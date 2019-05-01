@@ -1,5 +1,3 @@
-$color-black: #000000;
-
 // Cool Gray (neutrals)
 $darkest-gray: #1F2933;
 $arsenic: #323F4B;
@@ -10,4 +8,44 @@ $light-slate-gray: #7B8794;
 $grey-chateau: #9AA5B0;
 $link-water: #CCD2D9;
 $solitude: #E4E7Eb;
-$lightest-gray: #F5F7FA
+$lightest-gray: #F5F7FA;
+
+// Amida Blue (accents)
+$midnight-express: #051A39;
+$regal-blue: #123053;
+$dark-cerulean: #14456E;
+$bahama-blue: #1E5A87;
+$lochmara: #256FA1;
+$danube: #548DB7;
+$polo-blue: #84ACCD;
+$light-steel-blue: #B3CCE1;
+$pattens-blue: #CFDEED;
+$solitude: #EBF0F9;
+
+.header-1 {
+  font-size: 91px;
+}
+.header-2 {
+  font-size: 72px;
+}
+.header-3 {
+  font-size: 60px;
+}
+.header-4 {
+  font-size: 48px;
+}
+.header-5 {
+  font-size: 36px;
+}
+.body-1 {
+  font-size: 30px;
+}
+.body-2 {
+  font-size: 24px;
+}
+.detail-2 {
+  font-size: 20px;
+}
+.detail-2 {
+  font-size: 18px;
+}
