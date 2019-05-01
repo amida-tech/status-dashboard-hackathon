@@ -28,14 +28,26 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <div class="header-4">And here are some trains!</div>
+    <div>{{ wmata }}</div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+  },
+  computed: {
+    ...mapState(['wmata']),
+  },
+  async mounted() {
+    this.fetchWmata();
+  },
+  methods: {
+    ...mapActions(['fetchWmata']),
   },
 };
 </script>
