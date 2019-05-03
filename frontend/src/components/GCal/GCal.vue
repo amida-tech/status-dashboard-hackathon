@@ -1,20 +1,19 @@
 <template>
   <div class="gcal">
     <div class="ooo-container" v-if="computeOutOfOffice.length > 0" >
-      <p>Out Of Office</p>
-      <Row/>
+      <span>Out Of Office</span>
+      <Row v-bind:data="computeOutOfOffice"/>
     </div>
     <div class="remote-container" v-if="computeRemote.length > 0">
-      <p>Remote</p>
-      <Row/>
+      <span>Remote</span>
+      <Row v-bind:data="computeRemote"/>
     </div>
   </div>
 </template>
 
 <script>
-import Row from './Card';
 import { mapActions, mapState } from 'vuex';
-
+import Row from './Row.vue';
 
 export default {
   name: 'GCal',
@@ -24,19 +23,18 @@ export default {
   computed: {
     ...mapState(['gcal']),
     computeRemote() {
-      return this.gcal.filter(event => event.type === "Remote");
+      return this.gcal.filter(event => event.type === 'Remote');
     },
-     computeOutOfOffice() {
-      return this.gcal.filter(event => event.type === "OOO");
-    }
+    computeOutOfOffice() {
+      return this.gcal.filter(event => event.type === 'OOO');
+    },
   },
-    async mounted() {
-      this.fetchGCal();
+  async mounted() {
+    this.fetchGCal();
   },
-   methods: {
+  methods: {
     ...mapActions(['fetchGCal']),
   },
-  
 };
 </script>
 
@@ -44,8 +42,14 @@ export default {
 <style scoped lang="scss">
     .gcal {
       display: grid;
-      width: 1280;
-      height: 800;
+      grid-template-rows: 50% 50%;
+      width: 1280px;
+      height: 800px;
     }
-    
+    .ooo-container {
+       grid-row-start: 1;
+    }
+    .remote-container {
+      grid-row-start:  2;
+    }
 </style>
