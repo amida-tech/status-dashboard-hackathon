@@ -19,11 +19,12 @@ def get_uber(session):
     :rtype:
     """
     get_these = ['Black', 'UberXL', 'UberX', 'Pool']
+    return_vals = {}
     client = UberRidesClient(session)
-    response = client.get_pickup_time_estimates(os.getenv('AMIDA_LAT'), os.getenv('AMIDA_LONG'))
-    time_estimates = response.json.get('times')
+    # Get the nearest car estimates
+    time_rep = client.get_pickup_time_estimates(os.getenv('AMIDA_LAT'), os.getenv('AMIDA_LONG'))
+    time_estimates = time_rep.json.get('times')
     if time_estimates is not None:
-        return_vals = {}
         for product in time_estimates:
             if product['display_name'] in get_these:
                 ind_est = time.gmtime(product['estimate'])
@@ -31,6 +32,16 @@ def get_uber(session):
                 if ind_est.tm_sec > 30:
                     minutes += 1
                 return_vals[product['display_name']] = f'{minutes} min'
-        return return_vals
 
-    return {}
+    # Get the surge multiplier
+    surge_resp = client.get_price_estimates(start_latitude=os.getenv('AMIDA_LAT'),
+                                            start_longitude=os.getenv('AMIDA_LONG'),
+                                            end_latitude=os.getenv('DUP_LAT'),
+                                            end_longitude=os.getenv('DUP_LONG'),
+                                            seat_count=2)
+    surge_est = surge_resp.json.get('prices')
+    if surge_est is not None:
+        first = surge_est[0]
+        return_vals['surge_multiplier'] = first['surge_multiplier'] if 'surge_multiplier' else 'None'
+
+    return return_vals
