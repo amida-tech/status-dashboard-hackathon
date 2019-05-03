@@ -21,7 +21,7 @@ export default new Vuex.Store({
     },
     setCommits(state, newCommits) {
       state.commits = newCommits;
-    }
+    },
   },
   actions: {
     async fetchWmata(store) {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
           },
         },
       );
-      store.commit('setCommits', await response.json())
+      store.commit('setCommits', await response.json());
     },
   },
 });
