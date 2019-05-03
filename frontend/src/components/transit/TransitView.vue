@@ -194,28 +194,9 @@ export default {
   .transit-view {
     display: flex;
     flex-direction: column;
-    // border: 1px solid #fbad35;
     background-color: $midnight-express;
     justify-content: stretch;
-    &__rideshare-section {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 0.5rem;
-    }
-    &__rideshare-service {
-      @extend .material-box-shadow--level-2;
-      background-color: $solitude;
-      padding: 0.5rem;
-      margin: 0.5rem;
-      flex: 1;
-      border-radius: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      height: 50%;
-      align-self: flex-end;
-    }
+    height: 100%;
     &__metro-section {
       flex: 1;
       display: flex;
@@ -224,13 +205,7 @@ export default {
       padding-right: 0.5rem;
     }
     &__metro-station {
-      // @extend .material-box-shadow--level-2;
-      // background-color: $solitude;
-      // padding: 0.5rem;
       padding: 0 1rem;
-      // margin: 0 1rem;
-      // margin: 0.5rem;
-      // border-radius: 0.75rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -242,7 +217,6 @@ export default {
     &__station-name {
       color: $lightest-gray;
       font-weight: 100;
-      // margin-bottom: 1rem;
     }
     &__station-body {
       display: flex;
@@ -265,7 +239,6 @@ export default {
     }
     &__station-line {
       color: $solitude;
-      // background-color: $solitude;
       padding: 0.6rem 0 1rem;
       border-radius: 0.5rem;
       color: $solitude;
