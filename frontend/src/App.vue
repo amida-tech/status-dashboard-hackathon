@@ -1,16 +1,16 @@
 <template>
   <div class="app">
-    <Layout/>
+    <GCal/>
   </div>
 </template>
 
 <script>
-import Layout from './components/GCal/Layout.vue';
+import GCal from './components/GCal/GCal.vue';
 
 export default {
   name: 'app',
   components: {
-    Layout,
+    GCal,
   },
 };
 </script>
