@@ -33,7 +33,14 @@ export default new Vuex.Store({
       store.commit('setWmata', await response.json());
     },
     async fetchGCal(store) {
-      store.commit('setGCal', [
+      const response = await fetch(
+        'http://localhost:3000/',
+        {
+          method: 'get',
+        }
+      );
+
+      let fakeData = [
         {
           start: '2019-04-25',
           end: '2019-05-07',
@@ -55,14 +62,16 @@ export default new Vuex.Store({
           name: 'Andrew',
           type: 'OOO',
         },
-        {
-          start: '2019-04-03',
-          end: '2019-04-03',
-          summary: 'Steven Remote from his brain',
-          name: 'Steven',
-          type: 'Remote',
-        },
-      ]);
+        // {
+        //   start: '2019-04-03',
+        //   end: '2019-04-03',
+        //   summary: 'Steven Remote from his brain',
+        //   name: 'Steven',
+        //   type: 'Remote',
+        // },
+      ];
+
+      store.commit('setGCal',  await response.json());
     },
   },
 });
