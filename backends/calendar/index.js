@@ -9,10 +9,10 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = process.cwd() + '/backends/calendar/token.json';
+const TOKEN_PATH = process.cwd() + '/token.json';
 
 // Load client secrets from a local file.
-fs.readFile(process.cwd() + '/backends/calendar/credentials.json', (err, content) => {
+fs.readFile(process.cwd() + '/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), listEvents);
@@ -54,20 +54,7 @@ function getAccessToken(oAuth2Client, callback) {
     output: process.stdout,
   });
 
-  const code="4/PwHzpAC7tkOYRNCNwDUGXo1TIprVauxyHvjF82whjePWAs4CuD9HsdM";
-
-  oAuth2Client.getToken(code, (err, token) => {
-    if (err) return console.error('Error retrieving access token', err);
-    oAuth2Client.setCredentials(token);
-    // Store the token to disk for later program executions
-    fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-      if (err) return console.error(err);
-      console.log('Token stored to', TOKEN_PATH);
-    });
-    callback(oAuth2Client);
-  });
-
-  /*rl.question('Enter the code from that page here: ', (code) => {
+  rl.question('Enter the code from that page here: ', (code) => {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error('Error retrieving access token', err);
@@ -79,7 +66,7 @@ function getAccessToken(oAuth2Client, callback) {
       });
       callback(oAuth2Client);
     });
-  });*/
+  });
 }
 
 /**
