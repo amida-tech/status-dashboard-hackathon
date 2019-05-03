@@ -21,7 +21,9 @@ def get_current():
     uber_response = get_uber(UBER_SESSION)
     weather_response = get_weather()
 
-    return jsonify({
+    resp = jsonify({
         'uber_times': uber_response,
         'weather': weather_response
     })
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
