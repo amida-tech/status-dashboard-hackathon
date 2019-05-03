@@ -1,0 +1,20 @@
+{
+  "name": "k8s-status-service",
+  "author": "Aaron Houlihan",
+  "description": "Get status from your k8s cluster",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "engines": {
+    "node": ">=12.1.0"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.8.2",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
