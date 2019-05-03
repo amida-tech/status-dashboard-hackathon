@@ -1,16 +1,19 @@
 <template>
   <div class="app">
     <Layout/>
+    <Card/>
   </div>
 </template>
 
 <script>
 import Layout from './components/GCal/Layout.vue';
+import Card from './components/GCal/Card.vue';
 
 export default {
   name: 'app',
   components: {
     Layout,
+    Card,
   },
 };
 </script>
