@@ -5,15 +5,15 @@
         DUPONT CIR
        -->
       <section class="transit-view__metro-station">
-        <h3 class="transit-view__station-name">Dupont Circle</h3>
+        <h4 class="transit-view__station-name">Dupont Circle</h4>
         <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
         </ul> -->
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
+          <!-- <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Shady Grove</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--red">Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontShadyGroveTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -22,7 +22,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Glenmont</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--red">Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -36,15 +36,11 @@
         FARRAGUT NORTH
        -->
       <section class="transit-view__metro-station">
-        <h3 class="transit-view__station-name">Farragut North</h3>
-        <!-- <ul class="transit-view__station-alerts">
-          <label>Service Alerts</label>
-          <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul> -->
+        <h4 class="transit-view__station-name">Farragut North</h4>
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
+          <!-- <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Shady Grove</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--red">Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthShadyGroveTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -53,7 +49,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Glenmont</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--red">Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthGlenmontTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -67,16 +63,12 @@
         FARRAGUT WEST
        -->
       <section class="transit-view__metro-station transit-view__metro-station--large">
-        <h3 class="transit-view__station-name">Farragut West</h3>
-        <!-- <ul class="transit-view__station-alerts">
-          <label>Service Alerts</label>
-          <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul> -->
+        <h4 class="transit-view__station-name">Farragut West</h4>
         <div class="transit-view__station-body">
           <section class="transit-view__station-line transit-view__station-line--orange">
-          <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5>
+          <!-- <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Vienna</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--orange">Vienna</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestViennaTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -85,7 +77,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">New Carrolton</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--orange">New Carrolton</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestNewCarrTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -95,9 +87,9 @@
           </section>
         </section>
         <section class="transit-view__station-line transit-view__station-line--blue">
-          <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5>
+          <!-- <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Franconia-Springfield</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--blue">Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestFranTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -106,7 +98,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--blue">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -116,9 +108,9 @@
           </section>
         </section>
         <section class="transit-view__station-line transit-view__station-line--silver">
-          <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5>
+          <!-- <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Wiehle-Reston East</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--silver">Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestWiehleTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -127,7 +119,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--silver">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -201,28 +193,9 @@ export default {
   .transit-view {
     display: flex;
     flex-direction: column;
-    border: 1px solid #fbad35;
     background-color: $midnight-express;
     justify-content: stretch;
-    &__rideshare-section {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 0.5rem;
-    }
-    &__rideshare-service {
-      @extend .material-box-shadow--level-2;
-      background-color: $solitude;
-      padding: 0.5rem;
-      margin: 0.5rem;
-      flex: 1;
-      border-radius: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      height: 50%;
-      align-self: flex-end;
-    }
+    height: 100%;
     &__metro-section {
       flex: 1;
       display: flex;
@@ -231,13 +204,7 @@ export default {
       padding-right: 0.5rem;
     }
     &__metro-station {
-      // @extend .material-box-shadow--level-2;
-      // background-color: $solitude;
-      // padding: 0.5rem;
       padding: 0 1rem;
-      // margin: 0 1rem;
-      // margin: 0.5rem;
-      // border-radius: 0.75rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -249,7 +216,6 @@ export default {
     &__station-name {
       color: $lightest-gray;
       font-weight: 100;
-      // margin-bottom: 1rem;
     }
     &__station-body {
       display: flex;
@@ -272,7 +238,6 @@ export default {
     }
     &__station-line {
       color: $solitude;
-      // background-color: $solitude;
       padding: 0.6rem 0 1rem;
       border-radius: 0.5rem;
       color: $solitude;
@@ -286,9 +251,12 @@ export default {
       align-items: center;
       margin-bottom: 1rem;
       margin-left: -0.3rem;
+    }
+    &__line-direction-name {
+      color: $link-water;
       &--red {
         &:before {
-          @extend span;
+          @extend p;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -304,7 +272,7 @@ export default {
       }
       &--orange {
         &:before {
-          @extend span;
+          @extend p;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -321,7 +289,7 @@ export default {
       }
       &--blue {
         &:before {
-          @extend span;
+          @extend p;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -337,7 +305,7 @@ export default {
       }
       &--green {
         &:before {
-          @extend span;
+          @extend p;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -353,7 +321,7 @@ export default {
       }
       &--yellow {
         &:before {
-          @extend span;
+          @extend p;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -369,7 +337,7 @@ export default {
       }
       &--silver {
         &:before {
-          @extend span;
+          @extend p;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -384,17 +352,14 @@ export default {
         }
       }
     }
-    &__line-direction-name {
-      color: $link-water;
-    }
     &__train-list {
       margin-bottom: 1rem;
       margin-top: 0.5rem;
       background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
       border-radius: 0.3rem;
-      position: relative;
       overflow: hidden;
+      position: relative;
       &:before {
         content: '';
         position: absolute;
