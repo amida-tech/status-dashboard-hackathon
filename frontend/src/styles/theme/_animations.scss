@@ -1,0 +1,12 @@
+@keyframes moveDownUp{
+  0% {
+    transform: translateY(0%)
+  }
+  50% {
+    // TODO: this should be -100% + height of div
+    transform: translateY(-100%)
+  }
+  100% {
+    transform: translateY(0%)
+  }
+}
