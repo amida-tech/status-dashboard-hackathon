@@ -1,0 +1,6 @@
+Flask==1.0.2
+pylint==2.3.1
+pytest==4.4.1
+pytest-cov==2.6.1
+python-dotenv==0.10.1
+uber_rides==0.6.0

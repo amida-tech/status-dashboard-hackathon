@@ -13,11 +13,11 @@
           WFH COMPONENT HERE
           </section>
           <section class="app__body-top-right">
-          RIDESHARE COMPONENT HERE
+          <RideshareView />
           </section>
         </section>
         <section class="app__body-bottom">
-        METRO COMPONENT HERE
+        <TransitView />
         </section>
       </section>
     </section>
@@ -29,13 +29,17 @@
 
 <script>
 import k8sView from './components/k8sView.vue';
-// import SemanticElements from './components/examples/SemanticElements.vue';
+import SemanticElements from './components/examples/SemanticElements.vue';
+import TransitView from './components/transit/TransitView.vue';
+import RideshareView from './components/transit/RideshareView.vue';
 
 export default {
   name: 'app',
   components: {
     k8sView,
-    // SemanticElements,
+    SemanticElements,
+    TransitView,
+    RideshareView,
   },
 };
 </script>

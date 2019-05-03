@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -86,7 +85,7 @@ export default {
   .transit-view {
     display: flex;
     flex-direction: row;
-    border: 1px solid #fbad35;
+    // border: 1px solid #fbad35;
     background-color: $midnight-express;
     height: 1080px;
     width: 1920px;
