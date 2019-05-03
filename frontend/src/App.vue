@@ -1,21 +1,16 @@
 <template>
   <div class="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <div class="header-1">test</div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <SemanticElements msg="Welcome to Your Vue.js App"/>
+    <Layout/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import SemanticElements from './components/examples/SemanticElements.vue';
+import Layout from './components/GCal/Layout.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    SemanticElements,
+    Layout
   },
 };
 </script>
