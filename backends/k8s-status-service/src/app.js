@@ -9,6 +9,11 @@ kc.loadFromDefault();
 const k8sCoreApi = kc.makeApiClient(k8s.Core_v1Api);
 const k8sAppsApi = kc.makeApiClient(k8s.Apps_v1beta1Api);
 
+app.use(async (ctx, next) => {
+  console.log(`${ctx.method} ${ctx.url} -------------------------------------`)
+  await next();
+})
+
 router.get('/configmaps', async (ctx, next) => {
   try {
     const res = await k8sCoreApi.listNamespacedConfigMap('default');
