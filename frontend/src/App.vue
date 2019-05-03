@@ -8,14 +8,15 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import GitHubCommitDisplay from './components/github-commit-thing/GitHubCommitDisplay.vue';
+import HelloWorld from './components/HelloWorld.vue';
+
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     GitHubCommitDisplay,
+    HelloWorld,
   },
 };
 </script>

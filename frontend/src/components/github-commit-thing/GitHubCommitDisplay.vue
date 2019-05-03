@@ -6,36 +6,53 @@
     <br>
     <br>
     <div class="github-feed">
-        <div class="github-feed__feed-header">
-          Most Recently Updated Repositories:
-        </div>
-        <div class="github-feed__feed-items">
-          <div class="github-feed__feed-items-project"><a href='#' target = '_blank'>PROJECT 1</a></div>
-          <div class="github-feed__feed-items-project"><a href='#2' target = '_blank'>PROJECT 2</a></div>
-          <div class="github-feed__feed-items-project"><a href='#3' target = '_blank'>PROJECT 3</a></div>
-        </div>
+      <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
+      <div class="github-feed__feed-items" id="feedData">
+        <div class="github-feed__feed-items-project">PROJECT 1</div>
+        <div class="github-feed__feed-items-project">PROJECT 2</div>
+        <div class="github-feed__feed-items-project">PROJECT 3</div>
+          <div
+          v-for="project in feedData"
+          v-bind:key="project"
+          class="github-feed__feed-items-project"
+          >
+            {{project.name}}
+          </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+
+import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
+
+const feedData = new Vue({
+  el: '#feedData',
+  data: {
+    feedData: [
+      { project: 'This is a test' },
+      { project: 'This is a second test' },
+    ],
+  },
+});
 
 export default {
-  name: "GitHubCommitDisplay",
+  name: 'GitHubCommitDisplay',
   props: {
-    msg: String
+    msg: String,
   },
   computed: {
-    ...mapState(["wmata"])
+    ...mapState(['wmata']),
   },
   async mounted() {
     // this.fetchWmata();
     // TODO: GitHub launch fetch
   },
   methods: {
-    ...mapActions(["fetchWmata"])
-  }
+    ...mapActions(['fetchWmata']),
+  },
 };
 </script>
 
