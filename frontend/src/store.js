@@ -9,15 +9,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     wmata: {},
-    k8s: {},
+    k8s: {
+      deployments: [],
+    },
     commits: [],
   },
   mutations: {
     setWmata(state, wmata) {
       state.wmata = wmata;
     },
-    setK8s(state, newState) {
-      state.k8s = newState;
+    setK8s(state, deployments) {
+      state.k8s = {deployments: deployments};
     },
     setCommits(state, newCommits) {
       state.commits = newCommits;

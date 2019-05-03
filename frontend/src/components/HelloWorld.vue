@@ -12,23 +12,19 @@
     <main class="transit-view__k8s-section">
       <section class="transit-view__metro-station">
         <h2 class="transit-view__station-name">K8s Deployments</h2>
-        <!-- <ul class="transit-view__station-alerts">
-          <label>Service Alerts</label>
-          <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul> -->
         <section class="transit-view__station-line transit-view__station-line--red">
           <!-- <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4> -->
           <section class="transit-view__line-direction">
             <ol class="transit-view__train-list">
-              <li v-for="item in k8s" :key="item" class="transit-view__train-listing">
+              <li v-for="item in getDeployments" :key="item" class="transit-view__k8s-listing">
                 <div class="transit-view__deployment-listing">
                   <div class="transit-view__train-listing">
-                    <label>App Name: </label>
-                    <span class="transit-view__train-name">{{item.name}}</span>
+                    <!-- <label>App Name: </label> -->
+                    <span class="transit-view__deployment-name">{{item.name}}</span>
                   </div>
                   <div class="transit-view__train-listing">
                     <label>Image Name: </label>
-                    <span class="transit-view__image-name">{{item.image}}</span>
+                    <span class="transit-view__image-name">{{item.imageName}}</span>
                   </div>
                   <div class="transit-view__train-listing">
                     <label>Git Commit Hash: </label>
@@ -65,9 +61,15 @@ export default {
   },
   computed: {
     ...mapState(['k8s']),
-    // getOrangeDeployments(){
-    //   return this.k8s.filter(deploy => deploy)
-    // }
+    getDeployments(){
+      return this.k8s.deployments.map((deploy) => {
+        var splitImage = deploy.image.split(':');
+        return {
+          ...deploy,
+          imageName: splitImage[1]
+        }
+      })
+    }
   },
   async mounted() {
     this.fetchK8s();
@@ -153,114 +155,10 @@ export default {
       position: relative;
       display: inline;
     }
-    &__line-name {
-      color: $lightest-gray;
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      &--red {
-        &:before {
-          @extend span;
-          color: $lightest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'RD';
-          background-color: #E44446;
-          margin-right: 0.5rem;
-        }
-      }
-      &--orange {
-        &:before {
-          @extend span;
-          color: $darkest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'OR';
-          background-color: #F89732;
-          margin-right: 0.5rem;
-        }
-        // background-color: #F89732;
-      }
-      &--blue {
-        &:before {
-          @extend span;
-          color: $lightest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'BL';
-          background-color: #007CC1;
-          margin-right: 0.5rem;
-        }
-      }
-      &--green {
-        &:before {
-          @extend span;
-          color: $lightest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'GR';
-          background-color: #50AD59;
-          margin-right: 0.5rem;
-        }
-      }
-      &--yellow {
-        &:before {
-          @extend span;
-          color: $darkest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'YL';
-          background-color: #FFD338;
-          margin-right: 0.5rem;
-        }
-      }
-      &--silver {
-        &:before {
-          @extend span;
-          color: $darkest-gray;
-          height: 2em;
-          display: inline-block;
-          width: 2em;
-          line-height: 1.9em;
-          font-weight: 700;
-          border-radius: 1em;
-          text-align: center;
-          content: 'SV';
-          background-color: #A4A6A3;
-          margin-right: 0.5rem;
-        }
-      }
-      
-    }
     &__train-list {
       margin-bottom: 1rem;
       margin-top: 0.5rem;
-      background-color: $darkest-gray;
+      // background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
       border-radius: 0.3rem;
       position: relative;
@@ -275,14 +173,23 @@ export default {
         background-image: linear-gradient(to bottom right, rgba(228, 231, 235, .20), rgba(92, 92, 95, .20));
       }
     }
-    &__train-listing {
+    &__k8s-listing {
       margin-bottom: 0.5rem;
       // display: flex;
       flex-direction: row;
       justify-content: space-between;
+      background-color: $darkest-gray;
+      padding: 0.6rem 0.6rem 0;
+      border-radius: 0.3rem;
     }
     &__train-name {
       font-size: 1.5rem;
+      // font-family: $font-monospace;
+    }
+    &__deployment-name {
+      // color: $regal-blue;
+      font-size: 1.5rem;
+      font-weight:900;
       // font-family: $font-monospace;
     }
     &__deployment-listing {
