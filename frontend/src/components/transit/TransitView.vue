@@ -140,7 +140,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'TransitView',
   computed: {
-    ...mapState(['wmata', 'transitInfo']),
+    ...mapState(['wmata']),
     dupontShadyGroveTrains() {
       return this.wmata.A03.filter(train => train.DestinationName === 'Shady Grove');
     },
@@ -177,12 +177,11 @@ export default {
     setInterval(this.fetchAll, 30000);
   },
   methods: {
-    ...mapActions(['fetchTrainsByStation', 'fetchTransitInfo']),
+    ...mapActions(['fetchTrainsByStation']),
     fetchAll() {
       this.fetchTrainsByStation('A03');
       this.fetchTrainsByStation('A02');
       this.fetchTrainsByStation('C03');
-      this.fetchTransitInfo();
     }
   },
 };
