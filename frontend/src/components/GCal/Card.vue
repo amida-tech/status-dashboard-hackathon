@@ -1,9 +1,9 @@
 <template>
     <div class="card">
       <article class="card__content">
-        <h2 class="card__title">{{card.name}}</h2>
+        <h5 class="card__title">{{card.name}}</h5>
         <div class="card__body">
-          <h5>Until {{card.end}}</h5>
+          <h6>Until {{card.end}}</h6>
           <br>
           <p>{{card.summary}}</p>
         </div>
@@ -30,7 +30,6 @@ body {
 .grid {
   display:grid;
   width:100%;
-  max-width:1000px;
   padding:0;
   list-style-type:none;
   grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
@@ -52,8 +51,8 @@ body {
   display:flex;
   flex-direction:column;
   margin: 0 10px;
-  height: 300px;
-  width:300px;
+  height: 11.5rem;
+  width:18.75rem;
   &__content {
     padding:1rem;
     display:flex;

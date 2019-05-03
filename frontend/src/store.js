@@ -83,9 +83,12 @@ export default new Vuex.Store({
     },
     async fetchGCal(store) {
       const response = await fetch(
-        'http://localhost:3000/',
+        'http://localhost:3000/gcal',
         {
           method: 'get',
+          // headers: {
+          //   "Access-Control-Allow-Origin": "*"
+          // }
         }
       );
 
@@ -111,16 +114,51 @@ export default new Vuex.Store({
           name: 'Andrew',
           type: 'OOO',
         },
-        // {
-        //   start: '2019-04-03',
-        //   end: '2019-04-03',
-        //   summary: 'Steven Remote from his brain',
-        //   name: 'Steven',
-        //   type: 'Remote',
-        // },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-04-03',
+          end: '2019-04-03',
+          summary: 'Steven Remote from his brain',
+          name: 'Steven',
+          type: 'Remote',
+        },
       ];
 
-      store.commit('setGCal',  await response.json());
+      store.commit('setGCal',  fakeData);
     },
   },
 });
