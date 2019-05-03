@@ -5,7 +5,7 @@
         DUPONT CIR
        -->
       <section class="transit-view__metro-station">
-        <h4 class="transit-view__station-name">Dupont Circle</h4>
+        <h5 class="transit-view__station-name">Dupont Circle</h5>
         <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
@@ -36,7 +36,7 @@
         FARRAGUT NORTH
        -->
       <section class="transit-view__metro-station">
-        <h4 class="transit-view__station-name">Farragut North</h4>
+        <h5 class="transit-view__station-name">Farragut North</h5>
         <section class="transit-view__station-line transit-view__station-line--red">
           <!-- <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5> -->
           <section class="transit-view__line-direction">
@@ -63,7 +63,7 @@
         FARRAGUT WEST
        -->
       <section class="transit-view__metro-station transit-view__metro-station--large">
-        <h4 class="transit-view__station-name">Farragut West</h4>
+        <h5 class="transit-view__station-name">Farragut West</h5>
         <div class="transit-view__station-body">
           <section class="transit-view__station-line transit-view__station-line--orange">
           <!-- <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5> -->
@@ -89,7 +89,7 @@
         <section class="transit-view__station-line transit-view__station-line--blue">
           <!-- <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--blue">Franconia-Springfield</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--condensed transit-view__line-direction-name--blue">Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestFranTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -98,7 +98,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--blue">Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--condensed transit-view__line-direction-name--blue">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -110,7 +110,7 @@
         <section class="transit-view__station-line transit-view__station-line--silver">
           <!-- <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5> -->
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--silver">Wiehle-Reston East</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--condensed transit-view__line-direction-name--silver">Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestWiehleTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -119,7 +119,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--silver">Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name transit-view__line-direction-name--condensed transit-view__line-direction-name--silver">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
@@ -206,6 +206,7 @@ export default {
     }
     &__metro-station {
       padding: 0 1rem;
+      margin-top: 0.5rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -217,6 +218,9 @@ export default {
     &__station-name {
       color: $lightest-gray;
       font-weight: 100;
+      margin-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid $lightest-gray;
     }
     &__station-body {
       display: flex;
@@ -242,7 +246,7 @@ export default {
       padding: 0.6rem 0 1rem;
       border-radius: 0.5rem;
       color: $solitude;
-      margin-top: 0.5rem;
+      // margin-top: 0.5rem;
       position: relative;
       display: inline;
     }
@@ -253,11 +257,20 @@ export default {
       margin-bottom: 1rem;
       margin-left: -0.3rem;
     }
+    &__line-direction {
+      overflow: hidden;
+    }
     &__line-direction-name {
       color: $link-water;
+      position: relative;
+      z-index: +1;
+      &--condensed {
+        letter-spacing: -0.2rem;
+      }
       &--red {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -274,6 +287,7 @@ export default {
       &--orange {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -291,6 +305,7 @@ export default {
       &--blue {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -307,6 +322,7 @@ export default {
       &--green {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $lightest-gray;
           height: 2em;
           display: inline-block;
@@ -323,6 +339,7 @@ export default {
       &--yellow {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -339,6 +356,7 @@ export default {
       &--silver {
         &:before {
           @extend p;
+          letter-spacing: 0;
           color: $darkest-gray;
           height: 2em;
           display: inline-block;
@@ -355,7 +373,7 @@ export default {
     }
     &__train-list {
       margin-bottom: 1rem;
-      margin-top: 0.5rem;
+      margin-top: -0.4rem;
       background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
       border-radius: 0.3rem;
