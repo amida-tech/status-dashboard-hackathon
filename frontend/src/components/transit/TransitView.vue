@@ -2,13 +2,31 @@
   <div class="transit-view">
     <aside class="transit-view__rideshare-section">
       <section class="transit-view__rideshare-service">
-        <h2>Uber</h2>
-        <label>Estiamted arrival time</label>
-        <span>4min</span>
+        <h2>UberX</h2>
+        <label>Estimated arrival time</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.UberX }}</span>
+        <!-- <h2>UberXL</h2>
+        <label>Estimated arrival time</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.UberXL }}</span>
+        <h2>Uber Black</h2>
+        <label>Estimated arrival time</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.Black }}</span>
+        <h2>Uber Pool</h2>
+        <label>Estimated arrival time</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.Pool }}</span> -->
         <label>surge multiplier</label>
-        <span>1.2x</span>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.Surge }}</span>
       </section>
-      <section class="transit-view__rideshare-service"></section>
+      <section class="transit-view__rideshare-service">
+        <h2>Weather</h2>
+        <label>Summary</label>
+        <span>{{ transitInfo.weather && transitInfo.weather.summary }}</span>
+        <label>Temperature</label>
+        <span>{{ transitInfo.weather && transitInfo.weather.temperature }}</span>
+        <label>Precipitation</label>
+        <span>{{ transitInfo.weather && transitInfo.weather.precipitation }}</span>
+
+      </section>
       <section class="transit-view__rideshare-service"></section>
       <section class="transit-view__rideshare-service"></section>
       <section class="transit-view__rideshare-service"></section>
@@ -152,7 +170,6 @@
         </div>
       </section>
     </main>
-    <!-- {{wmata}} -->
   </div>
 </template>
 
@@ -162,7 +179,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'TransitView',
   computed: {
-    ...mapState(['wmata']),
+    ...mapState(['wmata', 'transitInfo']),
     dupontShadyGroveTrains() {
       return this.wmata.A03.filter(train => train.DestinationName === 'Shady Grove');
     },
@@ -199,11 +216,12 @@ export default {
     setInterval(this.fetchAll, 30000);
   },
   methods: {
-    ...mapActions(['fetchTrainsByStation']),
+    ...mapActions(['fetchTrainsByStation', 'fetchTransitInfo']),
     fetchAll() {
       this.fetchTrainsByStation('A03');
       this.fetchTrainsByStation('A02');
       this.fetchTrainsByStation('C03');
+      this.fetchTransitInfo();
     }
   },
 };
