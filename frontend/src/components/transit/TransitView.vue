@@ -452,7 +452,9 @@ export default {
       border: 1px solid transparent;
       align-self: flex-end;
       &--arriving {
-        background-color: #CF9901;
+        background-color: $lightest-gray;
+        color: $darkest-gray;
+        font-weight: 700;
         border: 1px solid $link-water;
       }
     }
