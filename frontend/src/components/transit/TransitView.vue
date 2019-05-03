@@ -22,7 +22,7 @@
         <label>Summary</label>
         <span>{{ transitInfo.weather && transitInfo.weather.summary }}</span>
         <label>Temperature</label>
-        <span>{{ transitInfo.weather && transitInfo.weather.temperature }}</span>
+        <span>{{ transitInfo.weather && transitInfo.weather.temperature }} ℉</span>
         <label>Precipitation</label>
         <span>{{ transitInfo.weather && transitInfo.weather.precipitation }}</span>
 
