@@ -26,19 +26,19 @@
         <section class="transit-view__station-line transit-view__station-line--red">
           <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Shady Grove</h6>
+            <h6 class="transit-view__line-direction-name">Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontShadyGroveTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Glenmont</h6>
+            <h6 class="transit-view__line-direction-name">Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
@@ -57,19 +57,19 @@
         <section class="transit-view__station-line transit-view__station-line--red">
           <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Shady Grove</h6>
+            <h6 class="transit-view__line-direction-name">Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthShadyGroveTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Glenmont</h6>
+            <h6 class="transit-view__line-direction-name">Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthGlenmontTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
@@ -89,19 +89,19 @@
           <section class="transit-view__station-line transit-view__station-line--orange">
           <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Vienna</h6>
+            <h6 class="transit-view__line-direction-name">Vienna</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestViennaTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>New Carrolton</h6>
+            <h6 class="transit-view__line-direction-name">New Carrolton</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestNewCarrTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
@@ -110,19 +110,19 @@
         <section class="transit-view__station-line transit-view__station-line--blue">
           <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Franconia-Springfield</h6>
+            <h6 class="transit-view__line-direction-name">Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestFranTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
@@ -131,19 +131,19 @@
         <section class="transit-view__station-line transit-view__station-line--silver">
           <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Wiehle-Reston East</h6>
+            <h6 class="transit-view__line-direction-name">Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestWiehleTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Largo Town Center</h6>
+            <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-name">({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' || train.Min === 'BRD' }">{{ train.Min === 'BRD' ? 'Boarding' : train.Min === 'ARR' ? 'Arriving' : `${train.Min} min` }}</span>
               </li>
             </ol>
@@ -225,7 +225,7 @@ export default {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+      padding: 0.5rem;
     }
     &__rideshare-service {
       @extend .material-box-shadow--level-2;
@@ -399,7 +399,9 @@ export default {
           margin-right: 0.5rem;
         }
       }
-
+    }
+    &__line-direction-name {
+      color: $link-water;
     }
     &__train-list {
       margin-bottom: 1rem;
@@ -421,8 +423,10 @@ export default {
     }
     &__train-listing {
       margin-bottom: 0.5rem;
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
       display: flex;
-      flex-direction: row;
+      flex-direction: row-reverse;
       justify-content: space-between;
     }
     &__train-name {
@@ -431,12 +435,15 @@ export default {
     }
     &__train-time {
       font-size: 1.5rem;
-      padding: 0.1em 0.3em;
+      margin: 0.1em 0;
+      padding: 0 0.3em;
       border-radius: 0.1em;
       border: 1px solid transparent;
       align-self: flex-end;
       &--arriving {
-        background-color: #CF9901;
+        background-color: $lightest-gray;
+        color: $darkest-gray;
+        font-weight: 700;
         border: 1px solid $link-water;
       }
     }
