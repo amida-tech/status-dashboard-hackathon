@@ -1,6 +1,26 @@
 <script src="https://unpkg.com/vue-router"></script>
 <template>
   <div>
+    <br>
+    <div>GitHubCommitDisplay Test</div>
+    <div>{{ hmm }}</div>
+    <br>
+    <br>
+    <div class="github-feed">
+      <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
+      <div class="github-feed__feed-items" id="feedData-feeder">
+        <div class="github-feed__feed-items-project">PROJECT 1</div>
+        <div class="github-feed__feed-items-project">PROJECT 2</div>
+        <div class="github-feed__feed-items-project">PROJECT 3</div>
+        <div
+          v-for="project of feedData"
+          v-bind:key="project"
+          class="github-feed__feed-items-project"
+        >
+          {{project}}
+        </div>
+      </div>
+    </div>
     <br/>
     <a
         href="https://github.com/login/oauth/authorize?scope=user:email&client_id=7c13275faf3a6b218241"
@@ -15,6 +35,19 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+
+import Vue from 'vue';
+
+const feedData = new Vue({
+  el: '#feedData-feeder',
+  data: {
+    feedData: [
+      { commit: 'This is a test' },
+      { commit: 'This is a second test' },
+      { commit: 'This is a third test' },
+    ],
+  },
+});
 
 function getQueryStringValue (key) {
   return decodeURIComponent(window.location.search.replace(
@@ -49,6 +82,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
 
+<style scoped lang="scss">
+// @import "..\styles\core.scss"
 </style>
