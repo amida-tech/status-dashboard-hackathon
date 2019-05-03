@@ -24,17 +24,18 @@ app.use(async (ctx, next) => {
   await next();
 });
 
-router.get('/configmaps', async (ctx, next) => {
-  try {
-    const res = await k8sCoreApi.listNamespacedConfigMap('default');
-    ctx.status = 200
-    ctx.body = res.body
-  }
-  catch (e) {
-    ctx.status = 500
-    console.log(e)
-  }
-})
+// !! THIS RETURNS SECRET STUFF. DONT LET ANYONE GET AT IT
+// router.get('/configmaps', async (ctx, next) => {
+//   try {
+//     const res = await k8sCoreApi.listNamespacedConfigMap('default');
+//     ctx.status = 200
+//     ctx.body = res.body
+//   }
+//   catch (e) {
+//     ctx.status = 500
+//     console.log(e)
+//   }
+// })
 
 router.get('/pods', async (ctx, next) => {
   try {
