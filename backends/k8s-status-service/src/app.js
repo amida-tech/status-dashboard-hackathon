@@ -1,6 +1,8 @@
+const config = require('./config')
+
 const Koa = require('koa')
 const Router = require('koa-router')
-const k8s = require('@kubernetes/client-node');
+const k8s = require('@kubernetes/client-node')
 
 const app = new Koa()
 const router = new Router()
@@ -61,4 +63,11 @@ router.get('/deployments', async (ctx, next) => {
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3000)
+app.listen(config.port, (err) => {
+  if (err) {
+    console.log(`Error starting server on port ${config.port}`)
+    console.log(err)
+    process.exit(1)
+  }
+  console.log(`Listening on port ${config.port}`)
+})
