@@ -1,18 +1,5 @@
 <template>
   <div class="transit-view">
-    <aside class="transit-view__rideshare-section">
-      <section class="transit-view__rideshare-service">
-        <h2>Uber</h2>
-        <label>Estiamted arrival time</label>
-        <span>4min</span>
-        <label>surge multiplier</label>
-        <span>1.2x</span>
-      </section>
-      <section class="transit-view__rideshare-service"></section>
-      <section class="transit-view__rideshare-service"></section>
-      <section class="transit-view__rideshare-service"></section>
-      <section class="transit-view__rideshare-service"></section>
-    </aside>
     <main class="transit-view__metro-section">
       <!--
         DUPONT CIR
@@ -217,8 +204,6 @@ export default {
     flex-direction: column;
     border: 1px solid #fbad35;
     background-color: $midnight-express;
-    height: 1080px;
-    width: 1920px;
     justify-content: stretch;
     &__rideshare-section {
       flex: 1;
