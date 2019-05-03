@@ -1,0 +1,111 @@
+<template>
+  <div class="rideshare-view">
+    <aside class="rideshare-view__rideshare-section">
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
+          <label>Uber</label>
+        </div>
+        <!-- <label>Uber</label> -->
+        <label>Estimated Arrival</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.UberX }}</span>
+        <label>surge multiplier</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.Surge }}</span>
+      </section>
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--lyft">
+          <label>Lyft</label>
+        </div>
+        <label>Estimated Arrival</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.UberX }}</span>
+        <label>surge multiplier</label>
+        <span>{{ transitInfo.uber_times && transitInfo.uber_times.Surge }}</span>
+      </section>
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header">
+          <label>Weather</label>
+        </div>
+        <span>{{ transitInfo.weather && transitInfo.weather.summary }}</span>
+        <span>{{ transitInfo.weather && transitInfo.weather.temperature }} ℉</span>
+        <label>Precipitation</label>
+        <span>{{ transitInfo.weather && transitInfo.weather.precipitation }}</span>
+      </section>
+    </aside>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapState } from 'vuex';
+
+export default {
+  name: 'RideshareView',
+  computed: {
+    ...mapState(['transitInfo']),
+  },
+  async mounted() {
+    this.fetchAll()
+    setInterval(this.fetchAll, 30000);
+  },
+  methods: {
+    ...mapActions(['fetchTransitInfo']),
+    fetchAll() {
+      this.fetchTransitInfo();
+    }
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+@at-root {
+  .rideshare-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: $midnight-express;
+    justify-content: stretch;
+    &__rideshare-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0.5rem;
+      padding-bottom: 0;
+    }
+    &__rideshare-service {
+      @extend .material-box-shadow--level-2;
+      background-color: $solitude;
+      margin: 0.5rem;
+      flex: 1;
+      border-radius: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom right, rgba(228, 231, 235, .20), rgba(92, 92, 95, .20));
+      }
+    }
+    &__rideshare-service-header {
+      background-color: $solitude;
+      padding: 0.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      font-size: 1.5rem;
+      &--uber {
+        color: #FFFFFF;
+        background-color: #276EF1;
+      }
+      &--lyft {
+        color: #FFFFFF;
+        background-color: #ff00bf;
+      }
+    }
+  }
+}
+</style>

@@ -1,5 +1,6 @@
 const config = {
-  wmataApiKey: 'xxxxxxxxxxxxx',
+  wmataApiKey: 'xxxxxxxxxx',
+  transitUrl: 'http://localhost:5000',
 };
 
 export default config;
