@@ -7,14 +7,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import SemanticElements from './components/examples/SemanticElements.vue';
-import TransitView from './components/transit/TransitView.vue'
+import TransitView from './components/transit/TransitView.vue';
 
 export default {
   name: 'app',
   components: {
-    // HelloWorld,
     SemanticElements,
     TransitView,
   },
