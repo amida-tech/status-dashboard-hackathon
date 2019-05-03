@@ -9,13 +9,13 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
-import SemanticElements from './components/examples/SemanticElements.vue';
+// import SemanticElements from './components/examples/SemanticElements.vue';
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    SemanticElements,
+    // SemanticElements,
   },
 };
 </script>

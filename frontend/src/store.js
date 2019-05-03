@@ -9,10 +9,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     wmata: {},
+    k8s: {},
   },
   mutations: {
     setWmata(state, wmata) {
       state.wmata = wmata;
+    },
+    setK8s(state, newState) {
+      state.k8s = newState;
     },
   },
   actions: {
@@ -27,6 +31,17 @@ export default new Vuex.Store({
         },
       );
       store.commit('setWmata', await response.json());
+    },
+    async fetchK8s(store) {
+      const response = await fetch(
+        'http://192.168.0.64:3000/deployments',
+        {
+          method: 'get',
+          headers: {
+          },
+        },
+      );
+      store.commit('setK8s', await response.json());
     },
   },
 });

@@ -29,7 +29,7 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
     <div class="header-4 train-title">And here are some trains!</div>
-    <div>{{ wmata }}</div>
+    <div>{{ k8s }}</div>
   </div>
 </template>
 
@@ -42,13 +42,13 @@ export default {
     msg: String,
   },
   computed: {
-    ...mapState(['wmata']),
+    ...mapState(['k8s']),
   },
   async mounted() {
-    this.fetchWmata();
+    this.fetchK8s();
   },
   methods: {
-    ...mapActions(['fetchWmata']),
+    ...mapActions(['fetchK8s']),
   },
 };
 </script>
