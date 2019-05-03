@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const readline = require('readline');
+const xregexp = require('xregexp')
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
@@ -10,13 +11,6 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = process.cwd() + '/token.json';
-
-// Load client secrets from a local file.
-fs.readFile(process.cwd() + '/credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Calendar API.
-  authorize(JSON.parse(content), listEvents);
-});
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -29,12 +23,13 @@ function authorize(credentials, callback) {
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
 
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken(oAuth2Client, callback);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
-  });
+  try {
+    let tokenContent = fs.readFileSync(TOKEN_PATH)
+    oAuth2Client.setCredentials(JSON.parse(tokenContent));
+    return oAuth2Client;
+  } catch (err) {
+      return getAccessToken(oAuth2Client, callback);
+  }
 }
 
 /**
@@ -73,7 +68,7 @@ function getAccessToken(oAuth2Client, callback) {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listEvents(auth) {
+async function listEvents(auth) {
 
   //return object
   const returnArray = [];
@@ -87,29 +82,38 @@ function listEvents(auth) {
   const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
   
 const calendar = google.calendar({version: 'v3', auth});
-  calendar.events.list({
+  let res = await calendar.events.list({
     calendarId: outOfOfficeCalendarId,
     timeMin: startOfDay.toISOString(),
     timeMax: endOfDay.toISOString(),
     maxResults: maxResults,
     singleEvents: true,
     orderBy: 'startTime',
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const events = res.data.items;
-    if (events.length) {
-    
-      const eventObject = {};
-      console.log(`${events.length} upcoming events`);
-      events.map((event, i) => {
-        eventObject.start = event.start.dateTime || event.start.date;
-        eventObject.end = event.end.dateTime || event.end.date;
-        eventObject.summary = event.summary;
-        returnArray.push(eventObject);
-      });
-    } else {
-      console.log('No upcoming events found.');
-    }
-  });
-  return  returnArray;
+  })
+  // if (err) return console.log('The API returned an error: ' + err);
+
+  const events = res.data.items;
+  if (events.length) {
+    console.log(`${events.length} upcoming events`);
+    events.map((e, i) => {
+      let eventObject = {};
+      eventObject.start = e.start.dateTime || e.start.date;
+      eventObject.end = e.end.dateTime || e.end.date;
+      eventObject.summary = e.summary;
+
+      let regExec = xregexp.exec(e.summary, /(\w*) (OOO|remote)/i)
+      eventObject.name = regExec[1];
+      eventObject.type = regExec[2];
+
+      returnArray.push(eventObject);
+    });
+  } else {
+    console.log('No upcoming events found.');
+  }
+  return await returnArray;
+}
+
+module.exports = { 
+  authorize,
+  listEvents
 }
