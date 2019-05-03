@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from dotenv import load_dotenv
 from uber_rides.session import Session
 from .uber import get_uber
+from .weather import get_weather
 
 
 load_dotenv('.env')
@@ -18,7 +19,9 @@ def get_current():
     For a new set of captured data, we want to apply the pre-trained model
     """
     uber_response = get_uber(UBER_SESSION)
+    weather_response = get_weather()
 
     return jsonify({
-        'uber_times': uber_response
+        'uber_times': uber_response,
+        'weather': weather_response
     })
