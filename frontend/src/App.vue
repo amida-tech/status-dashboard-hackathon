@@ -60,19 +60,19 @@ export default {
 
 
   &__header {
-    overflow: hidden
+    overflow: hidden;
   }
   &__body {
     flex: 15;
     display: flex;
     flex-direction: row;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-sidebar {
     background-color: purple;
     height: 100%;
     flex: 1;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-main {
     height: 100%;

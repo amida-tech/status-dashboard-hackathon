@@ -48,8 +48,8 @@ export default {
     .gcal {
       display: grid;
       grid-template-rows: 50% 50%;
-      width: 1280px;
-      height: 800px;
+      width: 100%;
+      height: 100%;
     }
     .ooo-container {
        grid-row-start: 1;
