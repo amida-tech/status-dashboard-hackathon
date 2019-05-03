@@ -8,6 +8,11 @@
       <span>Remote</span>
       <Row v-bind:data="computeRemote"/>
     </div>
+
+    <div v-if="computeRemote.length <= 0">
+      <span>Remote</span>
+      <p>Everyone's Here I guess ¯\_(ツ)_/¯</p>
+    </div>
   </div>
 </template>
 
