@@ -9,28 +9,36 @@
       
     </div> -->
     <div class="transit-view">
-    <main class="transit-view__metro-section">
+    <main class="transit-view__k8s-section">
       <section class="transit-view__metro-station">
-        <h2 class="transit-view__station-name">Kubernetes Deployments</h2>
+        <h2 class="transit-view__station-name">K8s Deployments</h2>
         <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
         </ul> -->
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4>
+          <!-- <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4> -->
           <section class="transit-view__line-direction">
-            <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
               <li v-for="item in k8s" :key="item" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{item.name}}</span>
+                <div class="transit-view__deployment-listing">
+                  <div class="transit-view__train-listing">
+                    <label>App Name: </label>
+                    <span class="transit-view__train-name">{{item.name}}</span>
+                  </div>
+                  <div class="transit-view__train-listing">
+                    <label>Image Name: </label>
+                    <span class="transit-view__image-name">{{item.image}}</span>
+                  </div>
+                  <div class="transit-view__train-listing">
+                    <label>Git Commit Hash: </label>
+                    <span class="transit-view__image-name">43110bc</span>
+                  </div>
+                </div>
               </li>
-              <!-- <li v-for="(deployment, index) in k8s" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ deployment.name }}</span>
-                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
-              </li> -->
             </ol>
           </section>
-          <section class="transit-view__line-direction">
+          <!-- <section class="transit-view__line-direction">
             <h5>Glenmont</h5>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
@@ -38,7 +46,7 @@
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
-          </section>
+          </section> -->
         </section>
       </section>
     </main>
@@ -56,6 +64,9 @@ export default {
   },
   computed: {
     ...mapState(['k8s']),
+    // getOrangeDeployments(){
+    //   return this.k8s.filter(deploy => deploy)
+    // }
   },
   async mounted() {
     this.fetchK8s();
@@ -97,6 +108,14 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: row;
+      padding: 0.5rem 0.5rem 0.5rem 0.25rem;
+      flex: 1.618 * 3;
+    }
+    &__k8s-section {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      max-width: 320px;
       padding: 0.5rem 0.5rem 0.5rem 0.25rem;
       flex: 1.618 * 3;
     }
@@ -257,12 +276,23 @@ export default {
     }
     &__train-listing {
       margin-bottom: 0.5rem;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       justify-content: space-between;
     }
     &__train-name {
       font-size: 1.5rem;
+      // font-family: $font-monospace;
+    }
+    &__deployment-listing {
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    &__image-name {
+      font-size: 1.5rem;
+      color: red;
       // font-family: $font-monospace;
     }
     &__train-time {

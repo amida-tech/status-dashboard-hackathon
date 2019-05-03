@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     async fetchK8s(store) {
       const response = await fetch(
-        'http://192.168.0.64:3000/deployments',
+        'http://192.168.0.163:3000/deployments',
         {
           method: 'get',
           headers: {
