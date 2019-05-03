@@ -28,34 +28,18 @@
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 minutes</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 minutes</span>
+              <li v-for="(train, index) in dupontShadyGroveTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
             <h5>Glenmont</h5>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 minutes</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 minutes</span>
+              <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
@@ -241,14 +225,24 @@ export default {
   name: 'TransitView',
   computed: {
     ...mapState(['wmata']),
+    dupontShadyGroveTrains() {
+      return this.wmata.A02.filter(train => train.DestinationName === 'Shady Grove');
+    },
+    dupontGlenmontTrains() {
+      return this.wmata.A02.filter(train => train.DestinationName === 'Glenmont');
+    },
   },
   async mounted() {
-    this.fetchTrainsByStation('A03');
-    this.fetchTrainsByStation('A02');
-    this.fetchTrainsByStation('C03');
+    this.fetchAll()
+    setInterval(this.fetchAll, 30000);
   },
   methods: {
     ...mapActions(['fetchTrainsByStation']),
+    fetchAll() {
+      this.fetchTrainsByStation('A03');
+      this.fetchTrainsByStation('A02');
+      this.fetchTrainsByStation('C03');
+    }
   },
 };
 </script>
