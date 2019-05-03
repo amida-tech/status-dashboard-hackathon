@@ -1,0 +1,13 @@
+$this-block: "layout-main-container";
+@at-root {
+  .#{$this-block} {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100rem;
+    position: relative;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    box-sizing: border-box;
+    }
+}

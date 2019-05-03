@@ -1,0 +1,21 @@
+@mixin fetchFromGoogleFonts($fonts...) {
+  $url: "https://fonts.googleapis.com/css?family=";
+  $weights: ":300,400,500,700";
+  $nb: 0;
+  @each $font-name in $fonts {
+    $nb: $nb + 1;
+    $nb-word: 0;
+    @each $word in $font-name {
+      $nb-word: $nb-word + 1;
+      $url: $url + $word;
+      @if $nb-word < length($font-name) {
+        $url: $url + "+";
+      }
+    }
+    $url: $url+$weights;
+    @if $nb < length($fonts) {
+      $url: $url + "|";
+    }
+  }
+  @import url(#{$url});
+}

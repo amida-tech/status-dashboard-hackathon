@@ -1,0 +1,10 @@
+a {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+    line-height: 1.15em;
+    text-decoration: none;
+    &[href] {
+        color: $lochmara;
+    }
+}
