@@ -1,3 +1,9 @@
-instructions here:
+# calander
 
-https://developers.google.com/calendar/quickstart/nodejs
+Instructions here: https://developers.google.com/calendar/quickstart/nodejs
+
+## Usage
+```
+> npm install
+> node serve
+```

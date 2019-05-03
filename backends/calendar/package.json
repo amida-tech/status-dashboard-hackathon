@@ -3,13 +3,29 @@
   "version": "1.0.0",
   "description": "pulls google calendar",
   "main": "index.js",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=8.14.0",
+    "npm": ">=6.4.0"
+  },
   "scripts": {
+    "serve": "node index.js",
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "contributors": [
+    "Matt McCall <matt@amida.com>",
+    "Nick McCally <nick@amida.com>",
+    "Riley  Orr <riley@amida.com>",
+    "Ryan Harrison <ryan@amida.com>",
+    "Steven Staley <steven@amida.com>"
+  ],
   "dependencies": {
     "googleapis": "^39.2.0",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
   }
 }
