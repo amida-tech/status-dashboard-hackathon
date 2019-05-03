@@ -23,10 +23,7 @@ cp .config.example.js config.js
 ## Included in Boilerplate
 
 ### Styles
-- We have set up some scss variables for your use, including a full color palette.
-- In `frontend/src/styles/variables.scss` you can find:
-  - A variety of Amida branded Blues & Grays 
-  - Sensible font sizes for display on a television 
+- We have set up some scss variables for your use, in the directory `/styles`
 
 ### State Manegment / Async API calls
 - In `frontend/src/store.js` there is an example of an async call to the WMATA api and storage of the response from that call in a globally available store. 
