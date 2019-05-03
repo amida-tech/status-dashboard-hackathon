@@ -61,4 +61,4 @@ router.get('/deployments', async (ctx, next) => {
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3001)
+app.listen(3000)
