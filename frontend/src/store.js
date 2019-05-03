@@ -17,7 +17,6 @@ export default new Vuex.Store({
   mutations: {
     setStationTrains(state, trains) {
       state.wmata = { ...state.wmata, [trains.stationID]: trains.trains };
-      console.log(trains.stationID);
     },
   },
   actions: {

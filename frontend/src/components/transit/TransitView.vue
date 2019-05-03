@@ -14,7 +14,7 @@
       <section class="transit-view__rideshare-service"></section>
     </aside>
     <main class="transit-view__metro-section">
-      <!-- 
+      <!--
         DUPONT CIR
        -->
       <section class="transit-view__metro-station">
@@ -45,7 +45,7 @@
           </section>
         </section>
       </section>
-      <!-- 
+      <!--
         FARRAGUT NORTH
        -->
       <section class="transit-view__metro-station">
@@ -59,40 +59,24 @@
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Shady Grove</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrNorthShadyGroveTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Glenmont</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrNorthGlenmontTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
         </section>
       </section>
-      <!-- 
+      <!--
         FARRAGUT WEST
        -->
       <section class="transit-view__metro-station transit-view__metro-station--large">
@@ -107,17 +91,9 @@
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Vienna</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestViennaTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
@@ -135,6 +111,9 @@
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
                 <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestNewCarrTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
@@ -144,34 +123,18 @@
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestFranTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
@@ -181,34 +144,18 @@
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestWiehleTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
             <h6 class="transit-view__line-direction-name">Largo Town Center</h6>
             <ol class="transit-view__train-list">
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
-              </li>
-              <li class="transit-view__train-listing">
-                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
-                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
@@ -228,10 +175,34 @@ export default {
   computed: {
     ...mapState(['wmata']),
     dupontShadyGroveTrains() {
-      return this.wmata.A02.filter(train => train.DestinationName === 'Shady Grove');
+      return this.wmata.A03.filter(train => train.DestinationName === 'Shady Grove');
     },
     dupontGlenmontTrains() {
+      return this.wmata.A03.filter(train => train.DestinationName === 'Glenmont');
+    },
+    farrNorthShadyGroveTrains() {
+      return this.wmata.A02.filter(train => train.DestinationName === 'Shady Grove');
+    },
+    farrNorthGlenmontTrains() {
       return this.wmata.A02.filter(train => train.DestinationName === 'Glenmont');
+    },
+    farrWestViennaTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'Vienna/Fairfax-GMU');
+    },
+    farrWestNewCarrTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'New Carrollton');
+    },
+    farrWestLargoBlueTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'Largo Town Center' && train.Line === 'BL');
+    },
+    farrWestFranTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'Franconia-Springfield');
+    },
+    farrWestLargoSilverTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'Largo Town Center' && train.Line === 'SV');
+    },
+    farrWestWiehleTrains() {
+      return this.wmata.C03.filter(train => train.DestinationName === 'Wiehle-Reston East');
     },
   },
   async mounted() {
@@ -439,9 +410,13 @@ export default {
           margin-right: 0.5rem;
         }
       }
+<<<<<<< HEAD
     }
     &__line-direction-name {
       color: $link-water;
+=======
+
+>>>>>>> a89f41bc2edbb59a12d6b1586089bbb85d2faf2e
     }
     &__train-list {
       margin-bottom: 1rem;
