@@ -77,7 +77,8 @@ export default {
   .transit-view {
     display: flex;
     flex-direction: row;
-    border: 1px solid #fbad35;
+    // border: 1px solid #fbad35;
+    // background-color: $midnight-express;
     background-color: $midnight-express;
 
     justify-content: stretch;
@@ -155,6 +156,17 @@ export default {
       border-radius: 0.3rem;
       position: relative;
       // overflow: hidden;
+    }
+    &__k8s-listing {
+      margin-bottom: 1rem;
+      // display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: $darkest-gray;
+      padding: 0.25rem 0.6rem 0.25rem;
+      overflow: hidden;
+      position: relative;
+      border-radius: 0.3rem;
       &:before {
         content: '';
         position: absolute;
@@ -164,15 +176,6 @@ export default {
         left: 0;
         background-image: linear-gradient(to bottom right, rgba(228, 231, 235, .20), rgba(92, 92, 95, .20));
       }
-    }
-    &__k8s-listing {
-      margin-bottom: 1rem;
-      // display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background-color: $darkest-gray;
-      padding: 0.25rem 0.6rem 0.25rem;
-      border-radius: 0.3rem;
     }
     &__train-name {
       font-size: 1.5rem;
