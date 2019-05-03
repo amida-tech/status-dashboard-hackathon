@@ -42,7 +42,9 @@ def get_uber(session):
     surge_est = surge_resp.json.get('prices')
     if surge_est is not None:
         first = surge_est[0]
-        return_vals['surge_multiplier'] = f'{first["surge_multiplier"]}x' \
-            if 'surge_multiplier' in first.keys() else '1x'
+        if 'surge_multiplier' in first.keys():
+            return_vals['surge_multiplier'] = f'{first["surge_multiplier"]}x'
+        else:
+            return_vals['surge_multiplier'] = '1x'
 
     return return_vals
