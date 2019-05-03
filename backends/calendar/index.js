@@ -75,18 +75,19 @@ function getAccessToken(oAuth2Client, callback) {
  */
 function listEvents(auth) {
   const calendar = google.calendar({version: 'v3', auth});
-
+  const maxResults = 100;
+  
   calendar.events.list({
     calendarId: 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com',
     timeMin: (new Date()).toISOString(),
-    maxResults: 10,
+    maxResults: maxResults,
     singleEvents: true,
     orderBy: 'startTime',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const events = res.data.items;
     if (events.length) {
-      console.log('Upcoming 10 events:');
+      console.log(`Upcoming ${maxResults} events:`);
       events.map((event, i) => {
         const start = event.start.dateTime || event.start.date;
         console.log(`${start} - ${event.summary}`);
