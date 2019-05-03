@@ -51,6 +51,7 @@
       </section>
     </main>
     </div>
+    <button v-on:click="fetchCommits()"> Fetch Git Commits </button>
   </div>
 </template>
 
@@ -72,7 +73,7 @@ export default {
     this.fetchK8s();
   },
   methods: {
-    ...mapActions(['fetchK8s']),
+    ...mapActions(['fetchK8s', 'fetchCommits']),
   },
 };
 </script>

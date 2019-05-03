@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     wmata: {},
     k8s: {},
+    commits: [],
   },
   mutations: {
     setWmata(state, wmata) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setK8s(state, newState) {
       state.k8s = newState;
+    },
+    setCommits(state, newCommits) {
+      state.commits = newCommits;
     },
   },
   actions: {
@@ -42,6 +46,17 @@ export default new Vuex.Store({
         },
       );
       store.commit('setK8s', await response.json());
+    },
+    async fetchCommits(store) {
+      const response = await fetch(
+        'http://192.168.0.64:3000/commits',
+        {
+          method: 'get',
+          headers: {
+          },
+        },
+      );
+      store.commit('setCommits', await response.json());
     },
   },
 });
