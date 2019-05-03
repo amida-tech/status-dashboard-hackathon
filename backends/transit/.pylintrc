@@ -1,0 +1,60 @@
+[MASTER]
+max-line-length=120
+
+# Add files or directories to the blacklist. They should be base names, not
+# paths.
+ignore=env
+
+# List of note tags to take in consideration, separated by a comma.
+notes=FIXME,XXX
+
+[BASIC]
+# Naming style matching correct argument names
+argument-naming-style=snake_case
+
+# Naming style matching correct attribute names
+attr-naming-style=snake_case
+
+# Regular expression matching correct class attribute names (either all UPPER or all snake_case)
+class-attribute-rgx=((?:[A-Z_]|[a-z_]){2,75}|(__.*__))$
+
+# Naming style matching correct class names
+class-naming-style=PascalCase
+
+# Naming style matching correct constant names
+const-naming-style=UPPER_CASE
+
+# Naming style matching correct function names
+function-naming-style=snake_case
+
+# Naming style matching correct method names
+method-naming-style=snake_case
+
+# Naming style matching correct module names
+module-naming-style=snake_case
+
+# Naming style matching correct variable names
+variable-naming-style=snake_case
+
+# Naming style matching inline variable name
+inlinevar-naming-style=snake_case
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=sc,sz,X_train,X_test,_,X,x,Y,y,df
+
+[DESIGN]
+
+# Maximum number of locals for function / method body
+max-locals=25
+
+# Maximum number of arguments for function / method
+max-args=10
+
+# Maximum number of branch for function / method body
+max-branches=18
+
+# Maximum number of nested blocks for function / method body
+max-nested-blocks=7
+
+# Maximum number of attributes for a class
+max-attributes=10
