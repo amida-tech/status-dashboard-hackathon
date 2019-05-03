@@ -11,12 +11,13 @@ export default new Vuex.Store({
     wmata: {
       A03: [],
       A02: [],
-      C03: []
+      C03: [],
     },
   },
   mutations: {
-    setStationTrains(state, trains, stationID) {
-      Vue.set(state.wmata, stationID, trains);
+    setStationTrains(state, trains) {
+      state.wmata = { ...state.wmata, [trains.stationID]: trains.trains };
+      console.log(trains.stationID);
     },
   },
   actions: {
@@ -30,7 +31,7 @@ export default new Vuex.Store({
           },
         },
       );
-      store.commit('setStationTrains', (await response.json()).Trains, stationID);
+      store.commit('setStationTrains', { trains: (await response.json()).Trains, stationID });
     },
   },
 });

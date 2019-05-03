@@ -230,12 +230,26 @@
         </section>
       </section>
     </main>
+    {{wmata}}
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'TransitView',
+  computed: {
+    ...mapState(['wmata']),
+  },
+  async mounted() {
+    this.fetchTrainsByStation('A03');
+    this.fetchTrainsByStation('A02');
+    this.fetchTrainsByStation('C03');
+  },
+  methods: {
+    ...mapActions(['fetchTrainsByStation']),
+  },
 };
 </script>
 
