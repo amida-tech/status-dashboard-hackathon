@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     wmata: {},
-    gcal:[]
+    gcal: [],
   },
   mutations: {
     setWmata(state, wmata) {
@@ -17,7 +17,7 @@ export default new Vuex.Store({
     },
     setGCal(state, gcal) {
       state.gcal = gcal;
-    }
+    },
   },
   actions: {
     async fetchWmata(store) {
@@ -34,34 +34,35 @@ export default new Vuex.Store({
     },
     async fetchGCal(store) {
       store.commit('setGCal', [
-          {
-            start: '2019-04-25',
-            end: '2019-05-07',
-            summary: 'Mike OOO',
-            name: 'Mike',
-            type: 'OOO'
-          },
-          {
-            start: '2019-05-01',
-            end: '2019-05-04',
-            summary: 'Michael Lovito OOO',
-            name: 'Lovito',
-            type: 'OOO'
-          },
-          {
-            start: '2019-05-02',
-            end: '2019-05-04',
-            summary: 'Andrew OOO',
-            name: 'Andrew',
-            type: 'OOO'
-          },
-          { start: '2019-04-03', 
-            end: '2019-04-03', 
-            summary: 'Steven Remote from his brain',
-            name: 'Steven',
-            type: 'Remote'}
-        ]
-      );
-    }
+        {
+          start: '2019-04-25',
+          end: '2019-05-07',
+          summary: 'Mike OOO',
+          name: 'Mike',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-01',
+          end: '2019-05-04',
+          summary: 'Michael Lovito OOO',
+          name: 'Lovito',
+          type: 'OOO',
+        },
+        {
+          start: '2019-05-02',
+          end: '2019-05-04',
+          summary: 'Andrew OOO',
+          name: 'Andrew',
+          type: 'OOO',
+        },
+        {
+          start: '2019-04-03',
+          end: '2019-04-03',
+          summary: 'Steven Remote from his brain',
+          name: 'Steven',
+          type: 'Remote',
+        },
+      ]);
+    },
   },
 });

@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <GCal/>
+    <!-- <Card/> -->
   </div>
 </template>
 
