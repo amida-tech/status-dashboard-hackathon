@@ -1,0 +1,114 @@
+.github-feed {
+
+    // top: 0;
+    // bottom: 0;
+    // left: 0;
+    // right: 0;
+    // position: fixed;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    flex-basis: 1px;
+
+    &__feed-header{
+        background-color: $shuttle-grey;
+        color: $lightest-gray;
+        border: 1px solid $grey-chateau;  
+        padding: 0.5em;
+    }
+
+    &__feed-items{
+        background-color: $shuttle-grey;
+        color: $lightest-gray;
+        border: 1px solid $grey-chateau;  
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__feed-items-project{
+        background-color: $shuttle-grey;
+        color: $lightest-gray;
+        border-right: 2px solid $grey-chateau;
+        padding: 0.5em;
+        &:hover {
+            background-color: $arsenic;
+        }
+    }
+
+    // .log-in{
+    //     @extend .utility--shadow-1;
+    
+    //     margin: 0 auto;
+    //     border: 1px solid $color-medium-grey;
+    //     padding: 20px;
+    //     border-radius: 4px;
+    //     width: calc(100% - 32px);
+    //     max-width: 540px;
+    //     background-color: $color-white;
+    //     position: absolute;
+    //     display: none;
+    
+    //     &--visible {
+    //         @extend .animated-ui;
+    //         @extend .zoomInmacOS;
+    
+    //         display: block;
+    //     }
+    
+    //     &--hidden {
+    //         pointer-events: none;
+    
+    //         @extend .animated-ui;
+    //         @extend .zoomOutmacOS;
+    
+    //         display: block;
+    //     }
+    
+    //     &__title {
+    //         margin: 0 0 16px;
+    //         font-family: $font-sans-serif;
+    //         font-size: 16px;
+    //         color: $color-dark-grey;
+    //         text-transform: uppercase;
+    //         line-height: 24px;
+    //     }
+    
+    //     &__form {
+    //         margin: 1.5em 0 0;
+    //     }
+    
+    //     &__label {
+    //         display: none;
+    //     }
+    
+    //     &__input {
+    //         @extend h2;
+    
+    //         font-weight: 300;
+    //         margin-top: 0;
+    //         border-radius: 0;
+    //     }
+    
+    //     &__footer {
+    //         margin-top: 0.5em;
+    //         padding-top: 2em;
+    //         border-top: 1px solid rgba($color-medium-grey, 0.5);
+    //     }
+    
+    //     &__action {
+    //         min-width: 160px;
+    //     }
+    
+    //     &__forgot {
+    //         float: right;
+    //         vertical-align: baseline;
+    //         margin-top: 10px;
+    //         font-size: 14px;
+    //         cursor: pointer;
+    //     }
+    // }
+}
+
+
