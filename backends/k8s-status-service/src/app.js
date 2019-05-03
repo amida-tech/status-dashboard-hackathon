@@ -9,6 +9,18 @@ kc.loadFromDefault();
 const k8sCoreApi = kc.makeApiClient(k8s.Core_v1Api);
 const k8sAppsApi = kc.makeApiClient(k8s.Apps_v1beta1Api);
 
+app.use(async (ctx, next) => {
+  console.log(`${ctx.method} ${ctx.url} -------------------------------------`)
+  await next();
+})
+
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  await next();
+});
+
 router.get('/configmaps', async (ctx, next) => {
   try {
     const res = await k8sCoreApi.listNamespacedConfigMap('default');
