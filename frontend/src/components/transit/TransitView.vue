@@ -1,6 +1,6 @@
 <template>
   <div class="transit-view">
-    <!-- <aside class="transit-view__rideshare-section">
+    <aside class="transit-view__rideshare-section">
       <section class="transit-view__rideshare-service">
         <h2>Uber</h2>
         <label>Estiamted arrival time</label>
@@ -12,7 +12,7 @@
       <section class="transit-view__rideshare-service"></section>
       <section class="transit-view__rideshare-service"></section>
       <section class="transit-view__rideshare-service"></section>
-    </aside> -->
+    </aside>
     <main class="transit-view__metro-section">
       <!-- 
         DUPONT CIR
@@ -105,7 +105,7 @@
           <section class="transit-view__station-line transit-view__station-line--orange">
           <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Shady Grove</h6>
+            <h6>Vienna</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -122,7 +122,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Glenmont</h6>
+            <h6>New Carrolton</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -142,7 +142,7 @@
         <section class="transit-view__station-line transit-view__station-line--blue">
           <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Shady Grove</h6>
+            <h6>Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -159,7 +159,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Glenmont</h6>
+            <h6>Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -179,7 +179,7 @@
         <section class="transit-view__station-line transit-view__station-line--silver">
           <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5>
           <section class="transit-view__line-direction">
-            <h6>Shady Grove</h6>
+            <h6>Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -196,7 +196,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h6>Glenmont</h6>
+            <h6>Largo Town Center</h6>
             <ol class="transit-view__train-list">
               <li class="transit-view__train-listing">
                 <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
@@ -254,7 +254,7 @@ export default {
 @at-root {
   .transit-view {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: 1px solid #fbad35;
     background-color: $midnight-express;
     height: 1080px;
@@ -263,7 +263,8 @@ export default {
     &__rideshare-section {
       flex: 1;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
       padding: 0.5rem 0.25rem 0.5rem 0.5rem;
     }
     &__rideshare-service {
@@ -275,11 +276,15 @@ export default {
       border-radius: 0.75rem;
       display: flex;
       flex-direction: column;
+      height: 50%;
+      align-self: flex-end;
     }
     &__metro-section {
       flex: 1;
       display: flex;
       flex-direction: row;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
     &__metro-station {
       // @extend .material-box-shadow--level-2;
@@ -300,7 +305,7 @@ export default {
     &__station-name {
       color: $lightest-gray;
       font-weight: 100;
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
     }
     &__station-body {
       display: flex;
