@@ -10,9 +10,9 @@
           Most Recently Updated Repositories:
         </div>
         <div class="github-feed__feed-items">
-          <div class="github-feed__feed-items-project">PROJECT 1 </div>
-          <div class="github-feed__feed-items-project">PROJECT 2 </div>
-          <div class="github-feed__feed-items-project">PROJECT 3 </div>
+          <div class="github-feed__feed-items-project"><a href='#' target = '_blank'>PROJECT 1</a></div>
+          <div class="github-feed__feed-items-project"><a href='#2' target = '_blank'>PROJECT 2</a></div>
+          <div class="github-feed__feed-items-project"><a href='#3' target = '_blank'>PROJECT 3</a></div>
         </div>
     </div>
   </div>

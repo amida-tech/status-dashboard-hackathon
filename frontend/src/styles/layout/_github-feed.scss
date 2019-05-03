@@ -15,26 +15,33 @@
     &__feed-header{
         background-color: $shuttle-grey;
         color: $lightest-gray;
-        border: 1px solid $grey-chateau;  
         padding: 0.5em;
     }
 
     &__feed-items{
+        padding: 0.5em;
         background-color: $shuttle-grey;
         color: $lightest-gray;
-        border: 1px solid $grey-chateau;  
         display: flex;
         flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
     }
 
     &__feed-items-project{
-        background-color: $shuttle-grey;
-        color: $lightest-gray;
-        border-right: 2px solid $grey-chateau;
-        padding: 0.5em;
-        &:hover {
-            background-color: $arsenic;
+        & a {
+            background-color: $shuttle-grey;
+            color: $lightest-gray;
+            padding: 0.5em;
+            font-family: $font-primary;
+            font-size: 15px;
+            margin-left: .5em;
+
+            &:hover {
+                background-color: $arsenic;
+            }
         }
+
     }
 
     // .log-in{
