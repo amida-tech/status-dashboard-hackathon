@@ -3,19 +3,19 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <div class="header-1">test</div>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <SemanticElements msg="Welcome to Your Vue.js App"/>
+    <GitHubCommitDisplay msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
-import SemanticElements from './components/examples/SemanticElements.vue';
+import GitHubCommitDisplay from './components/github-commit-thing/GitHubCommitDisplay.vue';
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    SemanticElements,
+    GitHubCommitDisplay,
   },
 };
 </script>
