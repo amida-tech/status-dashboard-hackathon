@@ -9,10 +9,10 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = process.cwd() + '/token.json';
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
+fs.readFile(process.cwd() + '/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), listEvents);
@@ -53,6 +53,7 @@ function getAccessToken(oAuth2Client, callback) {
     input: process.stdin,
     output: process.stdout,
   });
+
   rl.question('Enter the code from that page here: ', (code) => {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
@@ -73,24 +74,42 @@ function getAccessToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function listEvents(auth) {
-  const calendar = google.calendar({version: 'v3', auth});
+
+  //return object
+  const returnArray = [];
+
+  //constants
+  const startOfDay = new Date();
+  startOfDay.setHours(0,0,0,0);
+  const endOfDay = new Date();
+  endOfDay.setHours(23,59,59,0);
+  const maxResults = 100;
+  const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
+  
+const calendar = google.calendar({version: 'v3', auth});
   calendar.events.list({
-    calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
+    calendarId: outOfOfficeCalendarId,
+    timeMin: startOfDay.toISOString(),
+    timeMax: endOfDay.toISOString(),
+    maxResults: maxResults,
     singleEvents: true,
     orderBy: 'startTime',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const events = res.data.items;
     if (events.length) {
-      console.log('Upcoming 10 events:');
+    
+      const eventObject = {};
+      console.log(`${events.length} upcoming events`);
       events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
+        eventObject.start = event.start.dateTime || event.start.date;
+        eventObject.end = event.end.dateTime || event.end.date;
+        eventObject.summary = event.summary;
+        returnArray.push(eventObject);
       });
     } else {
       console.log('No upcoming events found.');
     }
   });
+  return  returnArray;
 }
