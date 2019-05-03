@@ -7,33 +7,34 @@
     <br>
     <div class="github-feed">
       <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
-      <div class="github-feed__feed-items" id="feedData">
+      <div class="github-feed__feed-items" id="feedData-feeder">
         <div class="github-feed__feed-items-project">PROJECT 1</div>
         <div class="github-feed__feed-items-project">PROJECT 2</div>
         <div class="github-feed__feed-items-project">PROJECT 3</div>
-          <div
-          v-for="project in feedData"
+        <div
+          v-for="project of feedData"
           v-bind:key="project"
           class="github-feed__feed-items-project"
-          >
-            {{project.name}}
-          </div>
+        >
+          {{project}}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
-import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 
+import Vue from 'vue';
+
 const feedData = new Vue({
-  el: '#feedData',
+  el: '#feedData-feeder',
   data: {
     feedData: [
-      { project: 'This is a test' },
-      { project: 'This is a second test' },
+      { commit: 'This is a test' },
+      { commit: 'This is a second test' },
+      { commit: 'This is a third test' },
     ],
   },
 });

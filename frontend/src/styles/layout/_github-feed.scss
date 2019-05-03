@@ -16,14 +16,14 @@
     &__feed-header{
         background-color: $shuttle-grey;
         color: $lightest-gray;
-        padding: 0.5em;
+        padding: 16px;
         font-size: 25px;
         font-family: $font-primary;
         width: 25%
     }
 
     &__feed-items{
-        padding: 0.5em;
+        padding: 10px;
         background-color: $shuttle-grey;
         color: $lightest-gray;
         display: flex;
@@ -36,10 +36,9 @@
     &__feed-items-project{
             background-color: $shuttle-grey;
             color: $lightest-gray;
-            padding: 0.5em;
+            padding: 10px;
             font-family: $font-monospace;
             font-size: 15px;
-            margin-left: 0.5em;
-
+            margin-left: 5px;
     }
 }
