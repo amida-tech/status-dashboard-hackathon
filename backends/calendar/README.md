@@ -16,5 +16,10 @@ Instructions here: https://developers.google.com/calendar/quickstart/nodejs
 ## Usage
 ```
 > npm install
+
+# Starts express server
 > npm serve
+
+# Hit end point
+> curl localhost:3000
 ```
