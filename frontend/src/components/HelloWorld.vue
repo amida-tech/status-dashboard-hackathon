@@ -34,21 +34,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
-  },
-  computed: {
-    ...mapState(['wmata']),
-  },
-  async mounted() {
-    this.fetchWmata();
-  },
-  methods: {
-    ...mapActions(['fetchWmata']),
   },
 };
 </script>

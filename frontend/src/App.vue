@@ -13,11 +13,11 @@
           WFH COMPONENT HERE
           </section>
           <section class="app__body-top-right">
-          RIDESHARE COMPONENT HERE
+          <RideshareView />
           </section>
         </section>
         <section class="app__body-bottom">
-        METRO COMPONENT HERE
+        <TransitView />
         </section>
       </section>
     </section>
@@ -28,14 +28,16 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import SemanticElements from './components/examples/SemanticElements.vue';
+import TransitView from './components/transit/TransitView.vue';
+import RideshareView from './components/transit/RideshareView.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     SemanticElements,
+    TransitView,
+    RideshareView,
   },
 };
 </script>

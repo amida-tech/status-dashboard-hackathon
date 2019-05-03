@@ -8,17 +8,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    wmata: {},
+    wmata: {
+      A03: [],
+      A02: [],
+      C03: [],
+    },
+    transitInfo: {},
   },
   mutations: {
-    setWmata(state, wmata) {
-      state.wmata = wmata;
+    setStationTrains(state, trains) {
+      state.wmata = { ...state.wmata, [trains.stationID]: trains.trains };
+    },
+    setTransitInfo(state, transitInfo) {
+      state.transitInfo = transitInfo;
     },
   },
   actions: {
-    async fetchWmata(store) {
+    async fetchTrainsByStation(store, stationID) {
       const response = await fetch(
-        'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/C03',
+        `https://api.wmata.com/StationPrediction.svc/json/GetPrediction/${stationID}`,
         {
           method: 'get',
           headers: {
@@ -26,7 +34,16 @@ export default new Vuex.Store({
           },
         },
       );
-      store.commit('setWmata', await response.json());
+      store.commit('setStationTrains', { trains: (await response.json()).Trains, stationID });
+    },
+    async fetchTransitInfo(store) {
+      const response = await fetch(
+        `${config.transitUrl}/current_transit`,
+        {
+          method: 'get',
+        },
+      );
+      store.commit('setTransitInfo', await response.json());
     },
   },
 });
