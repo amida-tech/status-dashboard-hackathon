@@ -10,7 +10,7 @@ import Layout from './components/GCal/Layout.vue';
 export default {
   name: 'app',
   components: {
-    Layout
+    Layout,
   },
 };
 </script>

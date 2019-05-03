@@ -1,13 +1,12 @@
 <template>
   <div class="Column">
-  
   </div>
 </template>
 
 <script>
 export default {
   name: 'LayOut',
-  props: {}
+  props: {},
 };
 </script>
 
