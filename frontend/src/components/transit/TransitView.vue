@@ -14,6 +14,9 @@
       <section class="transit-view__rideshare-service"></section>
     </aside>
     <main class="transit-view__metro-section">
+      <!-- 
+        DUPONT CIR
+       -->
       <section class="transit-view__metro-station">
         <h2 class="transit-view__station-name">Dupont Circle</h2>
         <ul class="transit-view__station-alerts">
@@ -58,8 +61,174 @@
           </section>
         </section>
       </section>
-      <section class="transit-view__metro-station"></section>
-      <section class="transit-view__metro-station"></section>
+      <!-- 
+        FARRAGUT NORTH
+       -->
+      <section class="transit-view__metro-station">
+        <h2 class="transit-view__station-name">Farragut North</h2>
+        <ul class="transit-view__station-alerts">
+          <label>Service Alerts</label>
+          <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
+        </ul>
+        <section class="transit-view__station-line transit-view__station-line--red">
+          <h4>Red Line</h4>
+          <section class="transit-view__line-direction">
+            <h5>Shady Grove</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+          <section class="transit-view__line-direction">
+            <h5>Glenmont</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+        </section>
+      </section>
+      <!-- 
+        FARRAGUT WEST
+       -->
+      <section class="transit-view__metro-station">
+        <h2 class="transit-view__station-name">Farragut West</h2>
+        <ul class="transit-view__station-alerts">
+          <label>Service Alerts</label>
+          <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
+        </ul>
+        <section class="transit-view__station-line transit-view__station-line--orange">
+          <h4>Orange Line</h4>
+          <section class="transit-view__line-direction">
+            <h5>Shady Grove</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+          <section class="transit-view__line-direction">
+            <h5>Glenmont</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+        </section>
+        <section class="transit-view__station-line transit-view__station-line--blue">
+          <h4>Blue Line</h4>
+          <section class="transit-view__line-direction">
+            <h5>Shady Grove</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+          <section class="transit-view__line-direction">
+            <h5>Glenmont</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+        </section>
+        <section class="transit-view__station-line transit-view__station-line--silver">
+          <h4>Silver Line</h4>
+          <section class="transit-view__line-direction">
+            <h5>Shady Grove</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+          <section class="transit-view__line-direction">
+            <h5>Glenmont</h5>
+            <ol class="transit-view__train-list">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">Arriving</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 minutes</span>
+              </li>
+            </ol>
+          </section>
+        </section>
+      </section>
     </main>
   </div>
 </template>
@@ -135,6 +304,22 @@ export default {
       &--red {
         background-color: #E44446;
       }
+      &--orange {
+        background-color: #F89732;
+      }
+      &--blue {
+        background-color: #007CC1;
+      }
+      &--green {
+        background-color: #50AD59;
+      }
+      &--yellow {
+        background-color: #FFD338;
+      }
+      &--silver {
+        background-color: #A4A6A3;
+      }
+      
     }
     &__train-list {
       margin-bottom: 1rem;
