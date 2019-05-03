@@ -2,33 +2,30 @@
 <template>
   <div>
     <br>
-    <div>GitHubCommitDisplay Test</div>
-    <div>{{ hmm }}</div>
-    <br>
-    <br>
     <div class="github-feed">
-      <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
-      <div class="github-feed__feed-items" id="feedData-feeder">
-        <div class="github-feed__feed-items-project">PROJECT 1</div>
-        <div class="github-feed__feed-items-project">PROJECT 2</div>
-        <div class="github-feed__feed-items-project">PROJECT 3</div>
-        <div
-          v-for="project of feedData"
-          v-bind:key="project"
-          class="github-feed__feed-items-project"
-        >
-          {{project}}
+      <a
+        href="https://github.com/login/oauth/authorize?scope=user:email&client_id=7c13275faf3a6b218241"
+        v-if="!githubAuthCode || githubAuthCode.length > 0"
+      >
+        Please log into GitHub!
+      </a>
+      <div v-else>
+        <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
+        <div class="github-feed__feed-items" id="feedData-feeder">
+          <div class="github-feed__feed-items-project">PROJECT 1</div>
+          <div class="github-feed__feed-items-project">PROJECT 2</div>
+          <div class="github-feed__feed-items-project">PROJECT 3</div>
+          <div
+            v-for="project of feedData"
+            v-bind:key="project"
+            class="github-feed__feed-items-project"
+          >
+            {{project}}
+          </div>
         </div>
       </div>
     </div>
     <br/>
-    <a
-        href="https://github.com/login/oauth/authorize?scope=user:email&client_id=7c13275faf3a6b218241"
-        v-if="githubAuthCode.length < 0"
-    >
-        Please log into GitHub!
-    </a>
-    <div v-else>{{ githubFeedData }}</div>
     <br/>
   </div>
 </template>
