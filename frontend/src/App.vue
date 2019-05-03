@@ -5,7 +5,7 @@
     </section>
     <section class="app__body">
       <section class="app__body-sidebar">
-        KUBERNETES COMPONENT HERE
+        <k8sView/>
       </section>
       <section class="app__body-main">
         <section class="app__body-top">
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import k8sView from './components/k8sView.vue';
 // import SemanticElements from './components/examples/SemanticElements.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
+    k8sView,
     // SemanticElements,
   },
 };
