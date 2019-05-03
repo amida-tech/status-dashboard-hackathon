@@ -68,7 +68,7 @@ router.get('/deployments', async (ctx, next) => {
         //   }
         // }),
       }
-  })
+    })
   }
   catch (e) {
     ctx.status = 500
