@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const readline = require('readline');
+const xregexp = require('xregexp')
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
@@ -99,6 +100,11 @@ const calendar = google.calendar({version: 'v3', auth});
       eventObject.start = e.start.dateTime || e.start.date;
       eventObject.end = e.end.dateTime || e.end.date;
       eventObject.summary = e.summary;
+
+      let regExec = xregexp.exec(e.summary, /(\w*) (OOO|remote)/i)
+      eventObject.name = regExec[1];
+      eventObject.type = regExec[2];
+
       returnArray.push(eventObject);
     });
   } else {
