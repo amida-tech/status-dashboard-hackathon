@@ -1,27 +1,44 @@
+<script src="https://unpkg.com/vue-router"></script>
 <template>
   <div>
     <br>
-    <div>GitHubCommitDisplay Test</div>
-    <div>{{ hmm }}</div>
-    <br>
-    <br>
     <div class="github-feed">
-      <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
-      <div class="github-feed__feed-items" id="feedData-feeder">
-        <div
-          v-for="project in feedData"
-          v-bind:key="project"
-          class="github-feed__feed-items-project"
-        >
-          {{project.commit}}
+      <a
+        href="https://github.com/login/oauth/authorize?scope=user:email&client_id=7c13275faf3a6b218241"
+        v-if="!githubAuthCode || githubAuthCode.length > 0"
+      >
+        Please log into GitHub!
+      </a>
+      <div v-else>
+        <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
+        <div class="github-feed__feed-items" id="feedData-feeder">
+          <div
+            v-for="project of feedData"
+            v-bind:key="project"
+            class="github-feed__feed-items-project"
+          >
+            {{project.commit}}
+          </div>
         </div>
       </div>
     </div>
+    <br/>
+    <br/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+
+function getQueryStringValue (key) {
+  return decodeURIComponent(window.location.search.replace(
+      new RegExp("^(?:.*[&\\?]"
+        + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&")
+        + "(?:\\=([^&]*))?)?.*$", "i"), "$1")
+      );
+}
+const code = getQueryStringValue('code');
+
 
 export default {
   name: 'GitHubCommitDisplay',
@@ -38,16 +55,21 @@ export default {
     msg: String,
   },
   computed: {
-    ...mapState(['wmata']),
+    ...mapState([
+        'githubAuthCode',
+        'githubFeedData',
+    ]),
   },
   async mounted() {
-    // this.fetchWmata();
-    // TODO: GitHub launch fetch
+    this.setGitHubAuthCodeToState(code);
   },
   methods: {
-    ...mapActions(['fetchWmata']),
+    ...mapActions([
+        'setGitHubAuthCodeToState',
+    ]),
   },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

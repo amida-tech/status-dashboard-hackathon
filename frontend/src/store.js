@@ -9,10 +9,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     wmata: {},
+    githubAuthCode: '',
+    githubAccessToken: '',
+    githubFeedData: 'default value for github feed data',
   },
   mutations: {
     setWmata(state, wmata) {
       state.wmata = wmata;
+    },
+    setGitHubAuthCode(state, code) {
+      state.githubAuthCode = code;
     },
   },
   actions: {
@@ -27,6 +33,9 @@ export default new Vuex.Store({
         },
       );
       store.commit('setWmata', await response.json());
+    },
+    setGitHubAuthCodeToState(store, code) {
+      store.commit('setGitHubAuthCode', code);
     },
   },
 });
