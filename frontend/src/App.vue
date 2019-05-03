@@ -5,7 +5,7 @@
     </section>
     <section class="app__body">
       <section class="app__body-sidebar">
-        KUBERNETES COMPONENT HERE
+        <k8sView/>
       </section>
       <section class="app__body-main">
         <section class="app__body-top">
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import k8sView from './components/k8sView.vue';
 import SemanticElements from './components/examples/SemanticElements.vue';
 import TransitView from './components/transit/TransitView.vue';
 import RideshareView from './components/transit/RideshareView.vue';
@@ -35,6 +36,7 @@ import RideshareView from './components/transit/RideshareView.vue';
 export default {
   name: 'app',
   components: {
+    k8sView,
     SemanticElements,
     TransitView,
     RideshareView,

@@ -13,6 +13,10 @@ export default new Vuex.Store({
       A02: [],
       C03: [],
     },
+    k8s: {
+      deployments: [],
+    },
+    commits: [],
     transitInfo: {},
   },
   mutations: {
@@ -21,6 +25,12 @@ export default new Vuex.Store({
     },
     setTransitInfo(state, transitInfo) {
       state.transitInfo = transitInfo;
+    },
+    setK8s(state, deployments) {
+      state.k8s = {deployments: deployments};
+    },
+    setCommits(state, newCommits) {
+      state.commits = newCommits;
     },
   },
   actions: {
@@ -44,6 +54,28 @@ export default new Vuex.Store({
         },
       );
       store.commit('setTransitInfo', await response.json());
+    },
+    async fetchK8s(store) {
+      const response = await fetch(
+        'http://192.168.0.163:3000/deployments',
+        {
+          method: 'get',
+          headers: {
+          },
+        },
+      );
+      store.commit('setK8s', await response.json());
+    },
+    async fetchCommits(store) {
+      const response = await fetch(
+        'http://192.168.0.64:3000/commits',
+        {
+          method: 'get',
+          headers: {
+          },
+        },
+      );
+      store.commit('setCommits', await response.json());
     },
   },
 });
