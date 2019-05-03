@@ -3,6 +3,7 @@ const config = require('./config')
 const Koa = require('koa')
 const Router = require('koa-router')
 const k8s = require('@kubernetes/client-node')
+const _ = require('lodash');
 
 const app = new Koa()
 const router = new Router()
@@ -52,7 +53,21 @@ router.get('/deployments', async (ctx, next) => {
     // const res = await k8sAppsApi.listDeploymentForAllNamespaces();
     const res = await k8sAppsApi.listNamespacedDeployment('default');
     ctx.status = 200
-    ctx.body = res.body
+    ctx.body = res.body.items.map(item => {
+      const containers = _.get(item, 'spec.template.spec.containers', []);
+      return { 
+        name: _.get(item, 'metadata.name'),
+        createTimestamp: _.get(item, 'metadata.creationTimestamp'),
+        containerName: _.get(containers[0], 'name'),
+        image: _.get(containers[0], 'image'),
+        // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
+        //   return {
+        //     containerName: _.get(container, 'name'),
+        //     image: _.get(container, 'image'),
+        //   }
+        // }),
+      }
+  })
   }
   catch (e) {
     ctx.status = 500
