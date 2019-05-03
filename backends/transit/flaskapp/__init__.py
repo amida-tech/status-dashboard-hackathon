@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from uber_rides.session import Session
 from .uber import get_uber
 from .weather import get_weather
+from .bikeshare import get_bikes
 
 
 load_dotenv('.env')
@@ -20,10 +21,12 @@ def get_current():
     """
     uber_response = get_uber(UBER_SESSION)
     weather_response = get_weather()
+    bikes_response = get_bikes()
 
     resp = jsonify({
         'uber_times': uber_response,
-        'weather': weather_response
+        'weather': weather_response,
+        'bikeshare': bikes_response
     })
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
