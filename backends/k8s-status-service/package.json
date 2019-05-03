@@ -16,6 +16,7 @@
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
+    "lodash": "^4.17.11",
     "nodemon": "^1.19.0"
   }
 }
