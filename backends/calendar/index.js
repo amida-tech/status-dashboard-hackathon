@@ -75,6 +75,10 @@ function getAccessToken(oAuth2Client, callback) {
  */
 function listEvents(auth) {
 
+  //return object
+  const returnArray = [];
+
+  //constants
   const startOfDay = new Date();
   startOfDay.setHours(0,0,0,0);
   const endOfDay = new Date();
@@ -83,7 +87,6 @@ function listEvents(auth) {
   const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
   
 const calendar = google.calendar({version: 'v3', auth});
-
   calendar.events.list({
     calendarId: outOfOfficeCalendarId,
     timeMin: startOfDay.toISOString(),
@@ -91,18 +94,22 @@ const calendar = google.calendar({version: 'v3', auth});
     maxResults: maxResults,
     singleEvents: true,
     orderBy: 'startTime',
-
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const events = res.data.items;
     if (events.length) {
-      console.log(`Upcoming ${maxResults} events:`);
+    
+      const eventObject = {};
+      console.log(`${events.length} upcoming events`);
       events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
+        eventObject.start = event.start.dateTime || event.start.date;
+        eventObject.end = event.end.dateTime || event.end.date;
+        eventObject.summary = event.summary;
+        returnArray.push(eventObject);
       });
     } else {
       console.log('No upcoming events found.');
     }
   });
+  return  returnArray;
 }
