@@ -1,5 +1,5 @@
 const config = {
-  wmataApiKey: 'xxxxxxxxxxxxx',
+  wmataApiKey: 'xxxxxxxxxx',
 };
 
 export default config;
