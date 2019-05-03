@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-world">
+  <div class="kubernetes-view">
     <!-- <div>
       <ol class="transit-view__train-list">
         <li v-for="item in k8s" :key="item" class="transit-view__train-listing">
@@ -70,6 +70,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @at-root {
+  .kubernetes-view {
+    height: 100%;
+    overflow: scroll;
+  }
   .transit-view {
     display: flex;
     flex-direction: row;
@@ -143,12 +147,14 @@ export default {
     }
     &__train-list {
       margin-bottom: 1rem;
+      // TODO: need to calculate this value with a function
+      animation: moveDownUp linear 108s;
       margin-top: 0.5rem;
       // background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
       border-radius: 0.3rem;
       position: relative;
-      overflow: hidden;
+      // overflow: hidden;
       &:before {
         content: '';
         position: absolute;
