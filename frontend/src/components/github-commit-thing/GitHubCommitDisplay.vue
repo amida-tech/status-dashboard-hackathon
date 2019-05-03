@@ -9,7 +9,7 @@
       >
         Please log into GitHub!
       </a>
-      <div v-else>
+      <div v-else class= "github-feed__feed-background">
         <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
         <div class="github-feed__feed-items" id="feedData-feeder">
           <div
