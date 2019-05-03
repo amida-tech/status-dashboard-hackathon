@@ -14,6 +14,13 @@ app.use(async (ctx, next) => {
   await next();
 })
 
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  await next();
+});
+
 router.get('/configmaps', async (ctx, next) => {
   try {
     const res = await k8sCoreApi.listNamespacedConfigMap('default');
@@ -54,4 +61,4 @@ router.get('/deployments', async (ctx, next) => {
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3000)
+app.listen(3001)
