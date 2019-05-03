@@ -30,6 +30,7 @@
     </ul>
     <div class="header-4 train-title">And here are some trains!</div>
     <div>{{ k8s }}</div>
+    <button v-on:click="fetchCommits()"> Fetch Git Commits </button>
   </div>
 </template>
 
@@ -48,7 +49,7 @@ export default {
     this.fetchK8s();
   },
   methods: {
-    ...mapActions(['fetchK8s']),
+    ...mapActions(['fetchK8s', 'fetchCommits']),
   },
 };
 </script>
