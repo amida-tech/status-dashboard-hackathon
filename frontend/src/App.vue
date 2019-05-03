@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-
     <section class="app_header">
 
     </section>
@@ -23,21 +22,18 @@
       </section>
     </section>
     <section class="app__footer">
-      TICKER COMPONENT HERE
+      <GitHubCommitDisplay msg="Welcome to Your Vue.js App"/>
     </section>
   </div>
 </template>
 
 <script>
 import GitHubCommitDisplay from './components/github-commit-thing/GitHubCommitDisplay.vue';
-import HelloWorld from './components/HelloWorld.vue';
-
 
 export default {
   name: 'app',
   components: {
     GitHubCommitDisplay,
-    HelloWorld,
   },
 };
 </script>

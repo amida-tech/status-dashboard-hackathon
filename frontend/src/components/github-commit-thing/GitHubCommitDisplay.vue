@@ -1,7 +1,7 @@
 <template>
   <div>
     <br>
-    <div>GitHubCommitDisplay</div>
+    <div>GitHubCommitDisplay Test</div>
     <div>{{ hmm }}</div>
     <br>
     <br>
