@@ -24,7 +24,7 @@
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
         </ul>
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h4>Red Line</h4>
+          <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4>
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
@@ -71,7 +71,7 @@
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
         </ul>
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h4>Red Line</h4>
+          <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4>
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
@@ -118,7 +118,7 @@
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
         </ul>
         <section class="transit-view__station-line transit-view__station-line--orange">
-          <h4>Orange Line</h4>
+          <h4 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h4>
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
@@ -155,7 +155,7 @@
           </section>
         </section>
         <section class="transit-view__station-line transit-view__station-line--blue">
-          <h4>Blue Line</h4>
+          <h4 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h4>
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
@@ -192,7 +192,7 @@
           </section>
         </section>
         <section class="transit-view__station-line transit-view__station-line--silver">
-          <h4>Silver Line</h4>
+          <h4 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h4>
           <section class="transit-view__line-direction">
             <h5>Shady Grove</h5>
             <ol class="transit-view__train-list">
@@ -230,7 +230,7 @@
         </section>
       </section>
     </main>
-    {{wmata}}
+    <!-- {{wmata}} -->
   </div>
 </template>
 
@@ -299,6 +299,7 @@ export default {
       color: $solitude;
     }
     &__station-name {
+      color: $lightest-gray;
       font-weight: 100;
       margin-bottom: 1rem;
     }
@@ -310,28 +311,116 @@ export default {
       margin-top: 0.5rem;
     }
     &__station-line {
-      background-color: $solitude;
-      padding: 0.6rem 1rem 1rem;
+      color: $solitude;
+      // background-color: $solitude;
+      padding: 0.6rem 0 1rem;
       border-radius: 0.5rem;
       color: $solitude;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      position: relative;
+      display: inline;
+    }
+    &__line-name {
+      color: $lightest-gray;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
       &--red {
-        background-color: #E44446;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'RD';
+          background-color: #E44446;
+          margin-right: 0.5rem;
+        }
       }
       &--orange {
-        background-color: #F89732;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'OR';
+          background-color: #F89732;
+          margin-right: 0.5rem;
+        }
+        // background-color: #F89732;
       }
       &--blue {
-        background-color: #007CC1;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'BL';
+          background-color: #007CC1;
+          margin-right: 0.5rem;
+        }
       }
       &--green {
-        background-color: #50AD59;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'GR';
+          background-color: #50AD59;
+          margin-right: 0.5rem;
+        }
       }
       &--yellow {
-        background-color: #FFD338;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'YL';
+          background-color: #FFD338;
+          margin-right: 0.5rem;
+        }
       }
       &--silver {
-        background-color: #A4A6A3;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'SV';
+          background-color: #A4A6A3;
+          margin-right: 0.5rem;
+        }
       }
       
     }
