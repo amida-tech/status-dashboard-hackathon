@@ -2,7 +2,7 @@
   <div class="app">
     <!-- <SemanticElements msg="Welcome to Your Vue.js App"/> -->
     <TransitView />
-    <SemanticElements/>
+    <!-- <SemanticElements/> -->
   </div>
 </template>
 

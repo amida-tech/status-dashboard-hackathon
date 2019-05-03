@@ -4,7 +4,7 @@
       <section class="transit-view__rideshare-service">
         <h2>Uber</h2>
         <label>Estiamted arrival time</label>
-        <span>4minutes</span>
+        <span>4min</span>
         <label>surge multiplier</label>
         <span>1.2x</span>
       </section>
@@ -18,28 +18,28 @@
         DUPONT CIR
        -->
       <section class="transit-view__metro-station">
-        <h2 class="transit-view__station-name">Dupont Circle</h2>
-        <ul class="transit-view__station-alerts">
+        <h3 class="transit-view__station-name">Dupont Circle</h3>
+        <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul>
+        </ul> -->
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h4>Red Line</h4>
+          <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
           <section class="transit-view__line-direction">
-            <h5>Shady Grove</h5>
+            <h6>Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontShadyGroveTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
-                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'ARR' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h5>Glenmont</h5>
+            <h6>Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
-                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'ARR' : `${train.Min} min` }}</span>
               </li>
             </ol>
           </section>
@@ -49,15 +49,15 @@
         FARRAGUT NORTH
        -->
       <section class="transit-view__metro-station">
-        <h2 class="transit-view__station-name">Farragut North</h2>
-        <ul class="transit-view__station-alerts">
+        <h3 class="transit-view__station-name">Farragut North</h3>
+        <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul>
+        </ul> -->
         <section class="transit-view__station-line transit-view__station-line--red">
-          <h4>Red Line</h4>
+          <h5 class="transit-view__line-name transit-view__line-name--red">Red Line</h5>
           <section class="transit-view__line-direction">
-            <h5>Shady Grove</h5>
+            <h6>Shady Grove</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthShadyGroveTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
@@ -66,7 +66,7 @@
             </ol>
           </section>
           <section class="transit-view__line-direction">
-            <h5>Glenmont</h5>
+            <h6>Glenmont</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrNorthGlenmontTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
@@ -79,25 +79,17 @@
       <!--
         FARRAGUT WEST
        -->
-      <section class="transit-view__metro-station">
-        <h2 class="transit-view__station-name">Farragut West</h2>
-        <ul class="transit-view__station-alerts">
+      <section class="transit-view__metro-station transit-view__metro-station--large">
+        <h3 class="transit-view__station-name">Farragut West</h3>
+        <!-- <ul class="transit-view__station-alerts">
           <label>Service Alerts</label>
           <li class="transit-view__station-alert">Due to fire dept activity at Mississippi Ave & 21st St SE, buses may experience delays in both directions.</li>
-        </ul>
-        <section class="transit-view__station-line transit-view__station-line--orange">
-          <h4>Orange Line</h4>
+        </ul> -->
+        <div class="transit-view__station-body">
+          <section class="transit-view__station-line transit-view__station-line--orange">
+          <h5 class="transit-view__line-name transit-view__line-name--orange">Orange Line</h5>
           <section class="transit-view__line-direction">
-            <h5>New Carrollton</h5>
-            <ol class="transit-view__train-list">
-              <li v-for="(train, index) in farrWestNewCarrTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
-                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
-              </li>
-            </ol>
-          </section>
-          <section class="transit-view__line-direction">
-            <h5>Vienna/Fairfax GMU</h5>
+            <h6>Vienna</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestViennaTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
@@ -105,20 +97,31 @@
               </li>
             </ol>
           </section>
-        </section>
-        <section class="transit-view__station-line transit-view__station-line--blue">
-          <h4>Blue Line</h4>
           <section class="transit-view__line-direction">
-            <h5>Largo</h5>
+            <h6>New Carrolton</h6>
             <ol class="transit-view__train-list">
-              <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time transit-view__train-time--arriving">ARR</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 min</span>
+              </li>
+              <li class="transit-view__train-listing">
+                <span class="transit-view__train-name">Shady Grove (6 Cars)</span>
+                <span class="transit-view__train-time">3 min</span>
+              <li v-for="(train, index) in farrWestNewCarrTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
+        </section>
+        <section class="transit-view__station-line transit-view__station-line--blue">
+          <h5 class="transit-view__line-name transit-view__line-name--blue">Blue Line</h5>
           <section class="transit-view__line-direction">
-            <h5>Franconia-Springfield</h5>
+            <h6>Franconia-Springfield</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestFranTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
@@ -126,20 +129,20 @@
               </li>
             </ol>
           </section>
-        </section>
-        <section class="transit-view__station-line transit-view__station-line--silver">
-          <h4>Silver Line</h4>
           <section class="transit-view__line-direction">
-            <h5>Largo</h5>
+            <h6>Largo Town Center</h6>
             <ol class="transit-view__train-list">
-              <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
+              <li v-for="(train, index) in farrWestLargoBlueTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
                 <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
               </li>
             </ol>
           </section>
+        </section>
+        <section class="transit-view__station-line transit-view__station-line--silver">
+          <h5 class="transit-view__line-name transit-view__line-name--silver">Silver Line</h5>
           <section class="transit-view__line-direction">
-            <h5>Wiehle-Reston East</h5>
+            <h6>Wiehle-Reston East</h6>
             <ol class="transit-view__train-list">
               <li v-for="(train, index) in farrWestWiehleTrains" :key="index" class="transit-view__train-listing">
                 <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
@@ -147,9 +150,20 @@
               </li>
             </ol>
           </section>
+          <section class="transit-view__line-direction">
+            <h6>Largo Town Center</h6>
+            <ol class="transit-view__train-list">
+              <li v-for="(train, index) in farrWestLargoSilverTrains" :key="index" class="transit-view__train-listing">
+                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
+                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
+              </li>
+            </ol>
+          </section>
         </section>
+        </div>
       </section>
     </main>
+    <!-- {{wmata}} -->
   </div>
 </template>
 
@@ -211,7 +225,7 @@ export default {
 @at-root {
   .transit-view {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: 1px solid #fbad35;
     background-color: $midnight-express;
     height: 1080px;
@@ -220,7 +234,8 @@ export default {
     &__rideshare-section {
       flex: 1;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
       padding: 0.5rem 0.25rem 0.5rem 0.5rem;
     }
     &__rideshare-service {
@@ -232,28 +247,48 @@ export default {
       border-radius: 0.75rem;
       display: flex;
       flex-direction: column;
+      height: 50%;
+      align-self: flex-end;
     }
     &__metro-section {
       flex: 1;
       display: flex;
       flex-direction: row;
-      padding: 0.5rem 0.5rem 0.5rem 0.25rem;
-      flex: 1.618 * 3;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
     &__metro-station {
       // @extend .material-box-shadow--level-2;
       // background-color: $solitude;
-      padding: 0.5rem;
-      margin: 0.5rem;
+      // padding: 0.5rem;
+      padding: 0 1rem;
+      // margin: 0 1rem;
+      // margin: 0.5rem;
       // border-radius: 0.75rem;
       flex: 1;
       display: flex;
       flex-direction: column;
       color: $solitude;
+      &--large {
+        flex: 3;
+      }
     }
     &__station-name {
+      color: $lightest-gray;
       font-weight: 100;
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
+    }
+    &__station-body {
+      display: flex;
+      flex-direction: row;
+      align-items: space-between;
+      .transit-view__station-line {
+        flex: 1;
+        margin-right: 2rem;
+        &:last-of-type {
+          margin-right: 0.5rem;
+        }
+      }
     }
     &__station-alert {
       background-color: $solitude;
@@ -263,28 +298,117 @@ export default {
       margin-top: 0.5rem;
     }
     &__station-line {
-      background-color: $solitude;
-      padding: 0.6rem 1rem 1rem;
+      color: $solitude;
+      // background-color: $solitude;
+      padding: 0.6rem 0 1rem;
       border-radius: 0.5rem;
       color: $solitude;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      position: relative;
+      display: inline;
+    }
+    &__line-name {
+      color: $lightest-gray;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      margin-left: -0.3rem;
       &--red {
-        background-color: #E44446;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'RD';
+          background-color: #E44446;
+          margin-right: 0.5rem;
+        }
       }
       &--orange {
-        background-color: #F89732;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'OR';
+          background-color: #F89732;
+          margin-right: 0.5rem;
+        }
+        // background-color: #F89732;
       }
       &--blue {
-        background-color: #007CC1;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'BL';
+          background-color: #007CC1;
+          margin-right: 0.5rem;
+        }
       }
       &--green {
-        background-color: #50AD59;
+        &:before {
+          @extend span;
+          color: $lightest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'GR';
+          background-color: #50AD59;
+          margin-right: 0.5rem;
+        }
       }
       &--yellow {
-        background-color: #FFD338;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'YL';
+          background-color: #FFD338;
+          margin-right: 0.5rem;
+        }
       }
       &--silver {
-        background-color: #A4A6A3;
+        &:before {
+          @extend span;
+          color: $darkest-gray;
+          height: 2em;
+          display: inline-block;
+          width: 2em;
+          line-height: 1.9em;
+          font-weight: 700;
+          border-radius: 1em;
+          text-align: center;
+          content: 'SV';
+          background-color: #A4A6A3;
+          margin-right: 0.5rem;
+        }
       }
 
     }
