@@ -29,15 +29,14 @@ async function fetchBuildHistory(name) {
     const response = await dockerHubApi.buildHistory('amidatech', name);
     return { build: _.maxBy(response, 'last_updated'), name };
   } catch(e) {
-    // console.log(e);
+    console.log('No build history details found for repository: ' + name);
   }
 }
 
-async function fetchBuildDetails(name, build) {
+async function fetchBuildDetails(name, build) { // /GitCommit.+?\n?u'(\w......)/
   try {
     const response = await dockerHubApi.buildDetails('amidatech', name, build.build_code);
-    return response;
-    // return { commit: response, name, build }
+    return { logs: response.build_results.logs, name, build } 
   } catch(e) {
     console.log(e);
   }
@@ -45,11 +44,17 @@ async function fetchBuildDetails(name, build) {
 
 function bucket() {
   let deploymentLists ='lol';
-  fetchDeployments().then(repos =>
-    Promise.all(repos.map(async repo => fetchBuildHistory(repo.name)))
-  ).then(repoWithCodes => 
-    Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo.name, repo.build)))
-  ).then(repoWithCommit => {
+  fetchDeployments().then(repos => {
+    return Promise.all(repos.map(async repo => fetchBuildHistory(repo.name)))
+  }).then(repoWithCodes => {
+    return Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo.name, repo.build)))
+  }).then(repoWithCommit => {
+    for (var i = 0; i < repoWithCommit.length; i++) {
+      if (repoWithCommit[i].logs != undefined && repoWithCommit[i].logs != '') {
+        repoWithCommit[i].commit = repoWithCommit[i].logs.match(/(?<=GitCommit: )(.......)/g)[0];
+      }
+      // delete repoWithCommit[i].logs;
+    }
     console.log(repoWithCommit);
     return repoWithCommit;
   });
