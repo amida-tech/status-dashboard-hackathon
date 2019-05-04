@@ -4,6 +4,12 @@
       <span>Out Of Office</span>
       <Row v-bind:data="computeOutOfOffice"/>
     </div>
+
+ <div v-if="computeOutOfOffice.length <= 0">
+      <span>Out Of Office</span>
+      <p>Everyone's Working I Guess ¯\_(ツ)_/¯</p>
+    </div>
+
     <div class="remote-container" v-if="computeRemote.length > 0">
       <span>Remote</span>
       <Row v-bind:data="computeRemote"/>
