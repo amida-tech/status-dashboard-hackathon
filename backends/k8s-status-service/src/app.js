@@ -2,7 +2,7 @@ const config = require('./config')
 
 const Koa = require('koa')
 const Router = require('koa-router')
-const k8s = require('@kubernetes/client-node')
+const k8s = require('@kubernetes/client-node');
 const _ = require('lodash');
 
 const app = new Koa()
@@ -11,6 +11,49 @@ const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 const k8sCoreApi = kc.makeApiClient(k8s.Core_v1Api);
 const k8sAppsApi = kc.makeApiClient(k8s.Apps_v1beta1Api);
+
+const dockerHubApi = require('docker-hub-api');
+dockerHubApi.login(process.env.DOCKER_HUB_USERNAME, process.env.DOCKER_HUB_PASSWORD);
+
+let deploymentsList = [];
+async function fetchDeployments() {
+  try {
+    return await dockerHubApi.repositories('amidatech');
+  } catch(e) {
+    console.log(e);
+  }
+};
+
+async function fetchBuildHistory(name) {
+  try {
+    const response = await dockerHubApi.buildHistory('amidatech', name);
+    return { build: _.maxBy(response, 'last_updated'), name };
+  } catch(e) {
+    // console.log(e);
+  }
+}
+
+async function fetchBuildDetails(name, build) {
+  try {
+    const response = await dockerHubApi.buildDetails('amidatech', name, build.build_code);
+    return response;
+    // return { commit: response, name, build }
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+function bucket() {
+  let deploymentLists ='lol';
+  fetchDeployments().then(repos =>
+    Promise.all(repos.map(async repo => fetchBuildHistory(repo.name)))
+  ).then(repoWithCodes => 
+    Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo.name, repo.build)))
+  ).then(repoWithCommit => {
+    console.log(repoWithCommit);
+    return repoWithCommit;
+  });
+}
 
 app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} -------------------------------------`)
@@ -50,6 +93,7 @@ router.get('/pods', async (ctx, next) => {
 })
 
 router.get('/deployments', async (ctx, next) => {
+  console.log(deployments);
   try {
     // const res = await k8sAppsApi.listDeploymentForAllNamespaces();
     const res = await k8sAppsApi.listNamespacedDeployment('default');
@@ -85,5 +129,6 @@ app.listen(config.port, (err) => {
     console.log(err)
     process.exit(1)
   }
-  console.log(`Listening on port ${config.port}`)
+  console.log(`Listening on port ${config.port}`);
+  bucket();
 })
