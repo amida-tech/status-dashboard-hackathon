@@ -1,10 +1,6 @@
 <template>
   <div class="app">
-    
-    <!-- <Card/> -->
-
     <section class="app_header">
-
     </section>
     <section class="app__body">
       <section class="app__body-sidebar">
@@ -34,7 +30,7 @@
 
 import GCal from './components/GCal/GCal.vue';
 import k8sView from './components/k8sView.vue';
-import SemanticElements from './components/examples/SemanticElements.vue';
+// import SemanticElements from './components/examples/SemanticElements.vue';
 import TransitView from './components/transit/TransitView.vue';
 import RideshareView from './components/transit/RideshareView.vue';
 
@@ -43,7 +39,7 @@ export default {
   components: {
     GCal,
     k8sView,
-    SemanticElements,
+    // SemanticElements,
     TransitView,
     RideshareView,
   },
