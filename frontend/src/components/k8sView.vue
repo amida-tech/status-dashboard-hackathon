@@ -149,7 +149,8 @@ export default {
     &__train-list {
       margin-bottom: 1rem;
       // TODO: need to calculate this value with a function
-      animation: moveDownUp linear 108s;
+      animation: moveDownUp linear 138s;
+      animation-iteration-count:infinite;
       margin-top: 0.5rem;
       // background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
