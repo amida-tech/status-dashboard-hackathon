@@ -1,7 +1,6 @@
 <template>
   <div class="app">
     <section class="app_header">
-
     </section>
     <section class="app__body">
       <section class="app__body-sidebar">
@@ -10,7 +9,7 @@
       <section class="app__body-main">
         <section class="app__body-top">
           <section class="app__body-top-left">
-          WFH COMPONENT HERE
+          <GCal/>
           </section>
           <section class="app__body-top-right">
           <RideshareView />
@@ -28,16 +27,19 @@
 </template>
 
 <script>
+
+import GCal from './components/GCal/GCal.vue';
 import k8sView from './components/k8sView.vue';
-import SemanticElements from './components/examples/SemanticElements.vue';
+// import SemanticElements from './components/examples/SemanticElements.vue';
 import TransitView from './components/transit/TransitView.vue';
 import RideshareView from './components/transit/RideshareView.vue';
 
 export default {
   name: 'app',
   components: {
+    GCal,
     k8sView,
-    SemanticElements,
+    // SemanticElements,
     TransitView,
     RideshareView,
   },
@@ -54,19 +56,19 @@ export default {
 
 
   &__header {
-    overflow: hidden
+    overflow: hidden;
   }
   &__body {
     flex: 15;
     display: flex;
     flex-direction: row;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-sidebar {
     background-color: purple;
     height: 100%;
     flex: 1;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-main {
     height: 100%;

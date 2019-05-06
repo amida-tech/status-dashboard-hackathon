@@ -1,0 +1,34 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "pulls google calendar",
+  "main": "app.js",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=8.14.0",
+    "npm": ">=6.4.0"
+  },
+  "scripts": {
+    "serve": "node app.js",
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "contributors": [
+    "Matt McCall <matt@amida.com>",
+    "Nick McCally <nick@amida.com>",
+    "Riley Orr <riley@amida.com>",
+    "Ryan Harrison <ryan@amida.com>",
+    "Steven Staley <steven@amida.com>"
+  ],
+  "dependencies": {
+    "@rimiti/express-async": "^1.2.0",
+    "express": "^4.16.4",
+    "googleapis": "^39.2.0",
+    "request": "^2.88.0",
+    "xregexp": "^4.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
