@@ -4,6 +4,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const k8s = require('@kubernetes/client-node');
 const _ = require('lodash');
+const fakek8 = require('../fakek8.json');
 
 const app = new Koa()
 const router = new Router()
@@ -19,19 +20,45 @@ let deploymentsList = [];
 async function fetchDeployments() {
   try {
     const response = await k8sAppsApi.listNamespacedDeployment('default');
-    return response;
+    return response.body.items.map(item => {
+      const containers = _.get(item, 'spec.template.spec.containers', []);
+      return { 
+        name: _.get(item, 'metadata.name'),
+        createTimestamp: _.get(item, 'metadata.creationTimestamp'),
+        containerName: _.get(containers[0], 'name'),
+        image: _.get(containers[0], 'image'),
+        // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
+        //   return {
+        //     containerName: _.get(container, 'name'),
+        //     image: _.get(container, 'image'),
+        //   }
+        // }),
+      }
+    });
     // return await dockerHubApi.repositories('amidatech');
   } catch(e) {
     console.log(e);
+    return fakek8.items.map(item => {
+      const containers = _.get(item, 'spec.template.spec.containers', []);
+      return { 
+        name: _.get(item, 'metadata.name'),
+        createTimestamp: _.get(item, 'metadata.creationTimestamp'),
+        containerName: _.get(containers[0], 'name'),
+        image: _.get(containers[0], 'image'),
+      }
+    })
   }
 };
 
-async function fetchBuildHistory(name) {
+async function fetchBuildHistory(repo) {
+  const image = repo.image.substring(repo.image.indexOf('/') + 1, repo.image.indexOf(':'));
+  const tag = repo.image.substring(repo.image.indexOf(':') + 1);
   try {
-    const response = await dockerHubApi.buildHistory('amidatech', name);
-    return { build: _.maxBy(response, 'last_updated'), name };
+    const response = await dockerHubApi.buildHistory('amidatech', image);
+    return { build: _.maxBy(_.filter(response, { dockertag_name: tag }), 'created_date'), ...repo };
   } catch(e) {
-    console.log('No build history details found for repository: ' + name);
+    console.log('No build history found for repository "' + repo.name + '" of image: "' + repo.image + '"');
+    return { build: undefined, ...repo };
   }
 }
 
@@ -40,16 +67,17 @@ async function fetchBuildDetails(name, build) { // /GitCommit.+?\n?u'(\w......)/
     const response = await dockerHubApi.buildDetails('amidatech', name, build.build_code);
     return { logs: response.build_results.logs, name, build } 
   } catch(e) {
-    console.log(e);
+    // console.log('No build details found for repository "' + repo.name + '" of image: "' + repo.image + '"');
+    return { logs: undefined, build: undefined, ...repo };
   }
 }
 
 function bucket() {
   let deploymentLists ='lol';
   fetchDeployments().then(repos => {
-    console.log(repos);
-    return Promise.all(repos.map(async repo => fetchBuildHistory(repo.name)))
+    return Promise.all(repos.map(async repo => fetchBuildHistory(repo)))
   }).then(repoWithCodes => {
+    console.log(repoWithCodes);
     return Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo.name, repo.build)))
   }).then(repoWithCommit => {
     for (var i = 0; i < repoWithCommit.length; i++) {
