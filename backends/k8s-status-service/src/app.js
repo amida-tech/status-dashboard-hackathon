@@ -18,7 +18,9 @@ dockerHubApi.login(process.env.DOCKER_HUB_USERNAME, process.env.DOCKER_HUB_PASSW
 let deploymentsList = [];
 async function fetchDeployments() {
   try {
-    return await dockerHubApi.repositories('amidatech');
+    const response = await k8sAppsApi.listNamespacedDeployment('default');
+    return response;
+    // return await dockerHubApi.repositories('amidatech');
   } catch(e) {
     console.log(e);
   }
@@ -45,6 +47,7 @@ async function fetchBuildDetails(name, build) { // /GitCommit.+?\n?u'(\w......)/
 function bucket() {
   let deploymentLists ='lol';
   fetchDeployments().then(repos => {
+    console.log(repos);
     return Promise.all(repos.map(async repo => fetchBuildHistory(repo.name)))
   }).then(repoWithCodes => {
     return Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo.name, repo.build)))
