@@ -111,7 +111,11 @@ function bucketUpdateCheck(repos) {
 
   deployments.forEach((deployment) => {
     const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === deployment.containerName });
-    deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
+    if (repoIndex > 0) {
+      deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
+    } else { // New deployment! Woo!
+      deployment.push({ ...repos[repoIndex], checkUpdate: true });
+    }
   });
 }
 
