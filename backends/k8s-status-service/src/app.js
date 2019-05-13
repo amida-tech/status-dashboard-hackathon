@@ -13,10 +13,63 @@ kc.loadFromDefault();
 const k8sCoreApi = kc.makeApiClient(k8s.Core_v1Api);
 const k8sAppsApi = kc.makeApiClient(k8s.Apps_v1beta1Api);
 
-const dockerHubApi = require('docker-hub-api');
-dockerHubApi.login(process.env.DOCKER_HUB_USERNAME, process.env.DOCKER_HUB_PASSWORD);
+const request = require('request-promise');
+let dockerTokenHeader = null;
+const dockerRoot = 'https://hub.docker.com/v';
+const dockerVersion = '2/';
 
-let deploymentsList = [];
+let deployments = [];
+
+async function dockerHubLogin() {
+  var options = {
+    method: 'POST',
+    uri: dockerRoot + dockerVersion + 'users/login/',
+    body: {
+      username: process.env.DOCKER_HUB_USERNAME, 
+      password: process.env.DOCKER_HUB_PASSWORD,
+    },
+    json: true
+  };
+
+  return request(options)
+  .then(function(res) {
+    console.log('Successfully logged in to DockerHub.');
+    dockerTokenHeader = 'JWT ' + res.token;
+  })
+  .catch(function(err) {
+    console.log('Call to DockerHub for auth token failed.');
+    console.log(err);
+  });
+}
+
+dockerHubLogin();
+
+async function fetchDockerBuilds(repo) {
+  if (!repo.checkUpdate) {
+    return repo;
+  }
+
+  var options = {
+    method: 'GET',
+    uri: `https://cloud.docker.com/api/audit/v1/action/?include_related=true&limit=100&object=%2Fapi%2Frepo%2Fv1%2Frepository%2Famidatech%2F${repo.image}%2F`,
+    headers: {
+      authorization: dockerTokenHeader,
+    },
+    json: true 
+  };
+  try {
+    return await request(options)
+    .then(function(res) {
+      return { build: _.maxBy(_.filter(res.objects, (build) => {
+        const tag = build.object.split('/');
+        return (tag[tag.length - 2] === repo.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...repo };
+    })
+  } catch(e) {
+    console.log(`Call to DockerHub for ${repo.name} with image of ${repo.image} failed.`);
+    return { build: undefined, commit: undefined, ...repo };
+  }
+}
+
 async function fetchDeployments() {
   try {
     const response = await k8sAppsApi.listNamespacedDeployment('default');
@@ -29,15 +82,8 @@ async function fetchDeployments() {
         containerName: _.get(containers[0], 'name'),
         image: wholeImage.substring(wholeImage.indexOf('/') + 1, wholeImage.indexOf(':')),
         tag: wholeImage.substring(wholeImage.indexOf(':') + 1),
-        // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
-        //   return {
-        //     containerName: _.get(container, 'name'),
-        //     image: _.get(container, 'image'),
-        //   }
-        // }),
       }
     });
-    // return await dockerHubApi.repositories('amidatech');
   } catch(e) {
     console.log(e);
     return fakek8.items.map(item => {
@@ -54,50 +100,37 @@ async function fetchDeployments() {
   }
 };
 
-async function fetchBuildHistory(repo) {
-  try {
-    const response = await dockerHubApi.buildHistory('amidatech', repo.image);
-    return { build: _.maxBy(_.filter(response, { dockertag_name: repo.tag }), 'created_date'), ...repo };
-  } catch(e) {
-    console.log('No build history found for repository "' + repo.name + '" of image: "' + repo.image + '"');
-    return { build: undefined, ...repo };
+function bucketUpdateCheck(repos) {
+  if (deployments.length === 0) {
+    deployments = repos;
+    deployments.forEach((deployment) => {
+      deployment.checkUpdate = true;
+    });
+    return;
   }
-}
 
-async function fetchBuildDetails(repo) { // /GitCommit.+?\n?u'(\w......)/
-  if (repo.build == undefined) {
-    return { logs: undefined, build: undefined, ...repo };
-  }
-  try {
-    const response = await dockerHubApi.buildDetails('amidatech', repo.image, repo.build.build_code);
-    return { logs: response.build_results.logs, ...repo } 
-  } catch(e) {
-    // console.log(e);
-    // console.log('No build details found for repository "' + repo.name + '" of image: "' + repo.image + '"');
-    return { logs: undefined, build: undefined, ...repo };
-  }
+  deployments.forEach((deployment) => {
+    const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === deployment.containerName });
+    deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
+  });
 }
-
-// CORRECTION:
-// https://cloud.docker.com/api/audit/v1/action/?include_related=true&limit=100&object=%2Fapi%2Frepo%2Fv1%2Frepository%2Famidatech%2Forange-web%2F
 
 function bucket() {
-  let deploymentLists ='lol';
   fetchDeployments().then(repos => {
-    return Promise.all(repos.map(async repo => fetchBuildHistory(repo)))
-  }).then(repoWithCodes => {
-    return Promise.all(_.compact(repoWithCodes).map(async repo => fetchBuildDetails(repo)))
-  }).then(repoWithCommit => {
-    // console.log(repoWithCommit);
-    for (var i = 0; i < repoWithCommit.length; i++) {
-      if (repoWithCommit[i].logs != undefined && repoWithCommit[i].logs != '') {
-        repoWithCommit[i].commit = repoWithCommit[i].logs.match(/(?<=GitCommit: )(.......)/g)[0];
+    bucketUpdateCheck(repos);
+    return Promise.all(deployments.map(async deployedRepo => fetchDockerBuilds(deployedRepo)))
+  }).then(repoWithBuild => {
+    for (var i = 0; i < repoWithBuild.length; i++) {
+      if (repoWithBuild[i].checkUpdate && repoWithBuild[i].build != undefined && repoWithBuild[i].build.user_agent != '') {
+        repoWithBuild[i].commit = repoWithBuild[i].build.user_agent.match(/(?<=git-commit\/)(.......)/g)[0];
       }
-      // delete repoWithCommit[i].logs;
+      repoWithBuild[i].checkUpdate = false;
     }
-    console.log(repoWithCommit);
-    return repoWithCommit;
-  });
+    return repoWithBuild;
+  })
+  // .catch(() => {
+  //   console.log('Bucket call to fetch K8 and Docker build info failed.');
+  // });
 }
 
 app.use(async (ctx, next) => {
@@ -138,26 +171,26 @@ router.get('/pods', async (ctx, next) => {
 })
 
 router.get('/deployments', async (ctx, next) => {
-  console.log(deployments);
   try {
     // const res = await k8sAppsApi.listDeploymentForAllNamespaces();
-    const res = await k8sAppsApi.listNamespacedDeployment('default');
+    // const res = await k8sAppsApi.listNamespacedDeployment('default');
     ctx.status = 200
-    ctx.body = res.body.items.map(item => {
-      const containers = _.get(item, 'spec.template.spec.containers', []);
-      return { 
-        name: _.get(item, 'metadata.name'),
-        createTimestamp: _.get(item, 'metadata.creationTimestamp'),
-        containerName: _.get(containers[0], 'name'),
-        image: _.get(containers[0], 'image'),
-        // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
-        //   return {
-        //     containerName: _.get(container, 'name'),
-        //     image: _.get(container, 'image'),
-        //   }
-        // }),
-      }
-    })
+    ctx.body = deployments;
+    // ctx.body = res.body.items.map(item => {
+    //   const containers = _.get(item, 'spec.template.spec.containers', []);
+    //   return { 
+    //     name: _.get(item, 'metadata.name'),
+    //     createTimestamp: _.get(item, 'metadata.creationTimestamp'),
+    //     containerName: _.get(containers[0], 'name'),
+    //     image: _.get(containers[0], 'image'),
+    //     // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
+    //     //   return {
+    //     //     containerName: _.get(container, 'name'),
+    //     //     image: _.get(container, 'image'),
+    //     //   }
+    //     // }),
+    //   }
+    // })
   }
   catch (e) {
     ctx.status = 500
@@ -167,6 +200,11 @@ router.get('/deployments', async (ctx, next) => {
 
 app.use(router.routes())
 app.use(router.allowedMethods())
+
+setInterval(function(){
+  console.log('Beginning next bucket update.');
+  bucket()
+}, 300000);
 
 app.listen(config.port, (err) => {
   if (err) {
