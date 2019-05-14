@@ -114,7 +114,7 @@ function bucketUpdateCheck(repos) {
     if (repoIndex > 0) {
       deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
     } else { // New deployment! Woo!
-      deployment.push({ ...repos[repoIndex], checkUpdate: true });
+      deployments.push({ ...repos[repoIndex], checkUpdate: true });
     }
   });
 }
