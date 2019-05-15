@@ -131,10 +131,11 @@ function bucket() {
       repoWithBuild[i].checkUpdate = false;
     }
     deployments = repoWithBuild;
+    console.log('Deployments updated with build info.');
   })
-  // .catch(() => {
-  //   console.log('Bucket call to fetch K8 and Docker build info failed.');
-  // });
+  .catch(() => {
+    console.log('Bucket call to fetch K8 and Docker build info failed.');
+  });
 }
 
 app.use(async (ctx, next) => {
