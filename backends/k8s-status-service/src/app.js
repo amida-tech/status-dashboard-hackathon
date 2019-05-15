@@ -130,7 +130,7 @@ function bucket() {
       }
       repoWithBuild[i].checkUpdate = false;
     }
-    return repoWithBuild;
+    deployments = repoWithBuild;
   })
   // .catch(() => {
   //   console.log('Bucket call to fetch K8 and Docker build info failed.');
