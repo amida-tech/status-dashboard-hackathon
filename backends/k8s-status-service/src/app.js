@@ -4,7 +4,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const k8s = require('@kubernetes/client-node');
 const _ = require('lodash');
-const fakek8 = require('../fakek8.json');
+// const fakek8 = require('../fakek8.json');
 
 const app = new Koa()
 const router = new Router()
@@ -86,17 +86,17 @@ async function fetchDeployments() {
     });
   } catch(e) {
     console.log(e);
-    return fakek8.items.map(item => {
-      const containers = _.get(item, 'spec.template.spec.containers', []);
-      const wholeImage = _.get(containers[0], 'image')
-      return { 
-        name: _.get(item, 'metadata.name'),
-        createTimestamp: _.get(item, 'metadata.creationTimestamp'),
-        containerName: _.get(containers[0], 'name'),
-        image: wholeImage.substring(wholeImage.indexOf('/') + 1, wholeImage.indexOf(':')),
-        tag: wholeImage.substring(wholeImage.indexOf(':') + 1),
-      }
-    })
+    // return fakek8.items.map(item => {
+    //   const containers = _.get(item, 'spec.template.spec.containers', []);
+    //   const wholeImage = _.get(containers[0], 'image')
+    //   return { 
+    //     name: _.get(item, 'metadata.name'),
+    //     createTimestamp: _.get(item, 'metadata.creationTimestamp'),
+    //     containerName: _.get(containers[0], 'name'),
+    //     image: wholeImage.substring(wholeImage.indexOf('/') + 1, wholeImage.indexOf(':')),
+    //     tag: wholeImage.substring(wholeImage.indexOf(':') + 1),
+    //   }
+    // })
   }
 };
 

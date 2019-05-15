@@ -22,8 +22,8 @@
                   </div>
                   <div class="transit-view__deployment-context">
                     <!-- <label>🐋: </label> -->
-                    <code class="transit-view__image-name">{{item.imageName}}</code>
-                    <code class="transit-view__sha">43110bc</code>
+                    <code class="transit-view__image-name">{{item.tag}}</code>
+                    <code class="transit-view__sha">{{item.commit}}</code>
                   </div>
                   <!-- <div class="transit-view__train-listing">
                     <span class="transit-view__image-name">43110bc</span>
@@ -50,11 +50,12 @@ export default {
     ...mapState(['k8s']),
     getDeployments(){
       return this.k8s.deployments.map((deploy) => {
+        console.log(deploy)
         var splitImage = deploy.image.split(':');
         return {
           ...deploy,
-          imageName: splitImage[1]
-        }
+          imageName: splitImage[1],
+        };
       })
     }
   },
