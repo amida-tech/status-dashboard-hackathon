@@ -18,7 +18,7 @@ let dockerTokenHeader = null;
 const dockerRoot = 'https://hub.docker.com/v';
 const dockerVersion = '2/';
 
-let deployments = [];
+let _deployments = [];
 
 async function dockerHubLogin() {
   var options = {
@@ -101,20 +101,20 @@ async function fetchDeployments() {
 };
 
 function bucketUpdateCheck(repos) {
-  if (deployments.length === 0) {
-    deployments = repos;
-    deployments.forEach((deployment) => {
+  if (_deployments.length === 0) {
+    _deployments = repos;
+    _deployments.forEach((deployment) => {
       deployment.checkUpdate = true;
     });
     return;
   }
 
-  deployments.forEach((deployment) => {
+  _deployments.forEach((deployment) => {
     const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === deployment.containerName });
     if (repoIndex > 0) {
       deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
     } else { // New deployment! Woo!
-      deployments.push({ ...repos[repoIndex], checkUpdate: true });
+      _deployments.push({ ...repos[repoIndex], checkUpdate: true });
     }
   });
 }
@@ -122,7 +122,7 @@ function bucketUpdateCheck(repos) {
 function bucket() {
   fetchDeployments().then(repos => {
     bucketUpdateCheck(repos);
-    return Promise.all(deployments.map(async deployedRepo => fetchDockerBuilds(deployedRepo)))
+    return Promise.all(_deployments.map(async deployedRepo => fetchDockerBuilds(deployedRepo)))
   }).then(repoWithBuild => {
     for (var i = 0; i < repoWithBuild.length; i++) {
       if (repoWithBuild[i].checkUpdate && repoWithBuild[i].build != undefined && repoWithBuild[i].build.user_agent != '') {
@@ -130,7 +130,7 @@ function bucket() {
       }
       repoWithBuild[i].checkUpdate = false;
     }
-    deployments = repoWithBuild;
+    _deployments = repoWithBuild;
     console.log('Deployments updated with build info.');
   })
   .catch(() => {
@@ -180,7 +180,7 @@ router.get('/deployments', async (ctx, next) => {
     // const res = await k8sAppsApi.listDeploymentForAllNamespaces();
     // const res = await k8sAppsApi.listNamespacedDeployment('default');
     ctx.status = 200
-    ctx.body = deployments;
+    ctx.body = _deployments;
     // ctx.body = res.body.items.map(item => {
     //   const containers = _.get(item, 'spec.template.spec.containers', []);
     //   return { 
