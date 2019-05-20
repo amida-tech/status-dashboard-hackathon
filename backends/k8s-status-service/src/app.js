@@ -59,10 +59,11 @@ async function fetchDockerBuilds(deployment) {
   };
   try {
     return await request(options)
-    .then(function(res) {
+    .then((res) => {
       return { build: _.maxBy(_.filter(res.objects, (build) => {
-        const tag = build.object.split('/');
-        return (tag[tag.length - 2] === deployment.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...deployment };
+        const tokenizedBuildObject = build.object.split('/');
+        const buildTag = tokenizedBuildObject[tokenizedBuildObject.length - 2]
+        return (buildTag === deployment.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...deployment };
     })
   } catch(e) {
     console.log(`Call to DockerHub for ${deployment.name} with image of ${deployment.image} failed.`);
