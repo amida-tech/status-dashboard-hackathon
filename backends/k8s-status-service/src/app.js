@@ -25,8 +25,8 @@ async function dockerHubLogin() {
     method: 'POST',
     uri: dockerRoot + dockerVersion + 'users/login/',
     body: {
-      username: process.env.DOCKER_HUB_USERNAME, 
-      password: process.env.DOCKER_HUB_PASSWORD,
+      username: config.dockerHubUsername, 
+      password: config.dockerHubPassword,
     },
     json: true
   };
