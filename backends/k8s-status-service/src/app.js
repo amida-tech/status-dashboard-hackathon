@@ -60,8 +60,8 @@ async function fetchDockerBuilds(deployment) {
     json: true 
   };
   try {
-    return await request(options)
-    .then((res) => {
+    const res = await request(options)
+
       const successfulBuildsOfThisTag = _.filter(res.objects, (build) => {
         const tokenizedBuildObject = build.object.split('/');
         const buildTag = tokenizedBuildObject[tokenizedBuildObject.length - 2]
@@ -75,8 +75,9 @@ async function fetchDockerBuilds(deployment) {
         commit: undefined,
         ...deployment
       };
-    })
-  } catch(e) {
+
+  }
+  catch (e) {
     console.log(`Call to DockerHub for ${deployment.name} with image of ${deployment.image} failed.`);
     return {
       build: undefined,
