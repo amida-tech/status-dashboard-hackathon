@@ -31,15 +31,15 @@ async function dockerHubLogin() {
     json: true
   };
 
-  return request(options)
-  .then(function(res) {
-    console.log('Successfully logged in to DockerHub.');
-    dockerTokenHeader = 'JWT ' + res.token;
-  })
-  .catch(function(err) {
-    console.log('Call to DockerHub for auth token failed.');
-    console.log(err);
-  });
+  try {
+    const res = await request(options)
+    return dockerTokenHeader = 'JWT ' + res.token;
+}
+  catch (e) {
+    console.log('Call to DockerHub for auth token failed. Server aborting...');
+    console.log(e)
+    process.exit(1);
+  }
 }
 
 dockerHubLogin();
