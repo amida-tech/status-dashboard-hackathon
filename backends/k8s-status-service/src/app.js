@@ -103,16 +103,16 @@ async function fetchDeployments() {
 function bucketUpdateCheck(repos) {
   if (_deployments.length === 0) {
     _deployments = repos;
-    _deployments.forEach((deployment) => {
-      deployment.checkUpdate = true;
+    _deployments.forEach((existingDeployment) => {
+      existingDeployment.checkUpdate = true;
     });
     return;
   }
 
-  _deployments.forEach((deployment) => {
-    const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === deployment.containerName });
+  _deployments.forEach((existingDeployment) => {
+    const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === existingDeployment.containerName });
     if (repoIndex > 0) {
-      deployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== deployment.createTimestamp;
+      existingDeployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== existingDeployment.createTimestamp;
     } else { // New deployment! Woo!
       _deployments.push({ ...repos[repoIndex], checkUpdate: true });
     }
