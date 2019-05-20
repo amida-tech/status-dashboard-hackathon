@@ -102,7 +102,9 @@ async function fetchDeployments() {
         tag: wholeImage.substring(wholeImage.indexOf(':') + 1),
       }
     });
-  } catch(e) {
+  }
+  catch (e) {
+    console.log('k8sAppsApi.listNamespacedDeployment("default") threw error:');
     console.log(e);
     // return fakek8.items.map(item => {
     //   const containers = _.get(item, 'spec.template.spec.containers', []);
