@@ -44,14 +44,14 @@ async function dockerHubLogin() {
 
 dockerHubLogin();
 
-async function fetchDockerBuilds(repo) {
-  if (!repo.checkUpdate) {
-    return repo;
+async function fetchDockerBuilds(deployment) {
+  if (!deployment.checkUpdate) {
+    return deployment;
   }
 
   var options = {
     method: 'GET',
-    uri: `https://cloud.docker.com/api/audit/v1/action/?include_related=true&limit=100&object=%2Fapi%2Frepo%2Fv1%2Frepository%2Famidatech%2F${repo.image}%2F`,
+    uri: `https://cloud.docker.com/api/audit/v1/action/?include_related=true&limit=100&object=%2Fapi%2Frepo%2Fv1%2Frepository%2Famidatech%2F${deployment.image}%2F`,
     headers: {
       authorization: dockerTokenHeader,
     },
@@ -62,11 +62,11 @@ async function fetchDockerBuilds(repo) {
     .then(function(res) {
       return { build: _.maxBy(_.filter(res.objects, (build) => {
         const tag = build.object.split('/');
-        return (tag[tag.length - 2] === repo.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...repo };
+        return (tag[tag.length - 2] === deployment.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...deployment };
     })
   } catch(e) {
-    console.log(`Call to DockerHub for ${repo.name} with image of ${repo.image} failed.`);
-    return { build: undefined, commit: undefined, ...repo };
+    console.log(`Call to DockerHub for ${deployment.name} with image of ${deployment.image} failed.`);
+    return { build: undefined, commit: undefined, ...deployment };
   }
 }
 
