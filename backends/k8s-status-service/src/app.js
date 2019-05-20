@@ -20,6 +20,8 @@ const dockerVersion = '2/';
 
 let _deployments = [];
 
+const FIVE_MINUTES = 300000;
+
 async function dockerHubLogin() {
   var options = {
     method: 'POST',
@@ -60,14 +62,27 @@ async function fetchDockerBuilds(deployment) {
   try {
     return await request(options)
     .then((res) => {
-      return { build: _.maxBy(_.filter(res.objects, (build) => {
+      const successfulBuildsOfThisTag = _.filter(res.objects, (build) => {
         const tokenizedBuildObject = build.object.split('/');
         const buildTag = tokenizedBuildObject[tokenizedBuildObject.length - 2]
-        return (buildTag === deployment.tag && build.state === 'Success') }), 'end_date'), commit: undefined, ...deployment };
+        return (buildTag === deployment.tag && build.state === 'Success')
+      })
+
+      const mostRecentSuccessfulBuildOfThisTag = _.maxBy(successfulBuildsOfThisTag, 'end_date')
+
+      return {
+        build: mostRecentSuccessfulBuildOfThisTag,
+        commit: undefined,
+        ...deployment
+      };
     })
   } catch(e) {
     console.log(`Call to DockerHub for ${deployment.name} with image of ${deployment.image} failed.`);
-    return { build: undefined, commit: undefined, ...deployment };
+    return {
+      build: undefined,
+      commit: undefined,
+      ...deployment
+    };
   }
 }
 
@@ -77,6 +92,7 @@ async function fetchDeployments() {
     return response.body.items.map(item => {
       const containers = _.get(item, 'spec.template.spec.containers', []);
       const wholeImage = _.get(containers[0], 'image')
+
       return { 
         name: _.get(item, 'metadata.name'),
         createTimestamp: _.get(item, 'metadata.creationTimestamp'),
@@ -207,10 +223,10 @@ router.get('/deployments', async (ctx, next) => {
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-setInterval(function(){
+setInterval(() => {
   console.log('Beginning next bucket update.');
   bucket()
-}, 300000);
+}, FIVE_MINUTES);
 
 app.listen(config.port, (err) => {
   if (err) {
