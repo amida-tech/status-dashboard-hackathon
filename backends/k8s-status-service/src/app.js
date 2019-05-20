@@ -100,9 +100,9 @@ async function fetchDeployments() {
   }
 };
 
-function bucketUpdateCheck(repos) {
+function bucketUpdateCheck(fetchedDeployments) {
   if (_deployments.length === 0) {
-    _deployments = repos;
+    _deployments = fetchedDeployments;
     _deployments.forEach((existingDeployment) => {
       existingDeployment.checkUpdate = true;
     });
@@ -110,27 +110,27 @@ function bucketUpdateCheck(repos) {
   }
 
   _deployments.forEach((existingDeployment) => {
-    const repoIndex = _.findIndex(repos, (repo) => { return _.get(repo, 'name') === existingDeployment.containerName });
-    if (repoIndex > 0) {
-      existingDeployment.checkUpdate = _.get(repos[repoIndex], 'createTimestamp') !== existingDeployment.createTimestamp;
+    const fetchedDeploymentIndex = _.findIndex(fetchedDeployments, (fetchedDeployment) => { return _.get(fetchedDeployment, 'name') === existingDeployment.containerName });
+    if (fetchedDeploymentIndex > 0) {
+      existingDeployment.checkUpdate = _.get(fetchedDeployments[fetchedDeploymentIndex], 'createTimestamp') !== existingDeployment.createTimestamp;
     } else { // New deployment! Woo!
-      _deployments.push({ ...repos[repoIndex], checkUpdate: true });
+      _deployments.push({ ...fetchedDeployments[fetchedDeploymentIndex], checkUpdate: true });
     }
   });
 }
 
 function bucket() {
-  fetchDeployments().then(repos => {
-    bucketUpdateCheck(repos);
-    return Promise.all(_deployments.map(async deployedRepo => fetchDockerBuilds(deployedRepo)))
-  }).then(repoWithBuild => {
-    for (var i = 0; i < repoWithBuild.length; i++) {
-      if (repoWithBuild[i].checkUpdate && repoWithBuild[i].build != undefined && repoWithBuild[i].build.user_agent != '') {
-        repoWithBuild[i].commit = repoWithBuild[i].build.user_agent.match(/(?<=git-commit\/)(.......)/g)[0];
+  fetchDeployments().then(deployments => {
+    bucketUpdateCheck(deployments);
+    return Promise.all(_deployments.map(async deployment => fetchDockerBuilds(deployment)))
+  }).then(deploymentWithBuild => {
+    for (var i = 0; i < deploymentWithBuild.length; i++) {
+      if (deploymentWithBuild[i].checkUpdate && deploymentWithBuild[i].build != undefined && deploymentWithBuild[i].build.user_agent != '') {
+        deploymentWithBuild[i].commit = deploymentWithBuild[i].build.user_agent.match(/(?<=git-commit\/)(.......)/g)[0];
       }
-      repoWithBuild[i].checkUpdate = false;
+      deploymentWithBuild[i].checkUpdate = false;
     }
-    _deployments = repoWithBuild;
+    _deployments = deploymentWithBuild;
     console.log('Deployments updated with build info.');
   })
   .catch(() => {
