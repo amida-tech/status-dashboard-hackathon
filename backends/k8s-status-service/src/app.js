@@ -36,7 +36,7 @@ async function dockerHubLogin() {
   try {
     const res = await request(options)
     return dockerTokenHeader = 'JWT ' + res.token;
-}
+  }
   catch (e) {
     console.log('Call to DockerHub for auth token failed. Server aborting...');
     console.log(e)
@@ -62,19 +62,19 @@ async function fetchDockerBuilds(deployment) {
   try {
     const res = await request(options)
 
-      const successfulBuildsOfThisTag = _.filter(res.objects, (build) => {
-        const tokenizedBuildObject = build.object.split('/');
-        const buildTag = tokenizedBuildObject[tokenizedBuildObject.length - 2]
-        return (buildTag === deployment.tag && build.state === 'Success')
-      })
+    const successfulBuildsOfThisTag = _.filter(res.objects, (build) => {
+      const tokenizedBuildObject = build.object.split('/');
+      const buildTag = tokenizedBuildObject[tokenizedBuildObject.length - 2]
+      return (buildTag === deployment.tag && build.state === 'Success')
+    })
 
-      const mostRecentSuccessfulBuildOfThisTag = _.maxBy(successfulBuildsOfThisTag, 'end_date')
+    const mostRecentSuccessfulBuildOfThisTag = _.maxBy(successfulBuildsOfThisTag, 'end_date')
 
-      return {
-        build: mostRecentSuccessfulBuildOfThisTag,
-        commit: undefined,
-        ...deployment
-      };
+    return {
+      build: mostRecentSuccessfulBuildOfThisTag,
+      commit: undefined,
+      ...deployment
+    };
 
   }
   catch (e) {
@@ -139,11 +139,12 @@ function bucketUpdateCheck(fetchedDeployments) {
   });
 }
 
-function bucket() {
-  fetchDeployments().then(deployments => {
+async function bucket() {
+  try {
+    const deployments = await fetchDeployments()
     bucketUpdateCheck(deployments);
-    return Promise.all(_deployments.map(async deployment => fetchDockerBuilds(deployment)))
-  }).then(deploymentWithBuild => {
+
+    const deploymentWithBuild = await Promise.all(_deployments.map(async deployment => fetchDockerBuilds(deployment)))
     for (var i = 0; i < deploymentWithBuild.length; i++) {
       if (deploymentWithBuild[i].checkUpdate && deploymentWithBuild[i].build != undefined && deploymentWithBuild[i].build.user_agent != '') {
         deploymentWithBuild[i].commit = deploymentWithBuild[i].build.user_agent.match(/(?<=git-commit\/)(.......)/g)[0];
@@ -152,10 +153,11 @@ function bucket() {
     }
     _deployments = deploymentWithBuild;
     console.log('Deployments updated with build info.');
-  })
-  .catch(() => {
-    console.log('Bucket call to fetch K8 and Docker build info failed.');
-  });
+  }
+  catch(e) {
+    console.log('Bucket call to fetch K8 and Docker build info failed with error:');
+    console.log(e);
+  }
 }
 
 app.use(async (ctx, next) => {
