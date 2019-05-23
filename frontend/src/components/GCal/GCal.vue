@@ -1,7 +1,7 @@
 <template>
   <div class="gcal">
     <div class="ooo-container" v-if="computeOutOfOffice.length > 0" >
-      <span>Out Of Office</span>
+      <span class="gcal-title">Out Of Office</span>
       <Row v-bind:data="computeOutOfOffice"/>
     </div>
 
@@ -11,12 +11,12 @@
     </div>
 
     <div class="remote-container" v-if="computeRemote.length > 0">
-      <span>Remote</span>
+      <span class="gcal-title">Remote</span>
       <Row v-bind:data="computeRemote"/>
     </div>
 
     <div v-if="computeRemote.length <= 0">
-      <span>Remote</span>
+      <span class="gcal-title">Remote</span>
       <p>Everyone's Here I guess ¯\_(ツ)_/¯</p>
     </div>
   </div>
@@ -62,5 +62,9 @@ export default {
     }
     .remote-container {
       grid-row-start:  2;
+    }
+
+    .gcal-title {
+      color: #F5F7FA
     }
 </style>

@@ -20,9 +20,6 @@
         </section>
       </section>
     </section>
-    <section class="app__footer">
-      TICKER COMPONENT HERE
-    </section>
   </div>
 </template>
 
@@ -78,7 +75,7 @@ export default {
     overflow: hidden;
   }
   &__body-top {
-    background-color: orange;
+    background-color: $midnight-express;
     width: 100%;
     flex: 1;
     display: flex;
