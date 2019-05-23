@@ -101,9 +101,11 @@ const calendar = google.calendar({version: 'v3', auth});
       eventObject.end = e.end.dateTime || e.end.date;
       eventObject.summary = e.summary;
 
-      let regExec = xregexp.exec(e.summary, /(\w*) (OOO|remote)/i)
+      let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
+      if (!regExec) { return; }
       eventObject.name = regExec[1];
       eventObject.type = regExec[2];
+      if (eventObject.type.toLowerCase() === 'oooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
 
       returnArray.push(eventObject);
     });
