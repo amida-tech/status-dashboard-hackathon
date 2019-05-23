@@ -1,0 +1,9 @@
+[Unit]
+Description=Amida Dashboard Transit
+
+[Service]
+ExecStart=${BASEDIR}/backends/transit/run.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target
