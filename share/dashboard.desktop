@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Dashboard
+Exec=chromium-browser -kiosk -fullscreen -no-default-browser-check "http://localhost:8080"
+Comment=Dashboard
+X-MATE-Autostart-Phase=Applications
+X-MATE-Autostart-Delay=5

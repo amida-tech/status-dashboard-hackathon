@@ -1,0 +1,9 @@
+[Unit]
+Description=Amida Dashboard Frontend
+
+[Service]
+ExecStart=${BASEDIR}/frontend/run.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target

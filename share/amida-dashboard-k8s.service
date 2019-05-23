@@ -1,0 +1,9 @@
+[Unit]
+Description=Amida Dashboard Calendar
+
+[Service]
+ExecStart=${BASEDIR}/backends/k8s-status-service/run.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target
