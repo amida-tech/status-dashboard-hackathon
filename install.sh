@@ -82,6 +82,7 @@ echo
 echo -e "${BLUE}Copy the kubecfg file from ~/.kube/config on your machine to $BASEDIR/kubecfg${NC}"
 echo -e -n "${BLUE}Hit enter when done${NC}"
 read
+chmod 600 $BASEDIR/kubecfg
 echo
 
 # prompt user for the various API keys
