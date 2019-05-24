@@ -4,6 +4,10 @@ const fs = require('fs');
 const readline = require('readline');
 const xregexp = require('xregexp')
 const {google} = require('googleapis');
+const dayjs = require('dayjs');
+const advancedFormat = require('dayjs/plugin/advancedFormat');
+
+dayjs.extend(advancedFormat);
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -99,6 +103,7 @@ const calendar = google.calendar({version: 'v3', auth});
       let eventObject = {};
       eventObject.start = e.start.dateTime || e.start.date;
       eventObject.end = e.end.dateTime || e.end.date;
+      eventObject.humanEnd = dayjs(eventObject.end).format('MMM Do');
       eventObject.summary = e.summary;
 
       let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
