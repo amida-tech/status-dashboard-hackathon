@@ -203,11 +203,11 @@ export default {
     }
     &__image-name {
       font-size: 1.5rem;
-      color: red;
       flex: 1;
       // font-family: $font-monospace;
       &:before {
-        content: '🐳'
+        content: '🐳';
+        margin-right: 0.4rem;
       }
     }
     &__train-time {
