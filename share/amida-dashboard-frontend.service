@@ -4,6 +4,8 @@ Description=Amida Dashboard Frontend
 [Service]
 ExecStart=${BASEDIR}/frontend/run.sh
 Restart=on-failure
+User=${USER}
+Group=${USER}
 
 [Install]
 WantedBy=graphical.target
