@@ -193,17 +193,13 @@ router.get('/deployments', async (ctx, next) => {
     // ctx.body = _deployments;
     ctx.body = res.body.items.map(item => {
       const containers = _.get(item, 'spec.template.spec.containers', []);
+      const image = _.get(containers[0], 'image');
       return { 
         name: _.get(item, 'metadata.name'),
         createTimestamp: _.get(item, 'metadata.creationTimestamp'),
         containerName: _.get(containers[0], 'name'),
-        image: _.get(containers[0], 'image'),
-        // containers: _.get(item, 'spec.template.spec.containers', []).map(container => { // More robust solution.
-        //   return {
-        //     containerName: _.get(container, 'name'),
-        //     image: _.get(container, 'image'),
-        //   }
-        // }),
+        image: image,
+        tag: image.substring(image.indexOf(':') + 1),
       }
     })
   }
