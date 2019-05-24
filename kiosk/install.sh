@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 # color escape codes for pretty output
-RED='\033[0;31m'
-BLUE='\033[0;34m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m\e[?2004l'
+source colors
 
 echo "Starting install $(date)" >> install.log
 
@@ -12,10 +8,12 @@ echo "Starting install $(date)" >> install.log
 if [ ! -f /etc/lsb-release ]; then
 	echo -e "${RED}/etc/lsb-release not found"
 	echo -e "This script must be run on Ubuntu or another Debian-based system. Quitting...${NC}"
+	echo "This script must be run on Ubuntu or another Debian-based system. Quitting..." >> install.log
 	exit 1
 fi
 if [[ $EUID -eq 0 ]]; then
 	echo -e "${RED}This script should not be run as root. Quitting... Run again as your local user.${NC}"
+	echo "This script should not be run as root. Quitting... Run again as your local user." >> install.log
 	exit 1
 fi
 
@@ -35,7 +33,7 @@ case ${answer:0:1} in
 esac
 echo
 
-export BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
+export BASEDIR="$( cd "$(dirname "$0")" ; cd ../; pwd -P )"
 pushd $BASEDIR >> install.log 2>&1
 
 # if a non-privileged dashboard user does not already exist, create one with a randomly generated password
@@ -130,10 +128,10 @@ frontend/setup.sh >> install.log 2>&1
 
 # install, enable autostart for, and start systemd units for each of the services
 echo "Setting up service units"
-envsubst < share/amida-dashboard-frontend.service | sudo tee /etc/systemd/system/amida-dashboard-frontend.service >> install.log
-envsubst < share/amida-dashboard-transit.service | sudo tee /etc/systemd/system/amida-dashboard-transit.service >> install.log
-envsubst < share/amida-dashboard-calendar.service | sudo tee /etc/systemd/system/amida-dashboard-calendar.service >> install.log
-envsubst < share/amida-dashboard-k8s.service | sudo tee /etc/systemd/system/amida-dashboard-k8s.service >> install.log
+envsubst < kiosk/share/amida-dashboard-frontend.service | sudo tee /etc/systemd/system/amida-dashboard-frontend.service >> install.log
+envsubst < kiosk/share/amida-dashboard-transit.service | sudo tee /etc/systemd/system/amida-dashboard-transit.service >> install.log
+envsubst < kiosk/share/amida-dashboard-calendar.service | sudo tee /etc/systemd/system/amida-dashboard-calendar.service >> install.log
+envsubst < kiosk/share/amida-dashboard-k8s.service | sudo tee /etc/systemd/system/amida-dashboard-k8s.service >> install.log
 sudo systemctl daemon-reload >> install.log 2>&1
 sudo systemctl enable amida-dashboard-frontend >> install.log 2>&1
 sudo systemctl start amida-dashboard-frontend >> install.log 2>&1
@@ -149,7 +147,7 @@ if [ "$KIOSK_MODE" = true ]; then
 	echo "Setting up browser autostart"
 	sudo mkdir -p $HOMEDIR/.config/autostart
 	# autostart a chrome window in kiosk mode pointing to the dashboard
-	sudo cp share/dashboard.desktop $HOMEDIR/.config/autostart/dashboard.desktop
+	sudo cp kiosk/share/dashboard.desktop $HOMEDIR/.config/autostart/dashboard.desktop
 	# disable auto screen lock
 	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 >> install.log 2>&1
 	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver lock-delay 3600 >> install.log 2>&1
@@ -163,4 +161,5 @@ fi
 
 popd > /dev/null 2>&1
 
+echo "Finished install $(date)" >> install.log
 echo -e "${GREEN}Install finished${NC}"
