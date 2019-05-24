@@ -86,6 +86,7 @@ export default {
     height: 100%;
     flex: 4;
     overflow: hidden;
+    padding: 18px;
   }
   &__body-top-right {
     height: 100%;
