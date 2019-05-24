@@ -66,7 +66,6 @@ systemctl --user start amida-dashboard-k8s
 
 echo "Setting up browser autostart"
 mkdir -p ~/.config/autostart
-envsubst < share/50-autologin.conf | sudo tee /etc/lightdm/lightdm.conf.d/50-autologin.conf
 cp share/dashboard.desktop ~/.config/autostart/dashboard.desktop
 
 read -p "Press enter to restart lightdm into browser kiosk mode"
