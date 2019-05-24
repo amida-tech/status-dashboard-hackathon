@@ -2,10 +2,6 @@ FROM node:12.0.0-alpine
 
 WORKDIR /app
 
-COPY . .
-
-RUN npm install
-
 RUN mkdir /root/.aws
 
 # Install AWS CLI
@@ -25,5 +21,11 @@ RUN apk add curl
 RUN curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
+
+# run npm install before copying code directory for more efficient image caching
+COPY package.json package.json
+RUN npm install
+
+COPY . .
 
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
