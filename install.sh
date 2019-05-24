@@ -151,7 +151,10 @@ if [ "$KIOSK_MODE" = true ]; then
 	# autostart a chrome window in kiosk mode pointing to the dashboard
 	sudo cp share/dashboard.desktop $HOMEDIR/.config/autostart/dashboard.desktop
 	# disable auto screen lock
-	sudo -u $USER HOME=/home/$USER dbus-launch --exit-with-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 >> install.log 2>&1
+	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 >> install.log 2>&1
+	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver lock-delay 3600 >> install.log 2>&1
+	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver lock-enabled false >> install.log 2>&1
+	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver idle-activation-enabled false >> install.log 2>&1
 
 	echo -e -n "${BLUE}Press enter to restart lightdm${NC}"
 	read
