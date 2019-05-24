@@ -67,6 +67,8 @@ systemctl --user start amida-dashboard-k8s
 echo "Setting up browser autostart"
 mkdir -p ~/.config/autostart
 cp share/dashboard.desktop ~/.config/autostart/dashboard.desktop
+# disable screensaver, setting DISPLAY env because gsettings has to talk to dbus
+sudo DISPLAY=:0 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
 
 read -p "Press enter to restart lightdm into browser kiosk mode"
 sudo systemctl restart lightdm
