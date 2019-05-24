@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@rimiti/express-async": "^1.2.0",
+    "dayjs": "^1.8.14",
     "express": "^4.16.4",
     "googleapis": "^39.2.0",
     "request": "^2.88.0",
