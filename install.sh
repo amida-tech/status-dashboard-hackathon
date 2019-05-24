@@ -14,6 +14,9 @@ export BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
 export USER="$(whoami)"
 pushd $BASEDIR
 
+echo "Copy the kubecfg file from ~/.kube/config on your machine to $BASEDIR/kubecfg"
+read -p "Hit enter when done"
+
 read -p "WMATA API Key: " WMATA_API_KEY
 read -p "Uber API Key: " UBER_KEY
 read -p "Darksky API Key: " DARKSKY_KEY
@@ -46,7 +49,9 @@ envsubst < backends/calendar/credentials.envsubst.json > backends/calendar/crede
 backends/calendar/setup.sh
 
 echo "Setting up kubernetes service"
-backends/k8s-status-service/setup.sh
+envsubst < backends/k8s-status-service/setup.envsubst.sh > backends/k8s-status-service/setup.sh
+chmod +x backends/k8s-status-service/setup.sh
+sudo backends/k8s-status-service/setup.sh
 
 echo "Setting up service units"
 mkdir -p ~/.config/systemd/user
