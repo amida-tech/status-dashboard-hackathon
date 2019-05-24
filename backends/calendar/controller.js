@@ -104,6 +104,7 @@ const calendar = google.calendar({version: 'v3', auth});
       eventObject.start = e.start.dateTime || e.start.date;
       eventObject.end = e.end.dateTime || e.end.date;
       eventObject.humanEnd = dayjs(eventObject.end).format('MMM Do');
+      eventObject.machineEnd = dayjs(eventObject.end).format('X'); // unix timestamp for sorting
       eventObject.summary = e.summary;
 
       let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
@@ -117,7 +118,8 @@ const calendar = google.calendar({version: 'v3', auth});
   } else {
     console.log('No upcoming events found.');
   }
-  return await returnArray;
+  // sort in ascending order by end date
+  return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
 }
 
 module.exports = { 
