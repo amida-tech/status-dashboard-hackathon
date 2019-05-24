@@ -73,7 +73,7 @@ export default {
 @at-root {
   .kubernetes-view {
     height: 100%;
-    overflow: scroll;
+    overflow: hidden;
   }
   .transit-view {
     display: flex;
