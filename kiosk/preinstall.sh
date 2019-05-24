@@ -18,7 +18,7 @@ fi
 export USER=$(whoami)
 
 # install node 12, python deps, and a human-memorable pw generator
-echo "${BLUE}Installing dependencies${NC}"
+echo -e "${BLUE}Installing dependencies${NC}"
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - >> preinstall.log 2>&1
 sudo apt-get install -y nodejs python3-venv python3-dev docker.io libpam0g-dev >> preinstall.log 2>&1
 pushd /tmp >> preinstall.log 2>&1
@@ -31,11 +31,11 @@ sudo make install >> preinstall.log 2>&1
 popd >> preinstall.log 2>&1
 
 # allow current user access to docker
-echo "${BLUE}Configuring docker${NC}"
+echo -e "${BLUE}Configuring docker${NC}"
 sudo systemctl enable docker >> preinstall.log 2>&1
 sudo systemctl start docker >> preinstall.log 2>&1
 sudo groupadd docker >> preinstall.log 2>&1
 sudo usermod -a -G docker $USER >> preinstall.log 2>&1
 
-echo "Finished install $(date)" >> preinstall.log
+echo -e "Finished install $(date)" >> preinstall.log
 echo -e "${GREEN}Preinstall finished${NC}"
