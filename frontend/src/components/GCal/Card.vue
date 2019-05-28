@@ -3,7 +3,7 @@
       <article class="card__content">
         <h5 class="card__title">{{card.name}}</h5>
         <div class="card__body">
-          <h6>Until {{card.end}}</h6>
+          <h6>Until {{card.humanEnd}}</h6>
           <br>
           <p>{{card.summary}}</p>
         </div>

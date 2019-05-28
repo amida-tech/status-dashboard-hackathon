@@ -77,7 +77,7 @@ export default {
   &__body-top {
     background-color: $midnight-express;
     width: 100%;
-    flex: 1;
+    flex: 57 1 0;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -86,6 +86,7 @@ export default {
     height: 100%;
     flex: 4;
     overflow: hidden;
+    padding: 18px;
   }
   &__body-top-right {
     height: 100%;
@@ -96,7 +97,7 @@ export default {
   &__body-bottom {
     background-color: red;
     width: 100%;
-    flex: 1;
+    flex: 43 1 0;
     overflow: hidden;
   }
   &__footer {

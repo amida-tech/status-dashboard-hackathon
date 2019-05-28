@@ -6,7 +6,7 @@
     </div>
 
  <div v-if="computeOutOfOffice.length <= 0">
-      <span>Out Of Office</span>
+      <span class="gcal-title">Out Of Office</span>
       <p>Everyone's Working I Guess ¯\_(ツ)_/¯</p>
     </div>
 
