@@ -3,6 +3,7 @@
 # Frontend
 
 ## Setup / Config 
+See [here](kiosk/README.md) for scripts to automate installing the dashboard (both frontend and backend) onto a Raspberry Pi or similar device.
 
 ### Local Install
 

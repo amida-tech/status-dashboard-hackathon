@@ -11,6 +11,7 @@
   "scripts": {
     "serve": "node app.js",
     "start": "nodemon app.js",
+    "token": "node get_token.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,6 +24,7 @@
   ],
   "dependencies": {
     "@rimiti/express-async": "^1.2.0",
+    "dayjs": "^1.8.14",
     "express": "^4.16.4",
     "googleapis": "^39.2.0",
     "request": "^2.88.0",

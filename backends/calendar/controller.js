@@ -4,6 +4,10 @@ const fs = require('fs');
 const readline = require('readline');
 const xregexp = require('xregexp')
 const {google} = require('googleapis');
+const dayjs = require('dayjs');
+const advancedFormat = require('dayjs/plugin/advancedFormat');
+
+dayjs.extend(advancedFormat);
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -99,18 +103,23 @@ const calendar = google.calendar({version: 'v3', auth});
       let eventObject = {};
       eventObject.start = e.start.dateTime || e.start.date;
       eventObject.end = e.end.dateTime || e.end.date;
+      eventObject.humanEnd = dayjs(eventObject.end).format('MMM Do');
+      eventObject.machineEnd = dayjs(eventObject.end).format('X'); // unix timestamp for sorting
       eventObject.summary = e.summary;
 
-      let regExec = xregexp.exec(e.summary, /(\w*) (OOO|remote)/i)
+      let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
+      if (!regExec) { return; }
       eventObject.name = regExec[1];
       eventObject.type = regExec[2];
+      if (eventObject.type.toLowerCase() === 'oooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
 
       returnArray.push(eventObject);
     });
   } else {
     console.log('No upcoming events found.');
   }
-  return await returnArray;
+  // sort in ascending order by end date
+  return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
 }
 
 module.exports = { 

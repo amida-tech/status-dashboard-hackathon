@@ -1,0 +1,11 @@
+[Unit]
+Description=Amida Dashboard Calendar
+
+[Service]
+ExecStart=${BASEDIR}/backends/calendar/run.sh
+Restart=on-failure
+User=${USER}
+Group=${USER}
+
+[Install]
+WantedBy=graphical.target
