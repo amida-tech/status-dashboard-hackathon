@@ -44,6 +44,7 @@ const feedData = new Vue({
       { commit: 'This is a third test' },
     ],
   },
+  githubLoginUrl: `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.GH_CLIENT_ID}`,
 });
 
 function getQueryStringValue (key) {
@@ -54,6 +55,27 @@ function getQueryStringValue (key) {
       );
 }
 const code = getQueryStringValue('code');
+
+if(code.length > 0) {
+    // TODO: Make request for access_token
+    const options = {
+        client_id: process.env.GH_CLIENT_ID, // not working
+        client_secret: process.env.GH_CLIENT_SECRET, // not working
+        code: code,
+        headers: {
+            "Accept": "application/json",
+        },
+    };
+    console.log('>>>>> options: ', options);
+
+    fetch(
+        'https://github.com/login/oauth/access_token',
+        options
+    )
+    .then((response) => {
+        console.log('GitHubCommitDisplay > response: ', respone);
+    });
+}
 
 export default {
   name: 'GitHubCommitDisplay',
