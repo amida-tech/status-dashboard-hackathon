@@ -13,9 +13,18 @@
     flex-basis: 1px;
     width: 100%;
 
+    &__feed-background{
+        background-color: $bahama-blue;
+        border: 1px solid $light-slate-gray;
+        padding: 0px;
+        width: 100%
+    }
+
     &__feed-header{
         background-color: $shuttle-grey;
         color: $lightest-gray;
+        border: 1px solid $light-slate-gray;
+        border-radius: 5px;
         padding: 16px;
         font-size: 25px;
         font-family: $font-primary;
@@ -24,18 +33,19 @@
 
     &__feed-items{
         padding: 10px;
-        background-color: $shuttle-grey;
         color: $lightest-gray;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         justify-content: left;
+        background-color: $bahama-blue;
         width: 75%;
     }
 
     &__feed-items-project{
             background-color: $shuttle-grey;
             color: $lightest-gray;
+            border-radius: 5px;
             padding: 10px;
             font-family: $font-monospace;
             font-size: 15px;

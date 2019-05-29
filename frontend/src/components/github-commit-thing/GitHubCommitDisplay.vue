@@ -9,18 +9,15 @@
       >
         Please log into GitHub!
       </a>
-      <div v-else>
+      <div v-else class= "github-feed__feed-background">
         <div class="github-feed__feed-header">Most Recently Updated Repositories:</div>
         <div class="github-feed__feed-items" id="feedData-feeder">
-          <div class="github-feed__feed-items-project">PROJECT 1</div>
-          <div class="github-feed__feed-items-project">PROJECT 2</div>
-          <div class="github-feed__feed-items-project">PROJECT 3</div>
           <div
             v-for="project of feedData"
             v-bind:key="project"
             class="github-feed__feed-items-project"
           >
-            {{project}}
+            {{project.commit}}
           </div>
         </div>
       </div>
@@ -79,6 +76,15 @@ if(code.length > 0) {
 
 export default {
   name: 'GitHubCommitDisplay',
+  data() {
+    return {
+      feedData: [
+        { commit: 'This is a test' },
+        { commit: 'This is a second test' },
+        { commit: 'This is a third test' },
+      ],
+    };
+  },
   props: {
     msg: String,
   },
