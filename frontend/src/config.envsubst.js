@@ -1,5 +1,5 @@
 const config = {
-  wmataApiKey: 'xxxxxxxxxx',
+  wmataApiKey: '${WMATA_API_KEY}',
   transitUrl: 'http://localhost:5000',
 };
 

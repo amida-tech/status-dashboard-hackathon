@@ -1,38 +1,45 @@
 <template>
   <div class="app">
     <section class="app_header">
-
     </section>
     <section class="app__body">
       <section class="app__body-sidebar">
-        KUBERNETES COMPONENT HERE
+        <k8sView/>
       </section>
       <section class="app__body-main">
         <section class="app__body-top">
           <section class="app__body-top-left">
-          WFH COMPONENT HERE
+          <GCal/>
           </section>
           <section class="app__body-top-right">
-          RIDESHARE COMPONENT HERE
+          <RideshareView />
           </section>
         </section>
         <section class="app__body-bottom">
-        METRO COMPONENT HERE
+        <TransitView />
         </section>
       </section>
-    </section>
-    <section class="app__footer">
-      <GitHubCommitDisplay msg="Welcome to Your Vue.js App"/>
     </section>
   </div>
 </template>
 
 <script>
+
+import GCal from './components/GCal/GCal.vue';
+import k8sView from './components/k8sView.vue';
+// import SemanticElements from './components/examples/SemanticElements.vue';
+import TransitView from './components/transit/TransitView.vue';
+import RideshareView from './components/transit/RideshareView.vue';
 import GitHubCommitDisplay from './components/github-commit-thing/GitHubCommitDisplay.vue';
 
 export default {
   name: 'app',
   components: {
+    GCal,
+    k8sView,
+    // SemanticElements,
+    TransitView,
+    RideshareView,
     GitHubCommitDisplay,
   },
 };
@@ -48,19 +55,19 @@ export default {
 
 
   &__header {
-    overflow: hidden
+    overflow: hidden;
   }
   &__body {
     flex: 15;
     display: flex;
     flex-direction: row;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-sidebar {
     background-color: purple;
     height: 100%;
     flex: 1;
-    overflow: hidden
+    overflow: hidden;
   }
   &__body-main {
     height: 100%;
@@ -70,9 +77,9 @@ export default {
     overflow: hidden;
   }
   &__body-top {
-    background-color: orange;
+    background-color: $midnight-express;
     width: 100%;
-    flex: 1;
+    flex: 57 1 0;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -81,6 +88,7 @@ export default {
     height: 100%;
     flex: 4;
     overflow: hidden;
+    padding: 18px;
   }
   &__body-top-right {
     height: 100%;
@@ -91,7 +99,7 @@ export default {
   &__body-bottom {
     background-color: red;
     width: 100%;
-    flex: 1;
+    flex: 43 1 0;
     overflow: hidden;
   }
   &__footer {

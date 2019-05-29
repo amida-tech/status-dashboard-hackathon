@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-world">
+  <div class="kubernetes-view">
     <!-- <div>
       <ol class="transit-view__train-list">
         <li v-for="item in k8s" :key="item" class="transit-view__train-listing">
@@ -9,10 +9,8 @@
       
     </div> -->
     <div class="transit-view">
-    <main class="transit-view__k8s-section">
-      <section class="transit-view__metro-station">
-        <h2 class="transit-view__station-name">K8s Deployments</h2>
-        <section class="transit-view__station-line transit-view__station-line--red">
+        <!-- <h2 class="transit-view__station-name">K8s Deployments</h2> -->
+        <main class="transit-view__station-line transit-view__station-line--red">
           <!-- <h4 class="transit-view__line-name transit-view__line-name--red">Red Line</h4> -->
           <section class="transit-view__line-direction">
             <ol class="transit-view__train-list">
@@ -22,36 +20,26 @@
                     <!-- <label>App Name: </label> -->
                     <span class="transit-view__deployment-name">{{item.name}}</span>
                   </div>
-                  <div class="transit-view__train-listing">
-                    <label>Image Name: </label>
-                    <span class="transit-view__image-name">{{item.imageName}}</span>
+                  <div class="transit-view__deployment-context">
+                    <!-- <label>🐋: </label> -->
+                    <code class="transit-view__image-name">{{item.tag}}</code>
+                    <code class="transit-view__sha">{{item.commit}}</code>
                   </div>
-                  <div class="transit-view__train-listing">
-                    <label>Git Commit Hash: </label>
+                  <!-- <div class="transit-view__train-listing">
                     <span class="transit-view__image-name">43110bc</span>
-                  </div>
+                  </div> -->
                 </div>
               </li>
             </ol>
           </section>
-          <!-- <section class="transit-view__line-direction">
-            <h5>Glenmont</h5>
-            <ol class="transit-view__train-list">
-              <li v-for="(train, index) in dupontGlenmontTrains" :key="index" class="transit-view__train-listing">
-                <span class="transit-view__train-name">{{ train.DestinationName }} ({{ train.Car }} Cars)</span>
-                <span class="transit-view__train-time" :class="{'transit-view__train-time--arriving': train.Min === 'ARR' }">{{ train.Min === 'ARR' ? 'Arriving' : `${train.Min} minutes` }}</span>
-              </li>
-            </ol>
-          </section> -->
-        </section>
-      </section>
-    </main>
+        </main>
     </div>
     <button v-on:click="fetchCommits()"> Fetch Git Commits </button>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -62,11 +50,12 @@ export default {
     ...mapState(['k8s']),
     getDeployments(){
       return this.k8s.deployments.map((deploy) => {
+        console.log(deploy)
         var splitImage = deploy.image.split(':');
         return {
           ...deploy,
-          imageName: splitImage[1]
-        }
+          imageName: splitImage[1],
+        };
       })
     }
   },
@@ -82,13 +71,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @at-root {
+  .kubernetes-view {
+    height: 100%;
+    overflow: hidden;
+  }
   .transit-view {
     display: flex;
     flex-direction: row;
     // border: 1px solid #fbad35;
+    // background-color: $midnight-express;
     background-color: $midnight-express;
-    height: 1080px;
-    width: 1920px;
+
     justify-content: stretch;
     &__rideshare-section {
       flex: 1;
@@ -156,12 +149,26 @@ export default {
     }
     &__train-list {
       margin-bottom: 1rem;
+      // TODO: need to calculate this value with a function
+      animation: moveDownUp linear 138s;
+      animation-iteration-count:infinite;
       margin-top: 0.5rem;
       // background-color: $darkest-gray;
       padding: 0.6rem 0.6rem 0;
       border-radius: 0.3rem;
       position: relative;
+      // overflow: hidden;
+    }
+    &__k8s-listing {
+      margin-bottom: 1rem;
+      // display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: $darkest-gray;
+      padding: 0.25rem 0.6rem 0.25rem;
       overflow: hidden;
+      position: relative;
+      border-radius: 0.3rem;
       &:before {
         content: '';
         position: absolute;
@@ -171,15 +178,6 @@ export default {
         left: 0;
         background-image: linear-gradient(to bottom right, rgba(228, 231, 235, .20), rgba(92, 92, 95, .20));
       }
-    }
-    &__k8s-listing {
-      margin-bottom: 0.5rem;
-      // display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background-color: $darkest-gray;
-      padding: 0.6rem 0.6rem 0;
-      border-radius: 0.3rem;
     }
     &__train-name {
       font-size: 1.5rem;
@@ -191,6 +189,12 @@ export default {
       font-weight:900;
       // font-family: $font-monospace;
     }
+    &__deployment-context {
+      display: flex;
+      flex-direction: row;
+      align-items: space-between;
+      margin-top: 0.5rem;
+    }
     &__deployment-listing {
       margin-bottom: 0.5rem;
       display: flex;
@@ -199,8 +203,12 @@ export default {
     }
     &__image-name {
       font-size: 1.5rem;
-      color: red;
+      flex: 1;
       // font-family: $font-monospace;
+      &:before {
+        content: '🐳';
+        margin-right: 0.4rem;
+      }
     }
     &__train-time {
       font-size: 1.5rem;
@@ -215,6 +223,5 @@ export default {
     }
   }
 }
-
 
 </style>
