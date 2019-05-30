@@ -81,7 +81,6 @@ async function listEvents(auth) {
   const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
   
 const calendar = google.calendar({version: 'v3', auth});
-    console.log(startOfDay.toISOString(), endOfDay.toISOString());
   let res = await calendar.events.list({
     calendarId: outOfOfficeCalendarId,
     timeMin: startOfDay.toISOString(),
