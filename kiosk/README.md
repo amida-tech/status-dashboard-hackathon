@@ -8,8 +8,8 @@ Installation is fully automated into scripts: `preinstall.sh`, and `install.sh`.
 and then run `install.sh`. For detailed instructions, see below.
 
 For security reasons
-- Setup is done with a more privileged user (`odroid`).
-- The dashboard runs as a less privileged user (`dashboard`).
+- Setup is done with a more privileged user (e.g. `odroid`).
+- The dashboard runs as a less privileged user (e.g. `dashboard`).
 
 # Installation Instructions
 
