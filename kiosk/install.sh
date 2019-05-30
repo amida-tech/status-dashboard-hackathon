@@ -145,6 +145,7 @@ sudo systemctl start amida-dashboard-k8s >> install.log 2>&1
 if [ "$KIOSK_MODE" = true ]; then
 	echo
 	echo "Setting up browser autostart"
+    envsubst < share/50-autologin.conf | sudo tee /etc/lightdm/lightdm.conf.d/50-autologin.conf >> install.log
 	sudo mkdir -p $HOMEDIR/.config/autostart
 	# autostart a chrome window in kiosk mode pointing to the dashboard
 	sudo cp kiosk/share/dashboard.desktop $HOMEDIR/.config/autostart/dashboard.desktop
