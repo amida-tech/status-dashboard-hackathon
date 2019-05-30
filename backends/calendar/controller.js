@@ -4,10 +4,7 @@ const fs = require('fs');
 const readline = require('readline');
 const xregexp = require('xregexp')
 const {google} = require('googleapis');
-const dayjs = require('dayjs');
-const advancedFormat = require('dayjs/plugin/advancedFormat');
-
-dayjs.extend(advancedFormat);
+const moment = require('moment-timezone');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -78,10 +75,8 @@ async function listEvents(auth) {
   const returnArray = [];
 
   //constants
-  const startOfDay = new Date();
-  startOfDay.setHours(0,0,0,0);
-  const endOfDay = new Date();
-  endOfDay.setHours(23,59,59,0);
+  const startOfDay = moment().tz('America/New_York').startOf('day');
+  const endOfDay = startOfDay.clone().endOf('day');
   const maxResults = 100;
   const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
   
@@ -103,8 +98,8 @@ const calendar = google.calendar({version: 'v3', auth});
       let eventObject = {};
       eventObject.start = e.start.dateTime || e.start.date;
       eventObject.end = e.end.dateTime || e.end.date;
-      eventObject.humanEnd = dayjs(eventObject.end).format('MMM Do');
-      eventObject.machineEnd = dayjs(eventObject.end).format('X'); // unix timestamp for sorting
+      eventObject.humanEnd = moment(eventObject.end).format('MMM Do');
+      eventObject.machineEnd = moment(eventObject.end).format('X'); // unix timestamp for sorting
       eventObject.summary = e.summary;
 
       let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
