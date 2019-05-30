@@ -42,6 +42,7 @@ export default {
   },
   async mounted() {
     this.fetchGCal();
+    setInterval(this.fetchGCal, 30000);
   },
   methods: {
     ...mapActions(['fetchGCal']),
