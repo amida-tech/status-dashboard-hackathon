@@ -1,11 +1,18 @@
 # Dashboard Kiosk
+
 This directory contains scripts to automate setup of the dashboard to a Raspberry Pi or similar (the guide below uses an Odroid XU4) connected to a TV screen. The end result is a device that will boot to a login screen, prompt for a password (for security reasons), and then show the dashboard.
 
 All backend services, in addition to the frontend, run from the device as systemd units, with the k8s service running as a Docker container wrapped in a systemd unit.
 
-Installation is fully automated into scripts: `preinstall.sh`, and `install.sh`. Run `preinstall.sh`, restart your shell, and then run `install.sh`. For detailed instructions, see below.
+Installation is fully automated into scripts: `preinstall.sh`, and `install.sh`. Run `preinstall.sh`, restart your shell, 
+and then run `install.sh`. For detailed instructions, see below.
+
+For security reasons
+- Setup is done with a more privileged user (`odroid`).
+- The dashboard runs as a less privileged user (`dashboard`).
 
 # Installation Instructions
+
 * Boot a Odroid XU4 or similar into the latest Ubuntu MATE. Note the IP address either from startup logs or by logging in and running `ip addr`. This guide assumes an Ethernet connection, otherwise use Network Manager inside the GUI (or `nm` cli) to configure a wireless connection.
 
 * SSH in (default username/password for Odroid Ubuntu MATE variant is `odroid`/`odroid`).
