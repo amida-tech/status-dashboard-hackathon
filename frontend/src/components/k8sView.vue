@@ -61,6 +61,7 @@ export default {
   },
   async mounted() {
     this.fetchK8s();
+    setInterval(this.fetchK8s, 30000);
   },
   methods: {
     ...mapActions(['fetchK8s', 'fetchCommits']),

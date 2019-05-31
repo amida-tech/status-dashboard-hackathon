@@ -145,14 +145,14 @@ sudo systemctl start amida-dashboard-k8s >> install.log 2>&1
 if [ "$KIOSK_MODE" = true ]; then
 	echo
 	echo "Setting up browser autostart"
+    envsubst < share/50-autologin.conf | sudo tee /etc/lightdm/lightdm.conf.d/50-autologin.conf >> install.log
 	sudo mkdir -p $HOMEDIR/.config/autostart
 	# autostart a chrome window in kiosk mode pointing to the dashboard
 	sudo cp kiosk/share/dashboard.desktop $HOMEDIR/.config/autostart/dashboard.desktop
 	# disable auto screen lock
-	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 >> install.log 2>&1
-	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver lock-delay 3600 >> install.log 2>&1
-	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver lock-enabled false >> install.log 2>&1
-	sudo -u $user home=/home/$user dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver idle-activation-enabled false >> install.log 2>&1
+	sudo -u $USER HOME=/home/$USER dbus-launch --exit-with-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 >> install.log 2>&1
+	sudo -u $USER HOME=/home/$USER dbus-launch --exit-with-session gsettings set org.mate.screensaver lock-enabled false >> install.log 2>&1
+	sudo -u $USER HOME=/home/$USER dbus-launch --exit-with-session gsettings set org.mate.screensaver idle-activation-enabled false >> install.log 2>&1
 
 	echo -e -n "${BLUE}Press enter to restart lightdm${NC}"
 	read
