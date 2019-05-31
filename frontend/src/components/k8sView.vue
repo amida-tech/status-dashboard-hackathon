@@ -6,7 +6,7 @@
           <span class="transit-view__train-name">{{item.name}}</span>
         </li>
       </ol>
-      
+
     </div> -->
     <div class="transit-view">
         <!-- <h2 class="transit-view__station-name">K8s Deployments</h2> -->
@@ -48,16 +48,16 @@ export default {
   },
   computed: {
     ...mapState(['k8s']),
-    getDeployments(){
+    getDeployments() {
       return this.k8s.deployments.map((deploy) => {
-        console.log(deploy)
-        var splitImage = deploy.image.split(':');
+        console.log(deploy);
+        const splitImage = deploy.image.split(':');
         return {
           ...deploy,
           imageName: splitImage[1],
         };
-      })
-    }
+      });
+    },
   },
   async mounted() {
     this.fetchK8s();

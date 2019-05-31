@@ -173,7 +173,7 @@ export default {
     },
   },
   async mounted() {
-    this.fetchAll()
+    this.fetchAll();
     setInterval(this.fetchAll, 30000);
   },
   methods: {
@@ -182,7 +182,7 @@ export default {
       this.fetchTrainsByStation('A03');
       this.fetchTrainsByStation('A02');
       this.fetchTrainsByStation('C03');
-    }
+    },
   },
 };
 </script>

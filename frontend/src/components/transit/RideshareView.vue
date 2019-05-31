@@ -42,14 +42,14 @@ export default {
     ...mapState(['transitInfo']),
   },
   async mounted() {
-    this.fetchAll()
+    this.fetchAll();
     setInterval(this.fetchAll, 30000);
   },
   methods: {
     ...mapActions(['fetchTransitInfo']),
     fetchAll() {
       this.fetchTransitInfo();
-    }
+    },
   },
 };
 </script>

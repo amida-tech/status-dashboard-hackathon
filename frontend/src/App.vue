@@ -17,6 +17,7 @@
         </section>
         <section class="app__body-bottom">
         <TransitView />
+        <GitHubCommitDisplay />
         </section>
       </section>
     </section>

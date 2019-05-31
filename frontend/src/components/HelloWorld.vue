@@ -6,7 +6,7 @@
           <span class="transit-view__train-name">{{item.name}}</span>
         </li>
       </ol>
-      
+
     </div> -->
     <div class="transit-view">
     <main class="transit-view__k8s-section">
@@ -60,15 +60,15 @@ export default {
   },
   computed: {
     ...mapState(['k8s']),
-    getDeployments(){
+    getDeployments() {
       return this.k8s.deployments.map((deploy) => {
-        var splitImage = deploy.image.split(':');
+        const splitImage = deploy.image.split(':');
         return {
           ...deploy,
-          imageName: splitImage[1]
-        }
-      })
-    }
+          imageName: splitImage[1],
+        };
+      });
+    },
   },
   async mounted() {
     this.fetchK8s();

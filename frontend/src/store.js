@@ -31,7 +31,7 @@ export default new Vuex.Store({
       state.transitInfo = transitInfo;
     },
     setK8s(state, deployments) {
-      state.k8s = {deployments: deployments};
+      state.k8s = { deployments };
     },
     setCommits(state, newCommits) {
       state.commits = newCommits;
@@ -92,7 +92,7 @@ export default new Vuex.Store({
         'http://localhost:3000/gcal',
         {
           method: 'get',
-        }
+        },
       );
 
       // let fakeData = [
@@ -126,7 +126,7 @@ export default new Vuex.Store({
       //   },
       // ];
 
-      store.commit('setGCal',  await response.json());
+      store.commit('setGCal', await response.json());
     },
     setGitHubAuthCodeToState(store, code) {
       store.commit('setGitHubAuthCode', code);
