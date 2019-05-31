@@ -12,15 +12,6 @@
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{ transitInfo.uber_times && transitInfo.uber_times.Surge }}</span>
       </section>
       <section class="rideshare-view__rideshare-service">
-        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--lyft">
-          <label>Lyft</label>
-        </div>
-        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Estimated Arrival</label>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{ transitInfo.uber_times && transitInfo.uber_times.UberX }}</span>
-        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">surge multiplier</label>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{ transitInfo.uber_times && transitInfo.uber_times.Surge }}</span>
-      </section>
-      <section class="rideshare-view__rideshare-service">
         <div class="rideshare-view__rideshare-service-header">
           <label>Weather</label>
         </div>
@@ -75,7 +66,6 @@ export default {
       @extend .material-box-shadow--level-2;
       background-color: $solitude;
       margin: 0.5rem;
-      flex: 1;
       border-radius: 0.9rem;
       display: flex;
       flex-direction: column;
@@ -111,8 +101,14 @@ export default {
     &__rideshare-service-value {
       line-height: 1.2;
     }
+    label:nth-child(2) {
+      margin-top: 0.8rem;
+    }
     label:not(:nth-child(2)) {
-      margin-top: 0.7rem;
+      margin-top: 1.2rem;
+    }
+    span:last-child {
+      margin-bottom: 0.8rem;
     }
 
   }
