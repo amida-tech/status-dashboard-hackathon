@@ -85,6 +85,8 @@ if(code.length > 0) {
     }
 
     // NOTE: Because... https://stackoverflow.com/a/42150336
+    // NOTE: This potentially exposes the credentials to this service...
+    // --- consider using https://github.com/prose/gatekeeper instead
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
     console.log('>>>>> GitHubCommitDisplay > options[2]: ', options);
