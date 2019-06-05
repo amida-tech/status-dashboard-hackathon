@@ -11,6 +11,65 @@ For security reasons
 - Setup is done with a more privileged user (e.g. `odroid`).
 - The dashboard runs as a less privileged user (e.g. `dashboard`).
 
+# Enviroment
+
+The setup scripts below will prompt you for various configuration values
+
+- WMATA API key
+- Uber API key
+- Darksy API key
+- Contents of `Google Calendar credentials.json`
+- A kubeconfig file
+
+## The kubeconfig file
+
+(This assumes you have basic knowledge of kubernetes and [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) files)
+
+### Specs Overview (your kubeconfig file needs...)
+
+- Cluster: Our k8s cluster.
+- User: The status dashboard service account.
+  - Note 1: This user and its roles/permissions are already setup in the cluster; k8s config files and info regarding this user are in Amida's `k8s-config` repo.
+  - Note 2: In the kubeconfig yaml file, this user's `token` member needs to be the token (not base-64 encoded) derrived from the secret of the status dashboard service account, per the instructions below.
+- Context: cluster = our k8s cluster, namespace = default, and user = the status dashboard service account.
+- Currrent context: The name of the aforementioned context.
+
+### Example
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: REDACTED (get it from a kubeconfig file of any machine already setup to work with our cluster)
+    server: REDACTED (get it from a kubeconfig file of any machine already setup to work with our cluster)
+  name: REDACTED (get it from a kubeconfig file of any machine already setup to work with our cluster)
+contexts:
+- context:
+    cluster: REDACTED (set to same value as clusters > name above)
+    user: REDACTED (set to same value as users > name below)
+  name: REDACTEDCLUSTERNAME__default__REDACTEDSERVICEACCOUNTNAME
+current-context: REDACTED (set to same value as contexts > name above)
+kind: Config
+preferences: {}
+users:
+- name: REDACTED (get it from `kubectl get serviceaccounts`)
+  user:
+    token: REDACTED (get it via the process below)
+```
+
+### The kubeconfig file user token
+
+```sh
+secret=$(kubectl get sa THE_SERVICE_ACCOUNT_NAME -o json | jq -r .secrets[].name)
+user_token=$(kubectl get secret $secret -o json | jq -r '.data["token"]' | base64 -D)
+```
+
+Then plug `user_token` into your kubeconfig yaml file.
+
+For background details, see
+- https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
+- https://stackoverflow.com/questions/42170380/how-to-add-users-to-kubernetes-kubectl
+
 # Installation Instructions
 
 * Boot a Odroid XU4 or similar into the latest Ubuntu MATE. Note the IP address either from startup logs or by logging in and running `ip addr`. This guide assumes an Ethernet connection, otherwise use Network Manager inside the GUI (or `nm` cli) to configure a wireless connection.
