@@ -1,0 +1,6 @@
+Dockerfile
+.env
+env
+**/__pycache__
+output
+python/output

@@ -1,5 +1,12 @@
 # status-dashboard-hackathon
 
+# Dockerized Install
+* Setup `.env` appropriately
+* Copy service user `kubecfg` to `.kubecfg`
+* `docker-compose build`
+* Run `docker run --rm --env-file .env -it --entrypoint /app/authorize.sh status-dashboard-hackathon_calendar` to authorize calendar app for OAuth and paste the `GCAL_TOKEN=...` line into `.env` as directed
+* `docker-compose up`
+
 # Frontend
 
 ## Setup / Config 
