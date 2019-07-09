@@ -11,9 +11,6 @@ APP = Flask(__name__)
 
 if 'UBER_SESSION' not in locals():
     UBER_SESSION = Session(server_token=os.getenv('UBER_KEY'))
-    import sys
-    print('This is error output', file=sys.stderr)
-    print(os.getenv('UBER_KEY'), file=sys.stderr)
 
 
 @APP.route('/current_transit', methods=['GET'])
