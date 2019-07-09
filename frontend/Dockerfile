@@ -1,4 +1,5 @@
 FROM node:12-alpine as builder
+MAINTAINER ops@amida.com
 ARG WMATA_API_KEY
 WORKDIR /app
 
@@ -12,6 +13,7 @@ RUN cat src/config.js
 RUN npm run build
 
 FROM nginx:alpine
+MAINTAINER ops@amida.com
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
