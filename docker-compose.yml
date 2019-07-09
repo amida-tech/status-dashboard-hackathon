@@ -1,0 +1,67 @@
+---
+version: '3.7'
+services:
+  gateway:
+    image: traefik:1.7
+    command: --docker
+    ports:
+      - 9000:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - WMATA_API_KEY=${WMATA_API_KEY}
+    ports:
+      - 9001:80
+    labels:
+      - traefik.enable=true
+      - traefik.port=80
+      - traefik.frontend.rule=PathPrefix:/
+
+  calendar:
+    build:
+      context: ./backends/calendar
+    environment:
+      - GCAL_CLIENT_ID=${GCAL_CLIENT_ID}
+      - GCAL_PROJECT_ID=${GCAL_PROJECT_ID}
+      - GCAL_CLIENT_SECRET=${GCAL_CLIENT_SECRET}
+      - GCAL_TOKEN=${GCAL_TOKEN}
+    ports:
+      - 9002:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.frontend.rule=PathPrefixStrip:/api/calendar/
+
+  k8s:
+    build:
+      context: ./backends/k8s-status-service
+    volumes:
+      - type: bind
+        source: ./.kubecfg
+        target: /root/.kube/config
+        read_only: true
+    environment:
+      - K8S_STATUS_SERVICE_PORT=3000
+    ports:
+      - 9003:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.frontend.rule=PathPrefixStrip:/api/k8s/
+
+  transit:
+    build:
+      context: ./backends/transit
+    environment:
+      - UBER_KEY=${UBER_KEY}
+      - DARKSKY_KEY=${DARKSKY_KEY}
+    ports:
+      - 9004:5000
+    labels:
+      - traefik.enable=true
+      - traefik.port=5000
+      - traefik.frontend.rule=PathPrefixStrip:/api/transit/

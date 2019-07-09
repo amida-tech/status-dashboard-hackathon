@@ -110,7 +110,7 @@ envsubst < backends/transit/.env.envsubst > backends/transit/.env
 backends/transit/setup.sh >> install.log 2>&1
 
 echo "Setting up calendar service"
-envsubst < backends/calendar/credentials.envsubst.json > backends/calendar/credentials.json
+echo $GCAL_CREDENTIALS > backends/calendar/credentials.json
 backends/calendar/setup.sh >> install.log 2>&1
 # do not redirect stdout here, as it requires user interaction
 echo -e "${BLUE}"
