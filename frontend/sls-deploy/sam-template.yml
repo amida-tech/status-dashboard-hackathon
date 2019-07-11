@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: 'SAM template for Serverless framework service: '
+Resources:
+  Hello:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: handler-sls-nuxt.index
+      Runtime: nodejs8.10
+      CodeUri: >-
+        ./
+      MemorySize: 128
+      Timeout: 3
+      Events:
+        Event1:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+            RestApiId:
+              Ref: StatusDashboard
+        Event2:
+          Type: Api
+          Properties:
+            Path: '/{proxy+}'
+            Method: ANY
+            RestApiId:
+              Ref: StatusDashboard
+  StatusDashboard:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: dev
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title:
+            Ref: 'AWS::StackName'
+        paths:
+          /:
+            any:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  'Fn::Sub': >-
+                    arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Hello.Arn}/invocations
+              responses: {}
+          '/{proxy+}':
+            any:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  'Fn::Sub': >-
+                    arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Hello.Arn}/invocations
+              responses: {}
+  HelloLambdaPermission:
+    Type: 'AWS::Lambda::Permission'
+    DependsOn:
+      - Hello
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName:
+        Ref: Hello
+      Principal: apigateway.amazonaws.com

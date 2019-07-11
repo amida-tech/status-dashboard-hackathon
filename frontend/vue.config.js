@@ -1,4 +1,5 @@
 module.exports = {
+  baseUrl: './',
   css: {
     loaderOptions: {
       // pass options to sass-loader

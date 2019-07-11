@@ -21,4 +21,7 @@ yarn-error.log*
 *.sw?
 
 # our really simple config
-src/config.js
+src/store/config.js
+
+# nuxt
+.nuxt

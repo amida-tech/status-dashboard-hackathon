@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "aws-serverless-express": "^3.3.6",
+    "express": "^4.17.1",
+    "nuxt": "^2.8.1",
+    "serverless-http": "^2.0.2"
+  }
+}

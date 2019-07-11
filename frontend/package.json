@@ -4,19 +4,32 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve-sls": "",
     "build": "vue-cli-service build",
+    "build-sls": "rm -rf sls-deploy/dist && vue-cli-service build && mv dist sls-deploy/dist",
+    "build-nuxt-sls": "rm -rf sls-deploy/.nuxt && sls-deploy/./node_modules/nuxt/bin/nuxt.js build && mv .nuxt sls-deploy/.nuxt",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@babel/core": "^7.4.4",
+    "@rimiti/express-async": "^1.2.0",
+    "aws-serverless-express": "^3.3.6",
     "core-js": "^2.6.5",
     "lodash": "^4.17.11",
+    "node-sass": "^4.12.0",
+    "nuxt": "^2.8.1",
+    "path": "^0.12.7",
+    "serverless-http": "^2.0.2",
     "vue": "^2.6.10",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@nuxtjs/style-resources": "^0.1.2",
+    "@babel/runtime": "^7.5.0",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-plugin-unit-mocha": "^3.7.0",
@@ -24,19 +37,19 @@
     "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-preset-vue": "^2.0.2",
     "chai": "^4.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "lodash": "^4.17.11",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
+    "serverless": "^1.46.1",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-domain-manager": "^3.2.6",
+    "serverless-offline": "^5.6.0",
+    "serverless-sam": "^0.2.0",
     "vue-template-compiler": "^2.5.21",
-    "@storybook/vue": "^5.0.11",
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-links": "^5.0.11",
-    "@storybook/addons": "^5.0.11",
-    "babel-preset-vue": "^2.0.2",
-    "@babel/core": "^7.4.4",
-    "babel-loader": "^8.0.5"
+    "webpack": "^4.35.0"
   }
 }
