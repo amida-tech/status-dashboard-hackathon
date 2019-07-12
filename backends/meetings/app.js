@@ -19,11 +19,12 @@ async function gcalClient() {
     return google.calendar({version: 'v3', auth: oAuth2Client})
 }
 
+
 async function getEvents(calendar, opts = {}) {
     if (!opts.limit) { opts.maxResults = 100 }
     if (!opts.start) { opts.start = moment().tz('America/New_York').startOf('day') }
     if (!opts.end) { opts.end = opts.start.clone().endOf('day') }
-    if (!opts.calendarId) { opts.calendarId = 'primary' }
+    if (!opts.calendarId) { opts.calendarId = process.env.GCAL_CALENDAR_ID }
     const res = await calendar.events.list({
         calendarId: opts.calendarId,
         timeMin: opts.start.toISOString(),
