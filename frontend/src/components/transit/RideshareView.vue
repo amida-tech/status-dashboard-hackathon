@@ -20,6 +20,33 @@
         <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Precipitation</label>
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{ transitInfo.weather && transitInfo.weather.precipitation }}</span>
       </section>
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header">
+          <label>Big Table</label>
+        </div>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">202-000-0000</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>https://uberconference.com/janejoe</a></span>
+        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Next</label>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
+      </section>
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header">
+          <label>6th Floor Conference Room</label>
+        </div>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">202-000-0000</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>https://uberconference.com/janejoe</a></span>
+        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Next</label>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
+      </section>
+      <section class="rideshare-view__rideshare-service">
+        <div class="rideshare-view__rideshare-service-header">
+          <label>7th Floor Conference Room</label>
+        </div>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">202-000-0000</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>https://uberconference.com/janejoe</a></span>
+        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Next</label>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
+      </section>
     </aside>
   </div>
 </template>
