@@ -32,9 +32,9 @@ export default {
     Row,
   },
   computed: {
-    ...mapState(['gcal', 'gcalWFH']),
+    ...mapState(['gcal', 'gcalWFH', 'gcalRemote']),
     computeRemote() {
-      return this.gcal.filter(event => event.type === 'Remote');
+      return this.gcalRemote //.filter(event => event.type === 'Remote');
     },
     computeOutOfOffice() {
       return this.gcal //.filter(event => event.type === 'OOO');
@@ -42,10 +42,12 @@ export default {
   },
   async mounted() {
     this.fetchGCal();
+    this.fetchGCalRemote();
     setInterval(this.fetchGCal, 3600000);
+    setInterval(this.fetchGCalRemote, 3600000);
   },
   methods: {
-    ...mapActions(['fetchGCal']),
+    ...mapActions(['fetchGCal', 'fetchGCalRemote']),
   },
 };
 </script>
