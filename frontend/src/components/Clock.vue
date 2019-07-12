@@ -7,10 +7,11 @@
         </div>
         <span class="flip-clock__piece">
           <span class="flip-clock__card flip-card">
-            <b class="flip-card__top">{{seconds}}</b>
-            <b class="flip-card__bottom" :data-value="seconds"></b>
-            <b class="flip-card__back" :data-value="seconds"></b>
-            <b class="flip-card__back-bottom" :data-value="seconds"></b>
+            <!-- <b class="flip-card__top flip">{{seconds}}</b>
+            <b class="flip-card__bottom flip" :data-value="seconds"></b>
+            <b class="flip-card__back flip" :data-value="seconds"></b>
+            <b class="flip-card__back-bottom flip" :data-value="seconds"></b> -->
+            <p class="time shadow">{{time}}</p>
           </span>
           <!-- <span class="flip-clock__slot">{{'Seconds'}}</span> -->
         </span>
@@ -34,10 +35,11 @@ export default {
   name: 'ClockView',
   data() {
     return {
-      ticker: null,
-      minutes: moment().minutes(),
-      hours: moment().hours(),
-      seconds: moment().seconds(),
+      // ticker: null,
+      // minutes: moment().minutes(),
+      // hours: moment().hours(),
+      // seconds: moment().seconds(),
+      time: moment().format('LTS')
     };
   },
   computed: {
@@ -52,9 +54,10 @@ export default {
   },
   created() {
     this.ticker = setInterval(() => {
-      this.minutes = moment().minutes();
-      this.hours = moment().hours();
-      this.seconds = moment().seconds();
+      // this.minutes = moment().minutes();
+      // this.hours = moment().hours();
+      // this.seconds = moment().seconds();
+      this.time =  moment().format('LTS')
     }, 1000);
   },
   methods: {
