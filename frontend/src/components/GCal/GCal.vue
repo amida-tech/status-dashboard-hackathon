@@ -5,7 +5,7 @@
       <Row v-bind:data="computeOutOfOffice"/>
     </div>
 
- <div v-if="computeOutOfOffice.length <= 0">
+    <div v-if="computeOutOfOffice.length <= 0">
       <span class="gcal-title">Out Of Office</span>
       <p>Everyone's Working I Guess ¯\_(ツ)_/¯</p>
     </div>
@@ -32,17 +32,17 @@ export default {
     Row,
   },
   computed: {
-    ...mapState(['gcal']),
+    ...mapState(['gcal', 'gcalWFH']),
     computeRemote() {
       return this.gcal.filter(event => event.type === 'Remote');
     },
     computeOutOfOffice() {
-      return this.gcal.filter(event => event.type === 'OOO');
+      return this.gcal //.filter(event => event.type === 'OOO');
     },
   },
   async mounted() {
     this.fetchGCal();
-    setInterval(this.fetchGCal, 30000);
+    setInterval(this.fetchGCal, 3600000);
   },
   methods: {
     ...mapActions(['fetchGCal']),

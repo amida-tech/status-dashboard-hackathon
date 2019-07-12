@@ -173,8 +173,8 @@ export default {
     },
   },
   async mounted() {
-    this.fetchAll()
-    setInterval(this.fetchAll, 30000);
+    this.fetchAll();
+    setInterval(this.fetchAll, 90000);
   },
   methods: {
     ...mapActions(['fetchTrainsByStation']),
