@@ -5,18 +5,10 @@
         <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
           <label>Clock</label>
         </div>
-        <span class="flip-clock__piece">
-          <span class="flip-clock__card flip-card">
-            <!-- <b class="flip-card__top flip">{{seconds}}</b>
-            <b class="flip-card__bottom flip" :data-value="seconds"></b>
-            <b class="flip-card__back flip" :data-value="seconds"></b>
-            <b class="flip-card__back-bottom flip" :data-value="seconds"></b> -->
-            <p class="time shadow">{{time}}</p>
-          </span>
-          <!-- <span class="flip-clock__slot">{{'Seconds'}}</span> -->
-        </span>
-        <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{minutes}}</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{seconds}}</span> -->
+        <div class="rideshare-view__clock-container">
+          <span class="time">{{time}}</span>
+          <span class="time">{{date}}</span>
+        </div>
       </section>
     </aside>
   </div>
@@ -39,7 +31,8 @@ export default {
       // minutes: moment().minutes(),
       // hours: moment().hours(),
       // seconds: moment().seconds(),
-      time: moment().format('LTS')
+      time: moment().format('LTS'),
+      date: moment().format("MMM Do YYYY")
     };
   },
   computed: {
@@ -57,13 +50,11 @@ export default {
       // this.minutes = moment().minutes();
       // this.hours = moment().hours();
       // this.seconds = moment().seconds();
+      this.date = moment().format("MMM Do YYYY")
       this.time =  moment().format('LTS')
     }, 1000);
   },
   methods: {
-    // getHour() {moment().hours()},
-    // getMinutes() {moment().minutes()},
-    // getSeconds() {moment().seconds()},
   },
 };
 </script>
@@ -84,6 +75,10 @@ export default {
       align-items: stretch;
       padding: 0.5rem;
       padding-bottom: 0;
+    }
+    &__clock-container{
+      display: flex;
+      flex-direction: column;
     }
     &__rideshare-service {
       @extend .material-box-shadow--level-2;
