@@ -8,7 +8,7 @@
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.busy}}</span>
         <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>{{getBigTable}}</a></span> -->
         <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">{{getBigTable.next_event.conference.location}}</label>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.next_event.summary}}</span>
       </section>
       <!-- <section class="rideshare-view__rideshare-service">
         <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
@@ -26,7 +26,7 @@
                 <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.busy}}</span>
         <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>{{getBigTable}}</a></span> -->
         <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">{{getBigTable.next_event.conference.location}}</label>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.next_event.summary}}</span>
       </section> -->
     </aside>
   </div>
