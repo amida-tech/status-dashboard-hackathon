@@ -79,7 +79,7 @@ async function listEvents(auth) {
   const endOfDay = startOfDay.clone().endOf('day');
   const maxResults = 100;
   const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
-  
+
 const calendar = google.calendar({version: 'v3', auth});
   let res = await calendar.events.list({
     calendarId: outOfOfficeCalendarId,
@@ -117,7 +117,39 @@ const calendar = google.calendar({version: 'v3', auth});
   return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
 }
 
-module.exports = { 
+async function addEvent (auth,email) {
+  const workFromHomeCalendarId = 'amida.com_jemhtrukfpict356ajn7lgv50g@group.calendar.google.com';
+  const currentDate = Date.now();
+  const calendar = google.calendar({version: 'v3', auth});
+  const event = {
+    'summary': 'Working From Home',
+    'start': {
+      'dateTime': currentDate,
+      'timeZone': 'America/New_York',
+    },
+    'end': {
+      'dateTime': '2019-05-28T17:00:00-07:00',
+      'timeZone': 'America/New_York',
+    },
+    'attendees': [
+      {'email': email},
+    ],
+  };
+  calendar.events.insert({
+    auth: auth,
+    calendarId: workFromHomeCalendarId,
+    resource: event,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ' + err);
+      return;
+    }
+    console.log('Event created: %s', event.htmlLink);
+  });
+}
+
+module.exports = {
   authorize,
-  listEvents
+  listEvents,
+  addEvent
 }
