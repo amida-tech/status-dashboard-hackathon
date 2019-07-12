@@ -65,3 +65,21 @@ services:
       - traefik.enable=true
       - traefik.port=5000
       - traefik.frontend.rule=PathPrefixStrip:/api/transit/
+
+  meetings:
+    build:
+      context: ./backends/meetings
+    environment:
+      - GCAL_CLIENT_ID=${GCAL_CLIENT_ID}
+      - GCAL_CLIENT_SECRET=${GCAL_CLIENT_SECRET}
+      - GCAL_TOKEN=${GCAL_TOKEN}
+      - GCAL_BIG_CONFERENCE_ROOM_ID=${GCAL_BIG_CONFERENCE_ROOM_ID}
+      - GCAL_SMALL_CONFERENCE_ROOM_ID=${GCAL_SMALL_CONFERENCE_ROOM_ID}
+      - GCAL_TABLE_CONFERENCE_ROOM_ID=${GCAL_TABLE_CONFERENCE_ROOM_ID}
+    ports:
+      - 9003:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.frontend.rule=PathPrefixStrip:/api/meetings/
+
