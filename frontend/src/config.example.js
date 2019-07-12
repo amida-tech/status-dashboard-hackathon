@@ -3,7 +3,7 @@ const config = {
   transitUrl: 'http://localhost:5000',
   k8sUrl: 'http://localhost:3001',
   calendarUrl: 'http://localhost:3000',
-  meetingsUrl: 'http://localhost:3000',
+  meetingsUrl: 'http://192.168.0.42:9000/api/meetings',
 };
 
 export default config;

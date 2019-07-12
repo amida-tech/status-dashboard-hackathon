@@ -87,7 +87,7 @@ export default new Vuex.Store({
     },
     async fetchMeetings(store) {
       const response = await fetch(
-        `http://localhost:3000/combined`,
+        `${config.meetingsUrl}/combined`,
         {
           method: 'get',
           headers: {
