@@ -129,35 +129,35 @@ export default new Vuex.Store({
       store.commit('setGCal', data);
     },
     async fetchGCalRemote(store) {
-      // const response = await fetch(
-      //   'http://localhost:3000/gcal',
-      //   {
-      //     method: 'get',
-      //   },
-      // );
+      const response = await fetch(
+        'http://localhost:3000/gcalwfh',
+        {
+          method: 'get',
+        },
+      );
 
-      let fakeData = [
-        {
-          start: '2019-07-10',
-          end: '2019-07-15',
-          summary: 'Mike OOO',
-          name: 'Mike',
-          type: 'OOO',
-        },
-        {
-          start: '2019-07-01',
-          end: '2019-07-13',
-          summary: 'Michael Lovito OOO',
-          name: 'Lovito',
-          type: 'OOO',
-        },
-        {
-          start: '2019-07-02',
-          end: '2019-07-24',
-          summary: 'Andrew OOO',
-          name: 'Andrew',
-          type: 'OOO',
-        },
+      // let fakeData = [
+      //   {
+      //     start: '2019-07-10',
+      //     end: '2019-07-15',
+      //     summary: 'Mike OOO',
+      //     name: 'Mike',
+      //     type: 'OOO',
+      //   },
+      //   {
+      //     start: '2019-07-01',
+      //     end: '2019-07-13',
+      //     summary: 'Michael Lovito OOO',
+      //     name: 'Lovito',
+      //     type: 'OOO',
+      //   },
+      //   {
+      //     start: '2019-07-02',
+      //     end: '2019-07-24',
+      //     summary: 'Andrew OOO',
+      //     name: 'Andrew',
+      //     type: 'OOO',
+      //   },
         // {
         //   start: '2019-07-03',
         //   end: '2019-08-03',
@@ -165,11 +165,11 @@ export default new Vuex.Store({
         //   name: 'Steven',
         //   type: 'Remote',
         // },
-      ];
+      //];
 
-      //const data = await response.json();
+      const data = await response.json();
 
-      store.commit('setGCalRemote', fakeData);
+      store.commit('setGCalRemote', data);
     },
   },
 });
