@@ -86,7 +86,7 @@ export default () => new Vuex.Store({
         'http://localhost:3000/gcal',
         {
           method: 'get',
-        }
+        },
       );
 
       store.commit('setGCal',  await response.json());

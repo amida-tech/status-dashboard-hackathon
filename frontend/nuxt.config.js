@@ -11,7 +11,7 @@ module.exports = {
   },
   build: {
     vendor: ['axios'],
-    publicPath: '/_nuxt/'// <= add the path to the cached files
+    publicPath: '/_nuxt/', // <= add the path to the cached files
   },
   srcDir: './src',
   performance: {

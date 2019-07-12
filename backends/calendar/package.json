@@ -11,6 +11,7 @@
   "scripts": {
     "serve": "node app.js",
     "start": "nodemon app.js",
+    "start-sls": "sls offline --port 3001",
     "token": "node get_token.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,6 +33,8 @@
     "xregexp": "^4.2.4"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "serverless": "^1.47.0",
+    "serverless-offline": "^5.7.3"
   }
 }
