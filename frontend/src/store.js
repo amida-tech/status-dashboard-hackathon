@@ -61,7 +61,7 @@ export default new Vuex.Store({
     },
     async fetchK8s(store) {
       const response = await fetch(
-        'http://localhost:3001/deployments',
+        `${config.k8sUrl}/deployments`,
         {
           method: 'get',
           headers: {
@@ -83,7 +83,7 @@ export default new Vuex.Store({
     },
     async fetchGCal(store) {
       const response = await fetch(
-        'http://localhost:3000/gcal',
+        `${config.calendarUrl}/gcal`,
         {
           method: 'get',
         }
