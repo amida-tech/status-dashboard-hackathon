@@ -12,7 +12,7 @@
           <GCal/>
           </section>
           <section class="app__body-top-right">
-          <RideshareView />
+          <Clock />
           </section>
         </section>
         <section class="app__body-bottom">
@@ -27,6 +27,7 @@
 
 import GCal from './components/GCal/GCal.vue';
 import k8sView from './components/k8sView.vue';
+import Clock from './components/Clock.vue'
 // import SemanticElements from './components/examples/SemanticElements.vue';
 import TransitView from './components/transit/TransitView.vue';
 import RideshareView from './components/transit/RideshareView.vue';
@@ -39,6 +40,7 @@ export default {
     // SemanticElements,
     TransitView,
     RideshareView,
+    Clock,
   },
 };
 </script>
