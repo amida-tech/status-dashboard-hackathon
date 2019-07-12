@@ -77,7 +77,7 @@ services:
       - GCAL_SMALL_CONFERENCE_ROOM_ID=${GCAL_SMALL_CONFERENCE_ROOM_ID}
       - GCAL_TABLE_CONFERENCE_ROOM_ID=${GCAL_TABLE_CONFERENCE_ROOM_ID}
     ports:
-      - 9003:3000
+      - 9005:3000
     labels:
       - traefik.enable=true
       - traefik.port=3000
