@@ -61,6 +61,7 @@ export default {
       align-items: stretch;
       padding: 0.5rem;
       padding-bottom: 0;
+      padding-top: 0;
     }
     &__rideshare-service {
       @extend .material-box-shadow--level-2;

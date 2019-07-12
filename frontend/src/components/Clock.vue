@@ -1,13 +1,13 @@
 <template>
-  <div class="rideshare-view">
-    <aside class="rideshare-view__rideshare-section">
-      <section class="rideshare-view__rideshare-service">
-        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
-          <label>Clock</label>
+  <div class="clock-view">
+    <aside class="clock-view__rideshare-section">
+      <section class="clock-view__rideshare-service">
+        <div class="clock-view__rideshare-service-header clock-view__rideshare-service-header--uber">
+          <label>EDT</label>
         </div>
-        <div class="rideshare-view__clock-container">
-          <span class="time">{{time}}</span>
-          <span class="time">{{date}}</span>
+        <div class="clock-view__clock-container">
+          <span class="clock-view__time">{{time}}</span>
+          <span class="clock-view__date">{{date}}</span>
         </div>
       </section>
     </aside>
@@ -62,10 +62,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @at-root {
-  .rideshare-view {
+  .clock-view {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    // height: 100%;
     background-color: $midnight-express;
     justify-content: stretch;
     &__rideshare-section {
@@ -75,11 +75,24 @@ export default {
       align-items: stretch;
       padding: 0.5rem;
       padding-bottom: 0;
+      background-color: $midnight-express;
     }
     &__clock-container{
       display: flex;
       flex-direction: column;
+      margin: .5rem;
+      justify-content: center;
+      align-items:left;
+      // background-color: $midnight-express;
     }
+    &__time{
+      // color: $solitude;
+      font-size: 2.5rem;
+    }
+    &__date{
+      // color: $solitude;
+      font-size: 1.5rem;
+    } 
     &__rideshare-service {
       @extend .material-box-shadow--level-2;
       background-color: $solitude;
@@ -107,6 +120,8 @@ export default {
       &--uber {
         color: #FFFFFF;
         background-color: #276EF1;
+        align-items: center;
+        justify-content: center;
       }
       &--lyft {
         color: #FFFFFF;
