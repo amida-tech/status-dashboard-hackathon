@@ -115,7 +115,7 @@ async function combined() {
 
     for (let [room, roomId] of Object.entries(rooms)) {
         const nextEv = (await nextEvent(false, roomId)).event
-        const busy = moment(nextEv.start).isBefore(moment())
+        const busy = moment(nextEv.start).isBefore(moment()) || (room === 'small')
         
         result[room] = {
             busy,
