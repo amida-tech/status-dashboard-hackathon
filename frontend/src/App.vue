@@ -12,7 +12,7 @@
           <GCal/>
           </section>
           <section class="app__body-top-right">
-          <RideshareView />
+            <MeetingsView/>
           </section>
         </section>
         <section class="app__body-bottom">
@@ -30,6 +30,7 @@ import k8sView from './components/k8sView.vue';
 // import SemanticElements from './components/examples/SemanticElements.vue';
 import TransitView from './components/transit/TransitView.vue';
 import RideshareView from './components/transit/RideshareView.vue';
+import MeetingsView from './components/MeetingsView.vue'
 
 export default {
   name: 'app',
@@ -39,6 +40,7 @@ export default {
     // SemanticElements,
     TransitView,
     RideshareView,
+    MeetingsView
   },
 };
 </script>

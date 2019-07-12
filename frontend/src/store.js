@@ -19,6 +19,7 @@ export default new Vuex.Store({
     },
     commits: [],
     transitInfo: {},
+    meetings: []
   },
   mutations: {
     setStationTrains(state, trains) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     setK8s(state, deployments) {
       state.k8s = {deployments: deployments};
+    },
+    setMeetings(state, meetings) {
+      state.meetings = meetings;
     },
     setCommits(state, newCommits) {
       state.commits = newCommits;
@@ -80,6 +84,17 @@ export default new Vuex.Store({
         },
       );
       store.commit('setCommits', await response.json());
+    },
+    async fetchMeetings(store) {
+      const response = await fetch(
+        `http://localhost:3000/combined`,
+        {
+          method: 'get',
+          headers: {
+          },
+        },
+      );
+      store.commit('setMeetings', await response.json());
     },
     async fetchGCal(store) {
       const response = await fetch(
