@@ -32,6 +32,8 @@
     "xregexp": "^4.2.4"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "serverless": "^1.47.0",
+    "serverless-offline": "^5.7.3"
   }
 }
