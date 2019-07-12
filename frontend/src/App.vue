@@ -13,6 +13,7 @@
           </section>
           <section class="app__body-top-right">
           <Clock />
+          <!-- <RideshareView /> -->
           </section>
         </section>
         <section class="app__body-bottom">

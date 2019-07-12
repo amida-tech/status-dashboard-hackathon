@@ -5,9 +5,17 @@
         <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
           <label>Clock</label>
         </div>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{hours}}</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{minutes}}</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{seconds}}</span>
+        <span class="flip-clock__piece">
+          <span class="flip-clock__card flip-card">
+            <b class="flip-card__top">{{seconds}}</b>
+            <b class="flip-card__bottom" :data-value="seconds"></b>
+            <b class="flip-card__back" :data-value="seconds"></b>
+            <b class="flip-card__back-bottom" :data-value="seconds"></b>
+          </span>
+          <!-- <span class="flip-clock__slot">{{'Seconds'}}</span> -->
+        </span>
+        <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{minutes}}</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{seconds}}</span> -->
       </section>
     </aside>
   </div>
@@ -20,7 +28,6 @@ var moment = require('moment')
 // const getMinutes = () => {moment().minutes()}
 // const getHour = () => {moment().hours()}
 // const getSeconds = () => {moment().seconds()}
-
 
 
 export default {

@@ -38,13 +38,13 @@ body {
 */
 }
 
-@halfHeight: 0.72em;
-@borderRadius: 0.15em;
+// @halfHeight: 0.72em;
+// @borderRadius: 0.15em;
 
 .flip-card {
   display: block;
   position: relative;
-  // padding-bottom: @halfHeight;
+  padding-bottom: 0.72em;
   font-size: 2.25rem;
   line-height: 0.95;
 }
@@ -64,11 +64,11 @@ body {
 .flip-card__back::before,
 .flip-card__back::after {
   display: block;
-  // height: @halfHeight;
+  height: 0.72em;
   color: #ccc;
   background: #222;
   padding: 0.23em 0.25em 0.4em;
-  // border-radius: @borderRadius @borderRadius 0 0;
+  border-radius: 0.15em 0.15em 0 0;
   // backface-visiblity: hidden;
   transform-style: preserve-3d;
   width: 1.8em;
@@ -82,10 +82,13 @@ body {
   left: 0;
   border-top: solid 1px #000;
   background: #393939;
-  // border-radius: 0 0 @borderRadius @borderRadius;
+  border-radius: 0 0 0.15em 0.15em;
   pointer-events: none;
   overflow: hidden;
   z-index: 2;
+  transform-origin: center top;
+  animation-fill-mode: both;
+  animation: flipBottom 0.6s cubic-bezier(.15,.45,.28,1);// 0.3s;
 }
 
 .flip-card__back-bottom {
@@ -95,7 +98,7 @@ body {
 .flip-card__bottom::after,
 .flip-card__back-bottom::after {
   display: block;
-  // margin-top: -@halfHeight;
+  margin-top: -0.72em;
 }
 
 .flip-card__back::before,
