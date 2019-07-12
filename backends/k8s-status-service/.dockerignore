@@ -3,3 +3,4 @@ node_modules*
 junk*
 aws-config
 aws-credentials
+kubecfg

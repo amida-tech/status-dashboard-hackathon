@@ -1,4 +1,5 @@
 FROM node:12.0.0-alpine
+MAINTAINER ops@amida.com
 
 WORKDIR /app
 
