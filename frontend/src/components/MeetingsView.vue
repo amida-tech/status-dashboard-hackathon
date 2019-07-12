@@ -2,11 +2,11 @@
   <div class="rideshare-view">
     <aside class="rideshare-view__rideshare-section">
       <section class="rideshare-view__rideshare-service">
-        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
+        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--available">
           <label>Big Table</label>
         </div>
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.busy}}</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>{{getBigTable}}</a></span>
+        <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>{{getBigTable}}</a></span> -->
         <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">{{getBigTable.next_event.conference.location}}</label>
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
       </section>
@@ -18,14 +18,14 @@
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>https://uberconference.com/janejoe</a></span>
         <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Next</label>
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
-      </section>
+      </section> -->
       <section class="rideshare-view__rideshare-service">
-        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
+        <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--busy">
           <label>7th Floor Conference Room</label>
         </div>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">202-000-0000</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>https://uberconference.com/janejoe</a></span>
-        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">Next</label>
+                <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{getBigTable.busy}}</span>
+        <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value"><a>{{getBigTable}}</a></span> -->
+        <label class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-label">{{getBigTable.next_event.conference.location}}</label>
         <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">Available</span>
       </section> -->
     </aside>
@@ -51,7 +51,6 @@ export default {
   },
   async mounted() {
     this.fetchMeetings()
-    console.log("Henry")
     setInterval(this.fetchMeetings, 30000);
   },
   methods: {
@@ -108,6 +107,14 @@ export default {
       &--lyft {
         color: #FFFFFF;
         background-color: #ff00bf;
+      }
+      &--available {
+        color: #FFFFFF;
+        background-color: #2ECC40;
+      }
+      &--busy {
+        color: #FFFFFF;
+        background-color: #FF4136;
       }
     }
     &__rideshare-service-content--indent {
