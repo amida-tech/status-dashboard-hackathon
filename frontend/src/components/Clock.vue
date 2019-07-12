@@ -5,17 +5,8 @@
         <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
           <label>Clock</label>
         </div>
-        <span class="flip-clock__piece">
-          <span class="flip-clock__card flip-card">
-            <b class="flip-card__top">{{seconds}}</b>
-            <b class="flip-card__bottom" :data-value="seconds"></b>
-            <b class="flip-card__back" :data-value="seconds"></b>
-            <b class="flip-card__back-bottom" :data-value="seconds"></b>
-          </span>
-          <!-- <span class="flip-clock__slot">{{'Seconds'}}</span> -->
+        <span class="rideshare-view__clock-container">{{date}}
         </span>
-        <!-- <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{minutes}}</span>
-        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{seconds}}</span> -->
       </section>
     </aside>
   </div>
@@ -38,6 +29,7 @@ export default {
       minutes: moment().minutes(),
       hours: moment().hours(),
       seconds: moment().seconds(),
+      date: moment().format("MMM Do YYYY")
     };
   },
   computed: {
@@ -52,15 +44,13 @@ export default {
   },
   created() {
     this.ticker = setInterval(() => {
+      this.date = moment().format("MMM Do YYYY")
       this.minutes = moment().minutes();
       this.hours = moment().hours();
       this.seconds = moment().seconds();
     }, 1000);
   },
   methods: {
-    // getHour() {moment().hours()},
-    // getMinutes() {moment().minutes()},
-    // getSeconds() {moment().seconds()},
   },
 };
 </script>
@@ -81,6 +71,10 @@ export default {
       align-items: stretch;
       padding: 0.5rem;
       padding-bottom: 0;
+    }
+    &__clock-container{
+      display: flex;
+      flex-direction: column;
     }
     &__rideshare-service {
       @extend .material-box-shadow--level-2;
