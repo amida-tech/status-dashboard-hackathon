@@ -5,6 +5,9 @@
         <div class="rideshare-view__rideshare-service-header rideshare-view__rideshare-service-header--uber">
           <label>Clock</label>
         </div>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{hours}}</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{minutes}}</span>
+        <span class="rideshare-view__rideshare-service-content--indent rideshare-view__rideshare-service-value">{{seconds}}</span>
       </section>
     </aside>
   </div>
@@ -12,21 +15,45 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+var moment = require('moment')
+
+// const getMinutes = () => {moment().minutes()}
+// const getHour = () => {moment().hours()}
+// const getSeconds = () => {moment().seconds()}
+
+
 
 export default {
-  name: 'RideshareView',
-  computed: {
-    ...mapState(['transitInfo']),
+  name: 'ClockView',
+  data() {
+    return {
+      ticker: null,
+      minutes: moment().minutes(),
+      hours: moment().hours(),
+      seconds: moment().seconds(),
+    };
   },
-  async mounted() {
-    this.fetchAll()
-    setInterval(this.fetchAll, 30000);
+  computed: {
+    // getTime(){
+    //   var time = moment().format()
+    //   setInterval(() => {
+    //     time = moment().format()
+    //     console.log('Jonah', time)
+    //   }, 1000)
+    //   return time
+    // }
+  },
+  created() {
+    this.ticker = setInterval(() => {
+      this.minutes = moment().minutes();
+      this.hours = moment().hours();
+      this.seconds = moment().seconds();
+    }, 1000);
   },
   methods: {
-    ...mapActions(['fetchTransitInfo']),
-    fetchAll() {
-      this.fetchTransitInfo();
-    }
+    // getHour() {moment().hours()},
+    // getMinutes() {moment().minutes()},
+    // getSeconds() {moment().seconds()},
   },
 };
 </script>
