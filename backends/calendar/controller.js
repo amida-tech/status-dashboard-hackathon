@@ -3,7 +3,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const xregexp = require('xregexp')
-const {google} = require('googleapis');
+const { google } = require('googleapis');
 const moment = require('moment-timezone');
 
 // If modifying these scopes, delete token.json.
@@ -20,16 +20,16 @@ const TOKEN_PATH = process.cwd() + '/token.json';
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback) {
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
+  const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
+    client_id, client_secret, redirect_uris[0]);
 
   try {
     let tokenContent = fs.readFileSync(TOKEN_PATH)
     oAuth2Client.setCredentials(JSON.parse(tokenContent));
     return oAuth2Client;
   } catch (err) {
-      return getAccessToken(oAuth2Client, callback);
+    return getAccessToken(oAuth2Client, callback);
   }
 }
 
@@ -69,7 +69,7 @@ function getAccessToken(oAuth2Client, callback) {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-async function listEvents(auth) {
+async function listEvents(auth, gcalId) {
 
   //return object
   const returnArray = [];
@@ -78,9 +78,9 @@ async function listEvents(auth) {
   const startOfDay = moment().tz('America/New_York').startOf('day');
   const endOfDay = startOfDay.clone().endOf('day');
   const maxResults = 100;
-  const outOfOfficeCalendarId = 'amida-tech.com_9dugut48t480pb4qee57stskjs@group.calendar.google.com';
-  
-const calendar = google.calendar({version: 'v3', auth});
+  const outOfOfficeCalendarId = gcalId;
+
+  const calendar = google.calendar({ version: 'v3', auth });
   let res = await calendar.events.list({
     calendarId: outOfOfficeCalendarId,
     timeMin: startOfDay.toISOString(),
@@ -102,11 +102,11 @@ const calendar = google.calendar({version: 'v3', auth});
       eventObject.machineEnd = moment(eventObject.end).format('X'); // unix timestamp for sorting
       eventObject.summary = e.summary;
 
-      let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
+      let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote|WFH)/i)
       if (!regExec) { return; }
       eventObject.name = regExec[1];
       eventObject.type = regExec[2];
-      if (eventObject.type.toLowerCase() === 'oooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
+      if (eventObject.type.toLowerCase() === 'ooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
 
       returnArray.push(eventObject);
     });
@@ -117,7 +117,7 @@ const calendar = google.calendar({version: 'v3', auth});
   return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
 }
 
-module.exports = { 
+module.exports = {
   authorize,
   listEvents
 }
