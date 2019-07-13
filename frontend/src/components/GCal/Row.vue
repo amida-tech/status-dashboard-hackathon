@@ -1,14 +1,23 @@
 <template>
   <div class="cards-container">
-      <Card class="scroll-right card--animated" v-if="data.length > 4"
-        v-for="(card, index) in data" :key="index" :card="card"/>
-      <Card v-if="data.length < 4" v-for="(card, index) in data" :key="index" :card="card"/>
+      <Card
+        class="scroll-right card--animated"
+        v-if="data.length > 4"
+        v-for="(card, index) in data"
+        :key="index"
+        :card="card"
+      />
+      <Card
+        v-if="data.length <= 4"
+        v-for="(card, index) in data"
+        :key="index"
+        :card="card"
+      />
   </div>
 </template>
 
 <script>
 import Card from './Card.vue';
-
 
 export default {
   name: 'Row',

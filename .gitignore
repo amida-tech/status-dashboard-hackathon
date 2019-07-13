@@ -135,4 +135,8 @@ $RECYCLE.BIN/
 .nuxt
 dist
 
-# End of https://www.gitignore.io/api/osx,node,linux,windows
+kubecfg
+
+.nuxt
+.serverless
+config.js
