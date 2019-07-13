@@ -5,6 +5,8 @@ const readline = require('readline');
 const xregexp = require('xregexp')
 const {google} = require('googleapis');
 const moment = require('moment-timezone');
+const DynamoDB = require('aws-sdk/clients/dynamodb')
+const dynamodb = new DynamoDB.DocumentClient();
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -12,6 +14,26 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = process.cwd() + '/token.json';
+
+
+putInOfficeTable = (user) => new Promise((res, rej) => {
+  let req = {
+    TableName: 'InOfficeTable',
+    Item: {
+      HashKey: 'date',
+      NumAttribute: 1,
+      BoolAttribute: true,
+      ListAttribute: [1, 'two', false],
+      MapAttribute: { foo: 'bar'},
+      NullAttribute: null
+   }
+  }
+  dynamodb.put(req, err => {
+    if(err) {rej(err)}
+    else { res() }
+  })
+});
+
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -101,14 +123,14 @@ const calendar = google.calendar({version: 'v3', auth});
       eventObject.humanEnd = moment(eventObject.end).format('MMM Do');
       eventObject.machineEnd = moment(eventObject.end).format('X'); // unix timestamp for sorting
       eventObject.summary = e.summary;
-
+      console.log(JSON.stringify(eventObject, null, 2))
       let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote)/i)
       if (!regExec) { return; }
       eventObject.name = regExec[1];
       eventObject.type = regExec[2];
       if (eventObject.type.toLowerCase() === 'oooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
 
-      returnArray.push(eventObject);
+      returnArray.push(eventObject);  
     });
   } else {
     console.log('No upcoming events found.');
@@ -116,6 +138,8 @@ const calendar = google.calendar({version: 'v3', auth});
   // sort in ascending order by end date
   return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
 }
+
+
 
 module.exports = { 
   authorize,
