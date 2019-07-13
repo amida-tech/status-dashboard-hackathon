@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     gcal: [],
+    gcalRemote: [],
     wmata: {
       A03: [],
       A02: [],
@@ -28,13 +29,16 @@ export default new Vuex.Store({
       state.transitInfo = transitInfo;
     },
     setK8s(state, deployments) {
-      state.k8s = {deployments: deployments};
+      state.k8s = { deployments };
     },
     setCommits(state, newCommits) {
       state.commits = newCommits;
     },
     setGCal(state, gcal) {
       state.gcal = gcal;
+    },
+    setGCalRemote(state, gcalRemote) {
+      state.gcalRemote = gcalRemote;
     },
   },
   actions: {
@@ -86,7 +90,7 @@ export default new Vuex.Store({
         'http://localhost:3000/gcal',
         {
           method: 'get',
-        }
+        },
       );
 
       // let fakeData = [
@@ -120,7 +124,52 @@ export default new Vuex.Store({
       //   },
       // ];
 
-      store.commit('setGCal',  await response.json());
+      const data = await response.json();
+
+      store.commit('setGCal', data);
+    },
+    async fetchGCalRemote(store) {
+      const response = await fetch(
+        'http://localhost:3000/gcalwfh',
+        {
+          method: 'get',
+        },
+      );
+
+      // let fakeData = [
+      //   {
+      //     start: '2019-07-10',
+      //     end: '2019-07-15',
+      //     summary: 'Mike OOO',
+      //     name: 'Mike',
+      //     type: 'OOO',
+      //   },
+      //   {
+      //     start: '2019-07-01',
+      //     end: '2019-07-13',
+      //     summary: 'Michael Lovito OOO',
+      //     name: 'Lovito',
+      //     type: 'OOO',
+      //   },
+      //   {
+      //     start: '2019-07-02',
+      //     end: '2019-07-24',
+      //     summary: 'Andrew OOO',
+      //     name: 'Andrew',
+      //     type: 'OOO',
+      //   },
+        // {
+        //   start: '2019-07-03',
+        //   end: '2019-08-03',
+        //   summary: 'Steven Remote from his brain',
+        //   name: 'Steven',
+        //   type: 'Remote',
+        // },
+      //];
+
+      const data = await response.json();
+
+      store.commit('setGCalRemote', data);
     },
   },
 });
