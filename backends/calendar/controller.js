@@ -1,142 +1,264 @@
 "use strict";
-
-const fs = require('fs');
-const readline = require('readline');
-const xregexp = require('xregexp')
-const { google } = require('googleapis');
-const moment = require('moment-timezone');
-const DynamoDB = require('aws-sdk/clients/dynamodb')
-const dynamodb = new DynamoDB.DocumentClient();
-
-// If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-// The file token.json stores the user's access and refresh tokens, and is
-// created automatically when the authorization flow completes for the first
-// time.
-const TOKEN_PATH = process.cwd() + '/token.json';
-
-
-putInOfficeTable = (date, email) => new Promise((res, rej) => {
-  let req = {
-    TableName: 'InOfficeTable',
-    Item: {
-      HashKey: 'DATE',
-      "DATE": {S: date},
-      "EMAIL": {S: email}
-    }
-  }
-  dynamodb.put(req, err => {
-    if(err) {rej(err)}
-    else { res() }
-  })
+const co = require('co');
+const uuidv4 = require('uuidv4');
+const AWSController = require('./util/aws/controller');
+const { listEvents, addToCal, removeFromCal } = require('./util/google/calendar');
+const { getInfoBySlackId, postMessage } = require('./util/slack');
+const { dynamodbConfig } = require('./awsConfig');
+const { wfhTableSchema, messagesTableSchema } = require('./util/tableSchema');
+const some = require('lodash/some');
+const has = require('lodash/has');
+const get = require('lodash/get');
+const {
+  getStartAndEndOfDateDate,
+  getStartAndEndOfTodayDate,
+} = require('./util/time');
+let x = process.env;
+const awsController = new AWSController({
+  dynamodb: dynamodbConfig
 });
 
 
-/**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- */
-function authorize(credentials, callback) {
-  const { client_secret, client_id, redirect_uris } = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id, client_secret, redirect_uris[0]);
+const listAvailabilityEvents = async (gCalId, date) => {
+ 
+  try {
+    let res = await listEvents(gCalId, date);
+    
+    const events = res.data.items;
+    
+    if (events && events.length) {
+      console.log(`${events.length} upcoming events`);
+      let eventObjects = events.map((e, i) => {
+        let eventObject = {};
+        eventObject.start = e.start.dateTime || e.start.date;
+        eventObject.end = e.end.dateTime || e.end.date;
+        eventObject.humanEnd = moment(eventObject.end).format('MMM Do');
+        eventObject.machineEnd = moment(eventObject.end).format('X'); // unix timestamp for sorting
+        eventObject.summary = e.summary;
+        eventObject.eventId = e.id;
+
+        let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote|WFH)/i)
+        if (!regExec) { return; }
+        eventObject.name = regExec[1];
+        eventObject.type = regExec[2];
+        if(eventObject.type.toLowerCase() === 'ooo' || eventObject.type.toLowerCase() === 'pto') { 
+          eventObject.type = 'OOO'; 
+        }
+        
+        if(eventObject.type.toLowerCase() === 'remote') { 
+          eventObject.type = 'REMOTE';
+        }
+
+        if(eventObject.type.toLowerCase() === 'wfh') {
+          eventObject.type = 'WFH';
+        }
+
+        return eventObject;
+
+      });
+
+      // sort in ascending order by end date
+      return eventObjects.sort((a, b) => a.machineEnd - b.machineEnd);
+    } else {
+      console.log('No upcoming events found.');
+    }
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
+  }
+}
+
+const listEventsWFH = async (date) => {
+  let gCalIdTravel = process.env.WFH_GCAL_ID
+  try {
+    return await listAvailabilityEvents(gCalIdTravel, date);
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
+  }
+}
+
+const listEventsOOO = async () => {
+  let gCalIdWFH = process.env.TRAVEL_GCAL_ID
+  try{
+    return await listAvailabilityEvents(gCalIdWFH, date);
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
+  }
+}
+
+const hasWFHEvent = async ({email, start}) => {
+  let req = {
+    TableName: process.env.WFH_TABLE,
+    Key: {
+      START_DATE: {S: start},
+      EMAIL: {S: email},
+    }
+  }
+  try{
+    let itemRes = await awsController.dynamodb.getItem(req);
+    return !! itemRes;
+  } catch(err) {
+    console.error(err);
+  }
+
+}
+
+const putInWFHTable = async ({slackId, email, eventId, start}) => {
+  let req = {
+    TableName: process.env.WFH_TABLE,
+    Item: {
+      START_DATE: {S: start},
+      EMAIL: {S: email},
+      SLACK_ID: {S: slackId},
+      CAL_EVENT_ID: {S: eventId}
+    }
+  }
+  return await awsController.dynamodb.putItem(req);
+}
+
+const addToWFHCal = async (slackId, date) => {
+
+  const calendarId = process.env.WFH_GCAL_ID
+  const { start, end } = date ? getStartAndEndOfDateDate(date) : getStartAndEndOfTodayDate()
 
   try {
-    let tokenContent = fs.readFileSync(TOKEN_PATH)
-    oAuth2Client.setCredentials(JSON.parse(tokenContent));
-    return oAuth2Client;
-  } catch (err) {
-    return getAccessToken(oAuth2Client, callback);
+    const { email, first_name } = await getInfoBySlackId(slackId);  
+    const summary = first_name + ' WFH';
+    const attendees = [ email ];
+    let hasEvent = await hasWFHEvent({email, start});
+    if(!hasEvent) {
+      const res = await addToCal({calendarId, attendees, summary, start, end});
+    
+      if(res.status === 'confirmed') {
+        console.error(`event created for ${email} with event ID: ${res.id}`)
+        let eventId = res.id;
+        await putInWFHTable({email, eventId, slackId, start})
+        return res;
+      } else {
+        console.error(JSON.stringify({
+          statusCode: res.status,
+          message: res.message
+        }, null, 2))
+      }
+    } else {
+      console.error({
+        msg:'WFH event already logged for this user',
+        slackId,
+        email
+      })
+      return;
+    }
+    
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
   }
+   
 }
 
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback for the authorized client.
- */
-function getAccessToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+const removeFromWFHCal = async (slackId, date) => {
+  const calendarId = process.env.WFH_GCAL_ID
+  const { start } = date ? getStartAndEndOfDateDate(date) : getStartAndEndOfTodayDate()
 
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
+  try {
+    //First check if they're on the calendar for the specified date
+    const { email } = await getInfoBySlackId(slackId);  
+    let item = await awsController.dynamodb.getItem({
+      TableName: wfhTableSchema.TableName,
+      Key: {
+        START_DATE: {S: start },
+        EMAIL: {S: email },
+      }
+    });
+
+    if(item) {
+      const eventId = get(item, 'CAL_EVENT_ID.S');
+      await removeFromCal({calendarId, eventId});
+      await awsController.dynamodb.deleteItem({
+        TableName: wfhTableSchema.TableName,
+        Key: {
+          START_DATE: {S: start },
+          EMAIL: {S: email },
+        }
       });
-      callback(oAuth2Client);
-    });
-  });
+
+      return true;
+    } else {
+      console.error({
+        msg: 'No event to delete for slack user',
+        slackId,
+        email
+      })
+    }
+
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
+  }
 }
 
-/**
- * Lists the next 10 events on the user's primary calendar.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-async function listEvents(auth, gcalId) {
-
-  //return object
-  const returnArray = [];
-
-  //constants
-  const startOfDay = moment().tz('America/New_York').startOf('day');
-  const endOfDay = startOfDay.clone().endOf('day');
-  const maxResults = 100;
-  const outOfOfficeCalendarId = gcalId;
-
-  const calendar = google.calendar({ version: 'v3', auth });
-  let res = await calendar.events.list({
-    calendarId: outOfOfficeCalendarId,
-    timeMin: startOfDay.toISOString(),
-    timeMax: endOfDay.toISOString(),
-    maxResults: maxResults,
-    singleEvents: true,
-    orderBy: 'startTime',
-  })
-  // if (err) return console.log('The API returned an error: ' + err);
-
-  const events = res.data.items;
-  if (events.length) {
-    console.log(`${events.length} upcoming events`);
-    events.map((e, i) => {
-      let eventObject = {};
-      eventObject.start = e.start.dateTime || e.start.date;
-      eventObject.end = e.end.dateTime || e.end.date;
-      eventObject.humanEnd = moment(eventObject.end).format('MMM Do');
-      eventObject.machineEnd = moment(eventObject.end).format('X'); // unix timestamp for sorting
-      eventObject.summary = e.summary;
-
-      let regExec = xregexp.exec(e.summary, /(\w*)(?:'s)? (PTO|OOO|remote|WFH)/i)
-      if (!regExec) { return; }
-      eventObject.name = regExec[1];
-      eventObject.type = regExec[2];
-      if (eventObject.type.toLowerCase() === 'ooo' || eventObject.type.toLowerCase() === 'pto') { eventObject.type = 'OOO'; }
-
-      returnArray.push(eventObject);  
-    });
-  } else {
-    console.log('No upcoming events found.');
+// Clears all events for given calendarId/date or today
+// if date is undefined
+const clearEventsOneDay = async(calendarId, date) => {
+  try{
+    const events = await listEvents(calendarId, date);
+    if(events && events.length) {
+      let promises = events.map(async event => {
+        if(has(event, 'id')) {
+          return await removeFromCal({calendarId, eventId: event.id});
+        }
+      });
+      return await Promise.all(promises);
+    }
+  } catch(err) {
+    console.error(err);
+    throw new Error(err);
   }
-  // sort in ascending order by end date
-  return returnArray.sort((a, b) => a.machineEnd - b.machineEnd);
+}
+
+// //Do we want the bot to be able to edit peoples' calendars?
+// //Do we want the bot to do so even if able?
+const addToUserCal = async (slackId, date) => {
+  //Stub
+}
+
+const putInMessagesTable = async({ts, channel}) => {
+  let req = {
+    TableName: process.env.MESSAGES_TABLE,
+    Item: {
+      TIMESTAMP: {S: ts},
+      CHANNEL: {S: channel},
+      UUID: { S: uuidv4() }
+    }
+  }
+  return await awsController.dynamodb.putItem(req);
+}
+
+const postDailyMessage = async (message) => {
+  const slackWFHChannel = process.env.SLACK_WFH_CHANNEL;
+  const slackBotUserId = process.env.WFH_BOT_SLACK_ID;
+  return await postMessage(slackWFHChannel, message, slackBotUserId);
+}
+
+const getMessageByKey = async (channel, timeStamp) => {
+  return await awsController.dynamodb.getItem({
+    TableName: messagesTableSchema.TableName,
+    Key: {
+      CHANNEL: {S: channel },
+      TIMESTAMP: { S: timeStamp },
+    }
+  });
 }
 
 module.exports = {
-  authorize,
-  listEvents
+  listEventsOOO,
+  listEventsWFH,
+  addToWFHCal,
+  removeFromWFHCal,
+  clearEventsOneDay,
+  putInMessagesTable,
+  postDailyMessage,
+  getMessageByKey 
 }

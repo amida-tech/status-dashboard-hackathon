@@ -6,3 +6,16 @@ jspm_packages
 .serverless
 
 serverless.env.yml
+
+# Token is recreated upon authorization
+token.json
+
+# google creds
+credentials.json
+
+# serverless.env.yml
+serverless.env.yml
+serverless.env-test.yml
+
+#vscode
+.vscode

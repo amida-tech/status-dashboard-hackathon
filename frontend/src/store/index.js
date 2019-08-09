@@ -130,7 +130,7 @@ export default () => new Vuex.Store({
     },
     async fetchGCalRemote(store) {
       const response = await fetch(
-        'http://localhost:3000/gcalwfh',
+        'http://localhost:3000/gcal?type=wfh',
         {
           method: 'get',
         },
@@ -158,18 +158,21 @@ export default () => new Vuex.Store({
       //     name: 'Andrew',
       //     type: 'OOO',
       //   },
-        // {
-        //   start: '2019-07-03',
-        //   end: '2019-08-03',
-        //   summary: 'Steven Remote from his brain',
-        //   name: 'Steven',
-        //   type: 'Remote',
-        // },
-      //];
+      // {
+      //   start: '2019-07-03',
+      //   end: '2019-08-03',
+      //   summary: 'Steven Remote from his brain',
+      //   name: 'Steven',
+      //   type: 'Remote',
+      // },
+      // ];
 
       const data = await response.json();
 
       store.commit('setGCalRemote', data);
     },
+    async function fetchGcalWFH() {
+
+    }
   },
 });

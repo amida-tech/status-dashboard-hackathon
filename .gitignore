@@ -140,3 +140,5 @@ kubecfg
 .nuxt
 .serverless
 config.js
+backends/calendar/token.json
+backends/calendar/credentials.json
