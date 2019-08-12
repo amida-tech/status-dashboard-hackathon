@@ -1,0 +1,87 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "calendar",
+      "program": "${workspaceRoot}/node_modules/.bin/sls",
+      "args": [
+        "invoke",
+        "local",
+        "-f",
+        "getEvents",
+        "-d",
+        "{\"pathParameters\" : { \"type\": \"wfh\"}}"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "wfhListener",
+      "program": "${workspaceRoot}/node_modules/.bin/sls",
+      "args": [
+        "invoke",
+        "local",
+        "-f",
+        "wfhListener",
+        "-p",
+        "./examples/addReaction.json"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "slackIntegration",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "test/integration/slack.integration.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "controllerIntegration",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "test/integration/controller.integration.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "calendarIntegration",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "test/integration/calendar.integration.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "handlersIntegration",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "test/integration/handlers.integration.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "awsControllerUnit",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "test/unit/awsController.unit.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "createTables",
+      "program": "/Users/steven/.nvm/versions/node/v10.16.0/bin/node",
+      "args": [
+        "util/generateTables.js"
+      ]
+    }
+  ]
+
+}

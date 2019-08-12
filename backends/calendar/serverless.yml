@@ -1,0 +1,85 @@
+service: slack-listener 
+
+package:
+  exclude:
+    - test/*
+
+custom:
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+    # Uncomment only if you already have a DynamoDB running locally
+      noStart: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  profile: cloudformation_role
+  role: arn:aws:iam::844297601570:role/SlackLambdaRole
+  region: ${file(./serverless.env.yml):WFH_TABLE}
+  environment:
+    AWS_REGION: ${self:provider.region}
+    STAGE: 'dev'
+    GOOGLE_CLIENT_ID: ${file(./serverless.env.yml):GOOGLE_CLIENT_ID}
+    GOOGLE_PROJECT_ID: ${file(./serverless.env.yml):GOOGLE_PROJECT_ID}
+    GOOGLE_AUTH_URI: ${file(./serverless.env.yml):GOOGLE_AUTH_URI}
+    GOOGLE_TOKEN_URI: ${file(./serverless.env.yml):GOOGLE_TOKEN_URI}
+    GOOGLE_AUTH_PROVIDER_X509_CERT_URL: ${file(./serverless.env.yml):GOOGLE_AUTH_PROVIDER_X509_CERT_URL}
+    GOOGLE_CLIENT_SECRET: ${file(./serverless.env.yml):GOOGLE_CLIENT_SECRET}
+    GOOGLE_REDIRECT_URIS: ${file(./serverless.env.yml):GOOGLE_REDIRECT_URIS}
+    TRAVEL_GCAL_ID: ${file(./serverless.env.yml):TRAVEL_GCAL_ID}
+    WFH_GCAL_ID: ${file(./serverless.env.yml):WFH_GCAL_ID}
+    SLACK_WFH_CHANNEL: ${file(./serverless.env.yml):SLACK_WFH_CHANNEL}
+    WFH_BOT_SLACK_ID: ${file(./serverless.env.yml):WFH_BOT_SLACK_ID}
+plugins:
+  - serverless-offline
+  - serverless-pseudo-parameters
+  - serverless-dynamodb-local
+functions:
+  wfhListener:
+    handler: handlers/wfhListener.index
+    events:
+      - http:
+          path: /wfh-listener
+          method: post
+    WFH_TABLE: ${file(./serverless.env.yml):WFH_TABLE}
+    IN_OFFICE_TABLE: ${file(./serverless.env.yml):IN_OFFICE_TABLE}
+    LOCAL_DYNAMO_ENDPOINT: ${file(./serverless.env.yml):LOCAL_DYNAMO_ENDPOINT}
+  getEvents:
+    handler: handlers/getEvents.index
+    events:
+      - http: get /gcal
+  getEvents:
+    handler: handlers/choreBot.index
+    events:
+      - http: get /gcal
+      
+      
+resources:
+  MessagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${file(./serverless.env.yml):MESSAGES_TABLE}
+      AttributeDefinitions:
+        - AttributeName: DATETIME
+          AttributeType: S
+        - AttributeName: CHANNEL
+          AttributeType: S
+      KeySchema:
+        - AttributeName: DATETIME
+          KeyType: HASH
+        - AttributeName: CHANNEL
+          KeyType: RANGE
+      # Set the capacity to auto-scale
+      BillingMode: PROVISIONED
+
+    
