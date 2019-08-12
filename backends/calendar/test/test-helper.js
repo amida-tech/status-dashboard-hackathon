@@ -35,7 +35,7 @@ const deleteTables = async () => {
   }
 }
 
-const setUpDynamodb = async () => {
+const setUpTablesAndCalendar = async () => {
   try{
     await deleteTables();
     await createTables();
@@ -46,5 +46,5 @@ const setUpDynamodb = async () => {
 };
 
 module.exports = {
-  setUpDynamodb
+  setUpTablesAndCalendar
 }

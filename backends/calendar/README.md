@@ -50,3 +50,22 @@ Instructions here: https://developers.google.com/calendar/quickstart/nodejs
   }
 ]
 ```
+## Serverless deployment
+
+### setup
+- First, npm i
+- Then, copy the serverless.env.example.yml file to serverless.env.yml
+- run node generateGoogleCeds.js, and follow the instructions
+- This should create config.json file. you should copy client id, secret, and google project id from that file into the serverless.env corresponding values.
+
+## Testing
+
+./node_modules/.bin/_mocha test/*
+
+## deployment 
+
+sls deploy
+
+## Local invocation 
+
+sls invoke-local 

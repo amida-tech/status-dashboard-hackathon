@@ -58,10 +58,11 @@ functions:
     handler: handlers/getEvents.index
     events:
       - http: get /gcal
-   getEvents:
-    handler: handlers/getEvents.index
+  getEvents:
+    handler: handlers/choreBot.index
     events:
       - http: get /gcal
+      
       
 resources:
   MessagesTable:

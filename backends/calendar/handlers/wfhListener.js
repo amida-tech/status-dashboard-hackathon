@@ -15,17 +15,20 @@ module.exports.index = async (event, context) => {
     if(challenge) {
       response.body = JSON.stringify({ challenge });
     } else {
-      const slackId = get(reqBody, 'event.user');
-      if(get(reqBody, 'event.type') === 'reactionAdded') {
-        
-        let res = await controller.addToWFHCal(slackId);
-        
+      const slackId = get(body, 'event.user');
+      if(get(body, 'event.type') === 'reactionAdded') {
+        let itemUser = get(body, 'event.item_user');
+        if(controller.messageExists(itemItemUser)) {
+          
+        }
+        if(itemsUser) {
+          await controller.addToWFHCal(slackId);
+        } else {
+          response.status = 500;
+          response.message = "No item user in reaction added event";
+        }
       } else if(get(reqBody, 'event.type') === 'reactionRemoved') {
-        const slackId = get(reqBody, 'event.user');
-        controller.removeFromWFHCal(slackId);
-      }else if(get(reqBody, 'event.type') === 'channelMessage') {
-        const slackId = get(reqBody, 'event.user');
-        controller.removeFromWFHCal(slackId);
+        await controller.removeFromWFHCal(slackId);
       }
     }
     

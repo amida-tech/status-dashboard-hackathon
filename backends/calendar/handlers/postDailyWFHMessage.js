@@ -7,7 +7,7 @@ module.exports.index = async (event, context) => {
     statusCode: 200
   }
   try {
-    let res = await controller.postDailyMessage(message);
+    let res = await controller.postWFHDailyMessage(message);
     if(res.ok) {
       await controller.putInMessagesTable(res);
       response.timeStamp = res.ts;

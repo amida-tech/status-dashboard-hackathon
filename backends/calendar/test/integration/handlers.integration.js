@@ -2,13 +2,11 @@ require('env-yaml').config({path: __dirname + '/../serverless.env-test.yml'});
 const chaiAsPromised = require('chai-as-promised');
 const chai = require('chai');
 const get = require('lodash/get');
-const putReactionData = require('../../examples/addReactionHouse.json').index;
-const messageHandler = require('../../handlers/postDailyMessage').index;
 const wfhListenerHandler = require('../../handlers/wfhListener').index;
-const dailyMessageHandler = require('../../handlers/postDailyMessage').index;
+const dailyWFHMessageHandler = require('../../handlers/postDailyWFHMessage').index;
 const controller = require('../../controller');
 
-const { setUpDynamodb } = require('../test-helper');
+const { setUpTablesAndCalendar } = require('../test-helper');
 
 chai.use(chaiAsPromised);
 
@@ -25,19 +23,19 @@ const message = "Hi! this is the work from home bot. You can place yourself on t
 describe('Daily Message Handler', () => {
   before(async () => {
     try{
-      await setUpDynamodb();
+      await setUpTablesAndCalendar();
     } catch(err){
       console.error(err)
     }
   })
-  it('Stores message timestamp/channel in dynamodb', async () => {
-    let res = await dailyMessageHandler();
+  it('Stores daily message timestamp/channel in dynamodb', async () => {
+    let res = await dailyWFHMessageHandler();
     expect(res.statusCode).to.equal(200);
     expect(res.channel).to.equal(slackWFHChannel);
     expect(res.message).to.equal(message);
     expect(res.timeStamp).to.exist;
 
-    let item = await controller.getMessageByKey(res.channel, res.timeStamp);
+    let item = await controller.getMessageByKey(res.channel, res.timeStamp, res.item_user);
       
     expect(get(item, 'CHANNEL.S')).to.equal(slackWFHChannel);
     expect(get(item, 'TIMESTAMP.S')).to.equal(res.timeStamp);
@@ -47,19 +45,24 @@ describe('Daily Message Handler', () => {
 
 describe('WFH Listener', () => {
   it('Adds event to wfh calendar & wfh table if message exists in messages table', async () => {
-    let messageRes = await dailyMessageHandler();
-    let reactionAddedHouse = {
+    let messageRes = await dailyWFHMessageHandler();
+    let slackReactionAddedHouse = {
       event: {
-        type: reactionAdded,
+        type: "reactionAdded",
         user: testUserId,
         item: {
           type: 'message',
           channel: slackWFHChannel,
           ts: '1564154225.014400',
           
-        }
+        },
+        reaction: '"house"',
+        item_user:slackBotUserId,
       }
     };
-    await wfhListenerHandler();
+    let event = {
+      body: JSON.stringify(slackReactionAddedHouse)
+    }
+    await wfhListenerHandler(event);
   });
 });

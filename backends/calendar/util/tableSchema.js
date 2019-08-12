@@ -10,10 +10,18 @@ module.exports = {
         AttributeName: 'CHANNEL',
         AttributeType: 'S',
       },
+      {
+        AttributeName: 'ITEM_USER',
+        AttributeType: 'S'
+      },
+      {
+        AttributeName: 'MESSAGE',
+        AttributeType: 'S'
+      }
     ],
     KeySchema: [
       {
-        AttributeName: 'CHANNEL',
+        AttributeName: 'ITEM_USER',
         KeyType: 'HASH',
       },
       {

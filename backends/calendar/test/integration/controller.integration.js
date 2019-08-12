@@ -5,7 +5,7 @@ const some = require('lodash/some');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const { messagesTableSchema, wfhTableSchema } = require('../../util/tableSchema');
-const { setUpDynamodb } = require('../test-helper');
+const { setUpTablesAndCalendar } = require('../test-helper');
 
 const { 
   addToWFHCal,
@@ -40,7 +40,7 @@ describe('Calendar' , async () => {
 
   beforeEach(async () => {
     try{
-      await setUpDynamodb();
+      await setUpTablesAndCalendar();
     } catch(err){
       console.error(err)
     }
@@ -145,4 +145,6 @@ describe('Calendar' , async () => {
     });
     expect(itemRes).to.be.undefined;
   })
+
+  it('posts ')
 });

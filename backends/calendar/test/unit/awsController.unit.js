@@ -17,9 +17,10 @@ const awsController = new AWSController({
 
 describe('Dynamodb functions', () => {
 
-  const channel = process.env.SLACK_WFH_CHANNEL;
+  const channel = 'slackChannelId'
   const messageDateTime = '01-01-2001';
   const messageUUID =  '1234';
+  const itemUser = 'itemUserId'
 
   it('Successfully creates all tables', async () => {
 
@@ -36,6 +37,7 @@ describe('Dynamodb functions', () => {
       Item: {
         TIMESTAMP: {S: messageDateTime},
         CHANNEL: {S: channel},
+        ITEMUSER: {S: itemUser },
         UUID: {S: messageUUID}
       }
     }
@@ -49,14 +51,15 @@ describe('Dynamodb functions', () => {
       {
         TableName: messagesTableSchema.TableName,
         Key: {
-          CHANNEL: {S: channel },
           TIMESTAMP: { S: messageDateTime },
+          ITEMUSER: {S: itemUser }
         }
       }
     );
     expect(res).to.deep.equal({
       TIMESTAMP: { S: messageDateTime },
       CHANNEL: { S: channel },
+      ITEMUSER: {S: itemUser },
       UUID: { S: messageUUID }
     })
   });
@@ -68,6 +71,7 @@ describe('Dynamodb functions', () => {
         Key: {
           CHANNEL: {S: channel},
           TIMESTAMP: { S: messageDateTime },
+          ITEMUSER: {S: itemUser }
         }
       }
     );

@@ -118,6 +118,19 @@ const putInWFHTable = async ({slackId, email, eventId, start}) => {
   return await awsController.dynamodb.putItem(req);
 }
 
+const wfhMessageExists = (channel, itemUser, timestamp) => {
+  const { start, end } = date ? getStartAndEndOfDateDate(date) : getStartAndEndOfTodayDate()
+  let req = {
+    TableName = process.env.MESSAGES_TABLE,
+    Keys: {
+      CHANNEL: {S: channel},
+      TIMESTAMP: {S: timestamp},
+      ITEM_USER: {S: itemUser}
+    }
+  }
+  dynamoItem = awsController.dynamodb.getItem(req)
+}
+
 const addToWFHCal = async (slackId, date) => {
 
   const calendarId = process.env.WFH_GCAL_ID
@@ -236,18 +249,20 @@ const putInMessagesTable = async({ts, channel}) => {
   return await awsController.dynamodb.putItem(req);
 }
 
-const postDailyMessage = async (message) => {
+const postWFHDailyMessage = async (message) => {
   const slackWFHChannel = process.env.SLACK_WFH_CHANNEL;
   const slackBotUserId = process.env.WFH_BOT_SLACK_ID;
   return await postMessage(slackWFHChannel, message, slackBotUserId);
 }
 
-const getMessageByKey = async (channel, timeStamp) => {
+
+const getMessageByKey = async (channel, timeStamp, itemUser) => {
   return await awsController.dynamodb.getItem({
     TableName: messagesTableSchema.TableName,
     Key: {
       CHANNEL: {S: channel },
       TIMESTAMP: { S: timeStamp },
+      ITEM_USER: {S: itemUser}
     }
   });
 }
@@ -259,6 +274,6 @@ module.exports = {
   removeFromWFHCal,
   clearEventsOneDay,
   putInMessagesTable,
-  postDailyMessage,
+  postWFHDailyMessage,
   getMessageByKey 
 }

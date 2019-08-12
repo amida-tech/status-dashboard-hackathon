@@ -5,13 +5,11 @@ const {wrapAsync} = require('@rimiti/express-async');
 const app = express();
 
 app.get('/gcal', wrapAsync(async function(req, res){
-  let credentials = controller.assembleGcalCredentialsFromEnv();
-  let auth = controller.authorize(credentials);
   let eventList;
   if(req.query.type === 'ooo') {
-    eventList = await controller.listEventsOOO(auth);
+    eventList = await controller.listEventsOOO();
   } else if(req.query.type === 'wfh') {
-    eventList = await controller.listEventsWFH(auth);
+    eventList = await controller.listEventsWFH();
   }
   // Load client secrets from a local file.
   res.setHeader("Access-Control-Allow-Origin", "*");

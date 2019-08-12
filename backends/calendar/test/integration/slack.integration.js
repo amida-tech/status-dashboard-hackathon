@@ -29,7 +29,7 @@ describe('infoBySlackId integration', () => {
 });
 
 describe('postMessage integration', () => {
-  it('correctly posts message to channel', async () => {
+  it('correctly posts message to channel as user', async () => {
     let res = await postMessage(slackWFHChannel, message,slackBotUserId);
     expect(res.ok).to.be.true
     expect(res.message.text).to.equal(message);
