@@ -27,7 +27,7 @@
     "express": "^4.16.4",
     "googleapis": "^39.2.0",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "request": "^2.88.0",
     "xregexp": "^4.2.4"
   },
